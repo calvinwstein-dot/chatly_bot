@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat Widget</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="chat-launcher">💬</div>
+  <div id="chat-widget" class="hidden">
+    <header id="chat-header">
+      <img id="chat-logo" class="hidden" />
+      <span id="chat-title"></span>
+    </header>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+      <input id="chat-input" type="text" placeholder="Type your message..." />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <script src="widget.js"></script>
+</body>
+</html>
