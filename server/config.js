@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+export const BUSINESS_PROFILE = "Henri"; // change per client
+
 export const config = {
   port: process.env.PORT || 3000,
   openaiApiKey: process.env.OPENAI_API_KEY,
