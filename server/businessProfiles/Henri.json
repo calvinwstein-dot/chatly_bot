@@ -1,5 +1,6 @@
 {
   "businessName": "Henri",
+  "currency": "kr",
   "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
   "locations": "01 Christianshavn, Torvegade | 02 Frederiksberg, Gl. Kongevej | 03 Frederiksberg, H.C. Ørstedsvej | 04 København K, Grønnegade | 05 Magasin, Kongens Nytorv | 06 Nordhavn, Århusgade | 07 Nørrebro, Elmegade | 08 Østerbro, Nordre Frihavnsgade",
   "services": [

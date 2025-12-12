@@ -22,7 +22,7 @@ Business description:
 ${business.description}
 
 Services:
-${business.services.map(s => `- ${s.name} ($${s.price})`).join("\n")}
+${business.services.map(s => `- ${s.name} (${s.price} ${business.currency || 'kr'})`).join("\n")}
 
 Hours:
 ${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
@@ -31,6 +31,9 @@ FAQs:
 ${business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n")}
 
 Always answer using ONLY this business's information.
+
+IMPORTANT: When listing services, always format them as bullet points, one per line:
+- Service Name (price kr)
 `;
 
 export async function handleChat({ sessionId, message }) {
