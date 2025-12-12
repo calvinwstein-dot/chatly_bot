@@ -1,0 +1,36 @@
+{
+  "businessName": "Henri",
+  "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
+  "locations": "01 Christianshavn, Torvegade | 02 Frederiksberg, Gl. Kongevej | 03 Frederiksberg, H.C. Ørstedsvej | 04 København K, Grønnegade | 05 Magasin, Kongens Nytorv | 06 Nordhavn, Århusgade | 07 Nørrebro, Elmegade | 08 Østerbro, Nordre Frihavnsgade",
+  "services": [
+    { "name": "Skin Fade", "price": 550 },
+    { "name": "Classic Haircut", "price": 440 },
+    { "name": "classic Beard Trim", "price": 395 },
+    { "name": "signature restyle", "price": 595 },
+    { "name": "two classics combo", "price": 750 },
+    { "name": "henri's signature combo", "price": 995 },
+    { "name": "signature hot towel shave", "price": 595 },
+    { "name": "head shave", "price": 395 },
+    { "name": "signature beard trim", "price": 595 }
+
+
+
+  ],
+  "hours": {
+    "monday": "8am - 6pm",
+    "tuesday": "8am - 6pm",
+    "wednesday": "8am - 6pm",
+    "thursday": "8am - 6pm",
+    "friday": "8am - 6pm",
+    "saturday": "9am - 5pm",
+    "sunday": "closed"
+
+  },
+  "faq": [
+    { "question": "Do you take walk-ins?", "answer": "Yes, we accept walk-ins every day if there is space available." },
+    { "question": "Do you accept card payments?", "answer": "Yes, we accept all major debit and credit cards except american express." },
+    { "question": "What is your cancellation policy?", "answer": "We kindly ask for at least 24 hours notice for any cancellations or rescheduling. Late cancellations or no-shows may be subject to a fee." },
+    { "question": "Do you offer gift cards?", "answer": "Yes, we offer gift cards that can be purchased in-store or online." },
+    { "question": "how do i book an appointment", "answer": "you can make a booking at anyone of our stores through our online booking system at https://henri.planway.com/?new_design=1." }
+  ]
+}
