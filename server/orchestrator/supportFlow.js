@@ -23,6 +23,15 @@ ${business.locations.map(loc => `- ${loc.name} (${loc.address}) - Map: ${loc.map
 Services:
 ${business.services.map(s => `- ${s.name} (${s.price} ${business.currency || 'kr'})`).join("\n")}
 
+Products:
+${business.products ? business.products.map(p => `- ${p.name} (${p.price} ${business.currency} - ${p.size}) - ${p.category}`).join("\n") : 'No products available'}
+
+Gift Cards:
+${business.giftCards ? business.giftCards.map(g => `- ${g.name} (${g.price} ${business.currency})`).join("\n") : 'Gift cards available in-store'}
+
+Loyalty Cards (5x Klippekort - Save with prepaid packages):
+${business.loyaltyCards ? business.loyaltyCards.map(l => `- ${l.name} (${l.price} ${business.currency})`).join("\n") : 'Loyalty cards available'}
+
 Hours:
 ${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
 
