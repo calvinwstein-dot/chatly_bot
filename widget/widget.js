@@ -29,9 +29,13 @@ function appendMessage(text, role) {
   const div = document.createElement("div");
   div.className = `message ${role}`;
   
-  // Convert URLs to clickable links
+  // Convert URLs and emails to clickable links
   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const htmlText = text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/g;
+  
+  let htmlText = text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  htmlText = htmlText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
+  
   div.innerHTML = htmlText;
   
   container.appendChild(div);
