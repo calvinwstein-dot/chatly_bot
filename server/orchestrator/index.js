@@ -75,6 +75,13 @@ RULES:
 BOOKING: When a customer wants to book an appointment, provide this booking link: https://henri.planway.com/?new_design=1
 Tell them they can select their preferred location, service, and time directly on the booking page.
 
+SHOPPING: All products, gift cards, gift boxes, and loyalty cards can be purchased online:
+- Shop all products: https://www.henri.dk/collections/all
+- Gift cards: https://www.henri.dk/collections/gavekort
+- Gift boxes: https://www.henri.dk/collections/gaveaesker
+- Loyalty cards: https://www.henri.dk/collections/loyalty-vouchers-1
+When customers ask about buying products or gift items, guide them to the online shop.
+
 LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
 `;
 
