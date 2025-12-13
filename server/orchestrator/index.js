@@ -45,13 +45,16 @@ ${business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n")}
 Always answer using ONLY this business's information.
 
 FORMATTING RULES - VERY IMPORTANT:
-1. When mentioning services, products, locations, gift cards, or loyalty cards, wrap their NAMES ONLY in **double asterisks** for bold
-2. ALWAYS list multiple items as bullet points, one per line (never in paragraphs)
-3. Format example:
-   - **Classic Haircut** - 440 DKK
-   - **Signature Hot Towel Shave** - 595 DKK
-4. For locations: **Location Name** - Address
-5. Keep prices and descriptions in regular text, only the item name in **bold**
+1. When mentioning services, products, locations, gift cards, or loyalty cards, wrap their NAMES ONLY in markdown link style: [Item Name](#)
+2. DO NOT write lists in paragraphs - ALWAYS use clean bulleted lists
+3. Each item MUST be on its own line
+4. Format example:
+   - [Classic Haircut](#): 440 DKK
+   - [Signature Hot Towel Shave](#): 595 DKK
+5. For locations: [Location Name](#) - Address
+6. Keep prices and descriptions in regular text, only the item name as [link](#)
+7. Add blank line after intro text before list
+8. Never mix multiple items in one sentence
 
 BOOKING: When a customer wants to book an appointment, provide this booking link: https://henri.planway.com/?new_design=1
 Tell them they can select their preferred location, service, and time directly on the booking page.

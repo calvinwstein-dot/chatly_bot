@@ -29,15 +29,15 @@ function appendMessage(text, role) {
   const div = document.createElement("div");
   div.className = `message ${role}`;
   
-  // Convert URLs and emails to clickable links
+  // Convert URLs and emails to clickable links (but not [text](#) patterns)
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/g;
   
   let htmlText = text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
   htmlText = htmlText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
   
-  // Convert **bold** to blue bold text for service/product names
-  htmlText = htmlText.replace(/\*\*([^*]+)\*\*/g, '<strong class="highlight">$1</strong>');
+  // Convert [text](#) to blue highlighted text for service/product names
+  htmlText = htmlText.replace(/\[([^\]]+)\]\(#\)/g, '<span class="highlight">$1</span>');
   
   div.innerHTML = htmlText;
   
