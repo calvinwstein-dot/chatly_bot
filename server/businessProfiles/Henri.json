@@ -101,6 +101,32 @@
     { "name": "5x Klippekort - Signature Beard Trim", "price": 2750 },
     { "name": "5x Klippekort - Signature Hot Towel Shave", "price": 2750 }
   ],
+  "giftBoxes": [
+    { 
+      "name": "Path for Wandering", 
+      "price": 395,
+      "description": "For those who move without a destination. Matte and shine, hold and lightness.",
+      "includes": ["Liquified Clay Spray", "Crystal Pomade"]
+    },
+    { 
+      "name": "A Bridge Between", 
+      "price": 395,
+      "description": "For those who find balance in movement. Two essential elements in harmony.",
+      "includes": ["Refined Salt Water", "Advanced Forming Cream"]
+    },
+    { 
+      "name": "The Chance Encounter", 
+      "price": 495,
+      "description": "For those who find balance in movement. A texture lifted by salt, a form refined by structure.",
+      "includes": ["Refined Salt Water", "Texture Clay Pomade", "Signature Beard Oil"]
+    },
+    { 
+      "name": "A Route Onwards", 
+      "price": 595,
+      "description": "For those who shape what lies ahead. Beard tamed, texture built, form defined.",
+      "includes": ["Liquified Clay Spray", "Crystal Pomade", "Signature Beard Oil", "The Consort Comb"]
+    }
+  ],
   "faq": [
     { "question": "Do you take walk-ins?", "answer": "Yes, we accept walk-ins every day if there is space available." },
     { "question": "Do you accept card payments?", "answer": "Yes, we accept all major debit and credit cards except american express." },

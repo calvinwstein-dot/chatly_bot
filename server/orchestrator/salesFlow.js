@@ -37,6 +37,9 @@ ${business.giftCards ? business.giftCards.map(g => `- ${g.name} (${g.price} ${bu
 Loyalty Cards (5x Klippekort - Save with prepaid packages):
 ${business.loyaltyCards ? business.loyaltyCards.map(l => `- ${l.name} (${l.price} ${business.currency})`).join("\n") : 'Loyalty cards available'}
 
+Gift Boxes (Curated product sets):
+${business.giftBoxes ? business.giftBoxes.map(gb => `- ${gb.name} (${gb.price} ${business.currency}) - ${gb.description}. Includes: ${gb.includes.join(', ')}`).join("\n") : 'Gift boxes available'}
+
 Hours:
 ${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
 
