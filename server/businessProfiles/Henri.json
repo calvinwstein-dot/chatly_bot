@@ -4,14 +4,46 @@
   "currency": "DKK",
   "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
   "locations": [
-    "01 Christianshavn, Torvegade",
-    "02 Frederiksberg, Gl. Kongevej",
-    "03 Frederiksberg, H.C. Ørstedsvej",
-    "04 København K, Grønnegade",
-    "05 Magasin, Kongens Nytorv",
-    "06 Nordhavn, Århusgade",
-    "07 Nørrebro, Elmegade",
-    "08 Østerbro, Nordre Frihavnsgade"
+    {
+      "name": "01 Christianshavn, Torvegade",
+      "address": "Torvegade 32B, 1400 København K",
+      "mapUrl": "https://www.google.dk/maps/dir//Torvegade+32B,+1400+K%C3%B8benhavn+K/@55.6728383,12.5077279,12z"
+    },
+    {
+      "name": "02 Frederiksberg, Gl. Kongevej",
+      "address": "Gl. Kongevej 80, 1850 Frederiksberg",
+      "mapUrl": "https://www.google.dk/maps/dir//Gl.+Kongevej+80,+1850+Frederiksberg/@55.6744775,12.4680973,12z"
+    },
+    {
+      "name": "03 Frederiksberg, H.C. Ørstedsvej",
+      "address": "H.C. Ørstedsvej 35, 1879 Frederiksberg",
+      "mapUrl": "https://www.google.com/maps/dir//H.+C.+%C3%98rsteds+Vej+35,+1879+Frederiksberg/@55.6801476,12.4657761,12z"
+    },
+    {
+      "name": "04 København K, Grønnegade",
+      "address": "Grønnegade 4, 1107 København K",
+      "mapUrl": "https://www.google.dk/maps?daddr=Gr%C3%B8nnegade%204%2C%201107%20K%C3%B8benhavn"
+    },
+    {
+      "name": "05 Magasin, Kongens Nytorv",
+      "address": "Magasin du Nord, Kongens Nytorv, København K",
+      "mapUrl": "https://www.google.dk/maps/dir//Magasin+du+Nord,+Kongens+Nytorv,+K%C3%B8benhavn+K/@55.6793132,12.5023845,12z"
+    },
+    {
+      "name": "06 Nordhavn, Århusgade",
+      "address": "Århusgade, Nordhavn",
+      "mapUrl": "https://www.google.dk/maps/dir//henri+nordhavn"
+    },
+    {
+      "name": "07 Nørrebro, Elmegade",
+      "address": "Elmegade 5, 2200 København",
+      "mapUrl": "https://www.google.dk/maps/dir//Elmegade+5,+2200+K%C3%B8benhavn/@55.6896464,12.475526,12z"
+    },
+    {
+      "name": "08 Østerbro, Nordre Frihavnsgade",
+      "address": "Nordre Frihavnsgade, Østerbro",
+      "mapUrl": "https://www.google.com/maps/dir//H.+C.+%C3%98rsteds+Vej+35,+1879+Frederiksberg/@55.6801476,12.4657761,26066m"
+    }
   ],
   "services": [
     { "name": "Henri's Signature Combo", "price": 995 },

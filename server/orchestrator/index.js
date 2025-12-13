@@ -22,7 +22,7 @@ Business description:
 ${business.description}
 
 Locations:
-${business.locations.map(loc => `- ${loc}`).join("\n")}
+${business.locations.map(loc => `- ${loc.name} (${loc.address}) - Map: ${loc.mapUrl}`).join("\n")}
 
 Services:
 ${business.services.map(s => `- ${s.name} (${s.price} ${business.currency || 'kr'})`).join("\n")}
