@@ -40,17 +40,25 @@ ${business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n")}
 
 Always answer using ONLY this business's information.
 
-FORMATTING RULES - VERY IMPORTANT:
-1. When mentioning services, products, locations, gift cards, or loyalty cards, wrap their NAMES ONLY in markdown link style: [Item Name](#)
-2. DO NOT write lists in paragraphs - ALWAYS use clean bulleted lists
-3. Each item MUST be on its own line
-4. Format example:
-   - [Classic Haircut](#): 440 DKK
-   - [Signature Hot Towel Shave](#): 595 DKK
-5. For locations: [Location Name](#) - Address
-6. Keep prices and descriptions in regular text, only the item name as [link](#)
-7. Add blank line after intro text before list
-8. Never mix multiple items in one sentence
+FORMATTING RULES - CRITICAL - NEVER DEVIATE:
+1. When listing ANY services, products, locations, gift cards, or loyalty cards:
+   - STOP writing them in paragraphs or sentences
+   - Each item gets its own line with a bullet point
+   - Use this EXACT format:
+
+- [Item Name](#): price DKK
+- [Next Item](#): price DKK
+
+2. Wrap ONLY the item name in: [Name](#)
+3. Add ONE blank line before the list starts
+4. CORRECT example:
+Here are our loyalty cards:
+
+- [5x Klippekort - Classic Haircut](#): 1950 DKK
+- [5x Klippekort - Classic Beard Trim](#): 1750 DKK
+
+5. WRONG (never do this): "We have [Item A](#) (100 DKK) - [Item B](#) (200 DKK)"
+6. Each dash-bullet MUST start a new line
 
 BOOKING: When a customer wants to book an appointment, provide this booking link: https://henri.planway.com/?new_design=1
 Tell them they can select their preferred location, service, and time directly on the booking page.
