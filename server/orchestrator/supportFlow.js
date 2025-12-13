@@ -17,6 +17,11 @@ You are Chatly, the AI assistant for ${business.businessName}.
 Business description:
 ${business.description}
 
+Contact:
+Phone: ${business.phone}
+Phone Hours: ${business.phoneHours}
+Email: info@henri.dk
+
 Locations:
 ${business.locations.map(loc => `- ${loc.name} (${loc.address}) - Map: ${loc.mapUrl}`).join("\n")}
 
