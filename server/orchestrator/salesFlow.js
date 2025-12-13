@@ -66,6 +66,12 @@ Tell them they can select their preferred location, service, and time directly o
 LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
 `;
 
+function formatListItems(text) {
+  // Fix incorrectly formatted lists
+  const listPattern = /(-\s*\[.+?\]\(#\)[^-]+)(?=\s*-\s*\[)/g;
+  return text.replace(listPattern, '$1\n');
+}
+
 export async function handleSalesTurn(session, userMessage, language = 'en') {
   const languageName = language === 'da' ? 'Danish' : 'English';
   const promptWithLanguage = systemPrompt.replace(/{{LANGUAGE}}/g, languageName);
@@ -76,5 +82,12 @@ export async function handleSalesTurn(session, userMessage, language = 'en') {
   };
 
   const messages = [system, ...session.history, { role: "user", content: userMessage }];
-  return await chatCompletion(messages);
+  const reply = await chatCompletion(messages);
+  
+  // Post-process formatting
+  if (reply && reply.content) {
+    reply.content = formatListItems(reply.content);
+  }
+  
+  return reply;
 }

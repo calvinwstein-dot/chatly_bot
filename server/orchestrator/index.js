@@ -70,6 +70,13 @@ Tell them they can select their preferred location, service, and time directly o
 LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
 `;
 
+function formatListItems(text) {
+  // Fix incorrectly formatted lists: "- [Item A](#): price - [Item B](#): price"
+  // Convert to proper multi-line format
+  const listPattern = /(-\s*\[.+?\]\(#\)[^-]+)(?=\s*-\s*\[)/g;
+  return text.replace(listPattern, '$1\n');
+}
+
 export async function handleChat({ sessionId, message, language = 'en' }) {
   const session = getSession(sessionId);
 
@@ -90,6 +97,11 @@ export async function handleChat({ sessionId, message, language = 'en' }) {
     };
     const messages = [system, ...session.history, { role: "user", content: message }];
     reply = await chatCompletion(messages);
+  }
+
+  // Post-process to ensure proper formatting
+  if (reply && reply.content) {
+    reply.content = formatListItems(reply.content);
   }
 
   const newHistory = [
