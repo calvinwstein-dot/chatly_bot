@@ -1,0 +1,37 @@
+{
+  "businessName": "Blonde Specialist CPH",
+  "logoUrl": "",
+  "currency": "DKK",
+  "description": "",
+  "locations": [
+    {
+      "name": "",
+      "address": "",
+      "mapUrl": ""
+    }
+  ],
+  "services": [
+    { "name": "", "price": 0 }
+  ],
+  "products": [
+    { "name": "", "price": 0, "size": "", "category": "" }
+  ],
+  "giftCards": [
+    { "name": "", "price": 0 }
+  ],
+  "loyaltyCards": [
+    { "name": "", "price": 0 }
+  ],
+  "hours": {
+    "monday": "",
+    "tuesday": "",
+    "wednesday": "",
+    "thursday": "",
+    "friday": "",
+    "saturday": "",
+    "sunday": ""
+  },
+  "faq": [
+    { "question": "", "answer": "" }
+  ]
+}

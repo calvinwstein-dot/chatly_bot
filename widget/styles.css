@@ -14,16 +14,18 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+  padding: 16px 24px;
+  border-radius: 50px;
   background: var(--primary);
   color: #fff;
+  font-size: 16px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+  white-space: nowrap;
 }
 
 #chat-widget {
