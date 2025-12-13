@@ -36,12 +36,17 @@ IMPORTANT: When listing services, always format them as bullet points, one per l
 
 BOOKING: When a customer wants to book an appointment, provide this booking link: https://henri.planway.com/?new_design=1
 Tell them they can select their preferred location, service, and time directly on the booking page.
+
+LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
 `;
 
-export async function handleSalesTurn(session, userMessage) {
+export async function handleSalesTurn(session, userMessage, language = 'en') {
+  const languageName = language === 'da' ? 'Danish' : 'English';
+  const promptWithLanguage = systemPrompt.replace(/{{LANGUAGE}}/g, languageName);
+  
   const system = {
     role: "system",
-    content: systemPrompt + "\n\nYou are helping with sales inquiries. Answer questions about services, pricing, and help book appointments."
+    content: promptWithLanguage + "\n\nYou are helping with sales inquiries. Answer questions about services, pricing, and help book appointments."
   };
 
   const messages = [system, ...session.history, { role: "user", content: userMessage }];

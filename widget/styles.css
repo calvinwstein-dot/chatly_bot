@@ -59,6 +59,34 @@ body {
   border-radius: 999px;
 }
 
+#language-toggle {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
+.lang-btn:hover {
+  opacity: 0.8;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.lang-btn.active {
+  opacity: 1;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
 #chat-messages {
   flex: 1;
   padding: 12px;

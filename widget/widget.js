@@ -1,5 +1,6 @@
 const API_BASE = window.CHATBOT_API_BASE || "";
 const sessionId = crypto.randomUUID();
+let currentLanguage = localStorage.getItem('chatLanguage') || 'en';
 
 async function loadWidgetConfig() {
   try {
@@ -44,7 +45,7 @@ async function sendMessage(message) {
     const res = await fetch(`${API_BASE}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId, message })
+      body: JSON.stringify({ sessionId, message, language: currentLanguage })
     });
 
     const data = await res.json();
@@ -77,6 +78,23 @@ function init() {
     input.value = "";
     sendMessage(msg);
   });
+
+  // Language toggle
+  const langEn = document.getElementById("lang-en");
+  const langDa = document.getElementById("lang-da");
+  
+  function setLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('chatLanguage', lang);
+    langEn.classList.toggle('active', lang === 'en');
+    langDa.classList.toggle('active', lang === 'da');
+  }
+  
+  langEn.addEventListener("click", () => setLanguage('en'));
+  langDa.addEventListener("click", () => setLanguage('da'));
+  
+  // Set initial language state
+  setLanguage(currentLanguage);
 
   loadWidgetConfig();
 }

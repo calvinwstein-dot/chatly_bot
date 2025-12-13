@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const { sessionId, message } = req.body;
+    const { sessionId, message, language } = req.body;
     if (!sessionId || !message) {
       return res.status(400).json({ error: "sessionId and message required" });
     }
 
-    const result = await handleChat({ sessionId, message });
+    const result = await handleChat({ sessionId, message, language: language || 'en' });
     res.json(result);
   } catch (err) {
     console.error("Chat error:", err);
