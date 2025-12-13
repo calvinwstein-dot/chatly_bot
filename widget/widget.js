@@ -27,7 +27,12 @@ function appendMessage(text, role) {
   const container = document.getElementById("chat-messages");
   const div = document.createElement("div");
   div.className = `message ${role}`;
-  div.textContent = text;
+  
+  // Convert URLs to clickable links
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const htmlText = text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  div.innerHTML = htmlText;
+  
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
 }

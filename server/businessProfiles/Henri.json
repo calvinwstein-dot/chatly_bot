@@ -1,6 +1,7 @@
 {
-  "businessName": "Henri",
-  "currency": "kr",
+  "businessName": "HENRI",
+  "logoUrl": "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
+  "currency": "DKK",
   "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
   "locations": [
     "01 Christianshavn, Torvegade",
@@ -13,18 +14,15 @@
     "08 Østerbro, Nordre Frihavnsgade"
   ],
   "services": [
-    { "name": "Skin Fade", "price": 550 },
+    { "name": "Henri's Signature Combo", "price": 995 },
+    { "name": "The Two Classics Combo", "price": 750 },
     { "name": "Classic Haircut", "price": 440 },
-    { "name": "classic Beard Trim", "price": 395 },
-    { "name": "signature restyle", "price": 595 },
-    { "name": "two classics combo", "price": 750 },
-    { "name": "henri's signature combo", "price": 995 },
-    { "name": "signature hot towel shave", "price": 595 },
-    { "name": "head shave", "price": 395 },
-    { "name": "signature beard trim", "price": 595 }
-
-
-
+    { "name": "Zero Fade / Skin Fade", "price": 550 },
+    { "name": "Long Haircut", "price": 750 },
+    { "name": "Head Shave", "price": 395 },
+    { "name": "Signature Hot Towel Shave", "price": 595 },
+    { "name": "Classic Beard Trim", "price": 395 },
+    { "name": "Signature Beard Trim", "price": 595 }
   ],
   "hours": {
     "monday": "8am - 6pm",

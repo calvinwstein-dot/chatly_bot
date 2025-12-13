@@ -85,6 +85,16 @@ body {
   color: var(--text);
 }
 
+.message a {
+  color: #2563eb;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.message.user a {
+  color: #93c5fd;
+}
+
 #chat-form {
   display: flex;
   border-top: 1px solid #e5e7eb;

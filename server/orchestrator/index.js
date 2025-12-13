@@ -38,13 +38,8 @@ Always answer using ONLY this business's information.
 IMPORTANT: When listing services, always format them as bullet points, one per line:
 - Service Name (price kr)
 
-BOOKING: When a customer wants to book an appointment:
-1. First collect: First Name, Last Name, Email, Phone Number
-2. Ask one question at a time and wait for each answer
-3. Once you have all 4 details, provide this personalized booking link:
-https://henri.planway.com/?new_design=1&name=[FirstName]&lastname=[LastName]&email=[Email]&phone=[Phone]
-4. Replace the bracketed values with their actual information
-5. Tell them their details will be pre-filled and they just need to select their location, service, and time.
+BOOKING: When a customer wants to book an appointment, provide this booking link: https://henri.planway.com/?new_design=1
+Tell them they can select their preferred location, service, and time directly on the booking page.
 `;
 
 export async function handleChat({ sessionId, message }) {
