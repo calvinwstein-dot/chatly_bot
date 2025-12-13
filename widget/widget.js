@@ -100,6 +100,51 @@ function init() {
   // Set initial language state
   setLanguage(currentLanguage);
 
+  // Voice input with Web Speech API
+  const micBtn = document.getElementById("mic-btn");
+  let recognition;
+  
+  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    
+    recognition.onstart = () => {
+      micBtn.classList.add('listening');
+      micBtn.textContent = '🔴';
+    };
+    
+    recognition.onend = () => {
+      micBtn.classList.remove('listening');
+      micBtn.textContent = '🎤';
+    };
+    
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      input.value = transcript;
+    };
+    
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+      micBtn.classList.remove('listening');
+      micBtn.textContent = '🎤';
+    };
+    
+    micBtn.addEventListener('click', () => {
+      if (micBtn.classList.contains('listening')) {
+        recognition.stop();
+      } else {
+        // Set language for speech recognition
+        recognition.lang = currentLanguage === 'da' ? 'da-DK' : 'en-US';
+        recognition.start();
+      }
+    });
+  } else {
+    // Hide mic button if speech recognition not supported
+    micBtn.style.display = 'none';
+  }
+
   loadWidgetConfig();
 }
 
