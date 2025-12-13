@@ -112,23 +112,22 @@ function init() {
     
     recognition.onstart = () => {
       micBtn.classList.add('listening');
-      micBtn.textContent = '🔴';
     };
     
     recognition.onend = () => {
       micBtn.classList.remove('listening');
-      micBtn.textContent = '🎤';
     };
     
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      input.value = transcript;
+      if (transcript.trim()) {
+        sendMessage(transcript);
+      }
     };
     
     recognition.onerror = (event) => {
       console.error('Speech recognition error:', event.error);
       micBtn.classList.remove('listening');
-      micBtn.textContent = '🎤';
     };
     
     micBtn.addEventListener('click', () => {

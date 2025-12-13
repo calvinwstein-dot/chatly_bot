@@ -131,10 +131,18 @@ body {
 #mic-btn {
   border: none;
   background: transparent;
-  font-size: 20px;
-  padding: 0 10px;
+  padding: 0 8px;
   cursor: pointer;
   transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#mic-btn img {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 #mic-btn:hover {
@@ -143,6 +151,10 @@ body {
 
 #mic-btn.listening {
   animation: pulse 1s infinite;
+}
+
+#mic-btn.listening img {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(7498%) hue-rotate(355deg) brightness(95%) contrast(118%);
 }
 
 @keyframes pulse {
