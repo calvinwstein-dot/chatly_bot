@@ -137,12 +137,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0;
+  line-height: 0;
+}
+
+.chatly-mic-btn::before,
+.chatly-mic-btn::after {
+  content: none !important;
 }
 
 .chatly-mic-icon {
   width: 24px;
   height: 24px;
   fill: #4b5563;
+  display: block;
+  pointer-events: none;
 }
 
 .chatly-mic-btn:hover {
