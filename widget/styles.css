@@ -102,6 +102,7 @@ body {
   padding: 8px 10px;
   border-radius: var(--bubble-radius);
   font-size: 14px;
+  white-space: pre-line;
 }
 
 .message.user {
