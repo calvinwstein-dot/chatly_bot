@@ -101,7 +101,7 @@ function init() {
   setLanguage(currentLanguage);
 
   // Voice input with Web Speech API
-  const micBtn = document.getElementById("mic-btn");
+  const micBtn = document.getElementById("chatly-mic-button");
   let recognition;
   
   if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {

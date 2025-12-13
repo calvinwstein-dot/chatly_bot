@@ -128,7 +128,7 @@ body {
   border-top: 1px solid #e5e7eb;
 }
 
-#mic-btn {
+.chatly-mic-btn {
   border: none;
   background: transparent;
   padding: 0 8px;
@@ -139,22 +139,22 @@ body {
   justify-content: center;
 }
 
-#mic-btn img {
+.chatly-mic-icon {
   width: 24px;
   height: 24px;
-  display: block;
+  fill: #4b5563;
 }
 
-#mic-btn:hover {
+.chatly-mic-btn:hover {
   transform: scale(1.1);
 }
 
-#mic-btn.listening {
+.chatly-mic-btn.listening {
   animation: pulse 1s infinite;
 }
 
-#mic-btn.listening img {
-  filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(7498%) hue-rotate(355deg) brightness(95%) contrast(118%);
+.chatly-mic-btn.listening .chatly-mic-icon {
+  fill: #ef4444;
 }
 
 @keyframes pulse {
