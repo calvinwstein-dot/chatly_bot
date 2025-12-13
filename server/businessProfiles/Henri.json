@@ -2,6 +2,8 @@
   "businessName": "HENRI",
   "logoUrl": "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
   "currency": "DKK",
+  "phone": "+45 35 12 22 00",
+  "phoneHours": "Monday-Friday: 09:00-15:00, Saturday: Closed",
   "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
   "locations": [
     {
