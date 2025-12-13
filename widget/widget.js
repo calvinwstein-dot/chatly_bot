@@ -36,6 +36,9 @@ function appendMessage(text, role) {
   let htmlText = text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
   htmlText = htmlText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
   
+  // Convert **bold** to blue bold text for service/product names
+  htmlText = htmlText.replace(/\*\*([^*]+)\*\*/g, '<strong class="highlight">$1</strong>');
+  
   div.innerHTML = htmlText;
   
   container.appendChild(div);
