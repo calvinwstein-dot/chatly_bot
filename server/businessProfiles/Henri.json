@@ -70,6 +70,7 @@
     { "question": "Do you take walk-ins?", "answer": "Yes, we accept walk-ins every day if there is space available." },
     { "question": "Do you accept card payments?", "answer": "Yes, we accept all major debit and credit cards except american express." },
     { "question": "What is your cancellation policy?", "answer": "We kindly ask for at least 24 hours notice for any cancellations or rescheduling. Late cancellations or no-shows may be subject to a fee." },
+    { "question": "How do I cancel my booking?", "answer": "You can cancel your appointment directly through your booking confirmation link, or alternatively, you may contact us at info@henri.dk and we'll be happy to assist you with the cancellation." },
     { "question": "Do you offer gift cards?", "answer": "Yes, we offer gift cards that can be purchased in-store or online." },
     { "question": "how do i book an appointment", "answer": "you can make a booking at anyone of our stores through our online booking system at https://henri.planway.com/?new_design=1." }
   ]
