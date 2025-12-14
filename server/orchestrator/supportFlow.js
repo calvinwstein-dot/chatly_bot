@@ -88,7 +88,7 @@ function formatListItems(text) {
 }
 
 export async function handleSupportTurn(session, userMessage, language = 'en') {
-  const languageName = language === 'da' ? 'Danish' : 'English';
+  const languageName = getLanguageName(language);
   const promptWithLanguage = systemPrompt.replace(/{{LANGUAGE}}/g, languageName);
   
   const system = {
