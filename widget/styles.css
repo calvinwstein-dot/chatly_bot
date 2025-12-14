@@ -64,42 +64,29 @@ body {
 #language-toggle {
   margin-left: auto;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  gap: 4px;
 }
 
-.lang-globe-icon {
-  color: #fff;
+.lang-btn {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 16px;
   cursor: pointer;
-  opacity: 0.9;
+  opacity: 0.6;
   transition: all 0.2s;
 }
 
-.lang-globe-icon:hover {
-  color: #2563eb;
+.lang-btn:hover {
+  opacity: 0.8;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.lang-btn.active {
   opacity: 1;
-}
-
-.lang-dropdown {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-size: 14px;
-  cursor: pointer;
-  color: #111;
-  transition: all 0.2s;
-}
-
-.lang-dropdown:hover {
-  background: #fff;
-  border-color: #2563eb;
-}
-
-.lang-dropdown:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 #chat-messages {

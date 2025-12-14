@@ -92,28 +92,6 @@ function formatListItems(text) {
   return text.replace(listPattern, '$1\n');
 }
 
-function getLanguageName(code) {
-  const languageMap = {
-    'en': 'English',
-    'da': 'Danish',
-    'es': 'Spanish',
-    'fr': 'French',
-    'de': 'German',
-    'sv': 'Swedish',
-    'no': 'Norwegian',
-    'fi': 'Finnish',
-    'it': 'Italian',
-    'pt': 'Portuguese',
-    'nl': 'Dutch',
-    'pl': 'Polish',
-    'zh': 'Chinese',
-    'ja': 'Japanese',
-    'ko': 'Korean',
-    'ar': 'Arabic'
-  };
-  return languageMap[code] || 'English';
-}
-
 export async function handleChat({ sessionId, message, language = 'en' }) {
   const session = getSession(sessionId);
 
@@ -125,7 +103,7 @@ export async function handleChat({ sessionId, message, language = 'en' }) {
   } else if (intent === "SUPPORT") {
     reply = await handleSupportTurn(session, message, language);
   } else {
-    const languageName = getLanguageName(language);
+    const languageName = language === 'da' ? 'Danish' : 'English';
     const promptWithLanguage = systemPrompt.replace(/{{LANGUAGE}}/g, languageName);
     
     const system = {

@@ -86,18 +86,19 @@ function init() {
     sendMessage(msg);
   });
 
-  // Language dropdown
-  const languageSelect = document.getElementById("language-select");
+  // Language toggle
+  const langEn = document.getElementById("lang-en");
+  const langDa = document.getElementById("lang-da");
   
   function setLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('chatLanguage', lang);
-    languageSelect.value = lang;
+    langEn.classList.toggle('active', lang === 'en');
+    langDa.classList.toggle('active', lang === 'da');
   }
   
-  languageSelect.addEventListener("change", (e) => {
-    setLanguage(e.target.value);
-  });
+  langEn.addEventListener("click", () => setLanguage('en'));
+  langDa.addEventListener("click", () => setLanguage('da'));
   
   // Set initial language state
   setLanguage(currentLanguage);
@@ -136,26 +137,8 @@ function init() {
       if (micBtn.classList.contains('listening')) {
         recognition.stop();
       } else {
-        // Set language for speech recognition based on selected language
-        const langMap = {
-          'en': 'en-US',
-          'da': 'da-DK',
-          'es': 'es-ES',
-          'fr': 'fr-FR',
-          'de': 'de-DE',
-          'sv': 'sv-SE',
-          'no': 'nb-NO',
-          'fi': 'fi-FI',
-          'it': 'it-IT',
-          'pt': 'pt-PT',
-          'nl': 'nl-NL',
-          'pl': 'pl-PL',
-          'zh': 'zh-CN',
-          'ja': 'ja-JP',
-          'ko': 'ko-KR',
-          'ar': 'ar-SA'
-        };
-        recognition.lang = langMap[currentLanguage] || 'en-US';
+        // Set language for speech recognition
+        recognition.lang = currentLanguage === 'da' ? 'da-DK' : 'en-US';
         recognition.start();
       }
     });

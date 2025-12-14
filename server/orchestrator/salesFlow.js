@@ -88,7 +88,7 @@ function formatListItems(text) {
 }
 
 export async function handleSalesTurn(session, userMessage, language = 'en') {
-  const languageName = getLanguageName(language);
+  const languageName = language === 'da' ? 'Danish' : 'English';
   const promptWithLanguage = systemPrompt.replace(/{{LANGUAGE}}/g, languageName);
   
   const system = {
