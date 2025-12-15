@@ -2,9 +2,13 @@ const API_BASE = window.CHATBOT_API_BASE || "";
 const sessionId = crypto.randomUUID();
 let currentLanguage = localStorage.getItem('chatLanguage') || 'en';
 
+// Get business from URL parameter (e.g., ?business=Henri)
+const urlParams = new URLSearchParams(window.location.search);
+const businessName = urlParams.get('business') || 'Henri';
+
 async function loadWidgetConfig() {
   try {
-    const res = await fetch(`${API_BASE}/api/widget-config`);
+    const res = await fetch(`${API_BASE}/api/widget-config?business=${businessName}`);
     const config = await res.json();
 
     document.documentElement.style.setProperty("--primary", config.primaryColor);
@@ -52,7 +56,7 @@ async function sendMessage(message) {
     const res = await fetch(`${API_BASE}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId, message, language: currentLanguage })
+      body: JSON.stringify({ sessionId, message, language: currentLanguage, business: businessName })
     });
 
     const data = await res.json();

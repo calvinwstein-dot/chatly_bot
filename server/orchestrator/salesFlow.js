@@ -1,17 +1,15 @@
 import { chatCompletion } from "../openaiClient.js";
 import fs from "fs";
 import path from "path";
-import { BUSINESS_PROFILE } from "../config.js";
 
-function loadBusinessProfile() {
-  const filePath = path.resolve(`server/businessProfiles/${BUSINESS_PROFILE}.json`);
+function loadBusinessProfile(businessName) {
+  const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
   const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data);
 }
 
-const business = loadBusinessProfile();
-
-const systemPrompt = `
+function buildSystemPrompt(business) {
+  return `
 You are Chatly, the AI assistant for ${business.businessName}.
 
 Business description:
@@ -80,6 +78,7 @@ When customers ask about buying products or gift items, guide them to the online
 
 LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
 `;
+}
 
 function formatListItems(text) {
   // Fix incorrectly formatted lists
@@ -87,7 +86,9 @@ function formatListItems(text) {
   return text.replace(listPattern, '$1\n');
 }
 
-export async function handleSalesTurn(session, userMessage, language = 'en') {
+export async function handleSalesTurn(session, userMessage, language = 'en', business = 'Henri') {
+  const businessProfile = loadBusinessProfile(business);
+  const systemPrompt = buildSystemPrompt(businessProfile);
   const languageName = language === 'da' ? 'Danish' : 'English';
   const promptWithLanguage = systemPrompt.replace(/{{LANGUAGE}}/g, languageName);
   

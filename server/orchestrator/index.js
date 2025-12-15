@@ -5,17 +5,15 @@ import { handleSupportTurn } from "./supportFlow.js";
 import { chatCompletion } from "../openaiClient.js";
 import fs from "fs";
 import path from "path";
-import { BUSINESS_PROFILE } from "../config.js";
 
-function loadBusinessProfile() {
-  const filePath = path.resolve(`server/businessProfiles/${BUSINESS_PROFILE}.json`);
+function loadBusinessProfile(businessName) {
+  const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
   const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data);
 }
 
-const business = loadBusinessProfile();
-
-const systemPrompt = `
+function buildSystemPrompt(business) {
+  return `
 You are Chatly, the AI assistant for ${business.businessName}.
 
 Business description:
@@ -84,6 +82,7 @@ When customers ask about buying products or gift items, guide them to the online
 
 LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
 `;
+}
 
 function formatListItems(text) {
   // Fix incorrectly formatted lists: "- [Item A](#): price - [Item B](#): price"
@@ -92,16 +91,18 @@ function formatListItems(text) {
   return text.replace(listPattern, '$1\n');
 }
 
-export async function handleChat({ sessionId, message, language = 'en' }) {
+export async function handleChat({ sessionId, message, language = 'en', business = 'Henri' }) {
   const session = getSession(sessionId);
+  const businessProfile = loadBusinessProfile(business);
+  const systemPrompt = buildSystemPrompt(businessProfile);
 
   const intent = await classifyIntent(message);
 
   let reply;
   if (intent === "SALES") {
-    reply = await handleSalesTurn(session, message, language);
+    reply = await handleSalesTurn(session, message, language, business);
   } else if (intent === "SUPPORT") {
-    reply = await handleSupportTurn(session, message, language);
+    reply = await handleSupportTurn(session, message, language, business);
   } else {
     const languageName = language === 'da' ? 'Danish' : 'English';
     const promptWithLanguage = systemPrompt.replace(/{{LANGUAGE}}/g, languageName);

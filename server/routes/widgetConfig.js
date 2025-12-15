@@ -1,18 +1,19 @@
 import express from "express";
-import { config, BUSINESS_PROFILE } from "../config.js";
+import { config } from "../config.js";
 import fs from "fs";
 import path from "path";
 
 const router = express.Router();
 
-function loadBusinessProfile() {
-  const filePath = path.resolve(`server/businessProfiles/${BUSINESS_PROFILE}.json`);
+function loadBusinessProfile(businessName) {
+  const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
   const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data);
 }
 
 router.get("/", (req, res) => {
-  const business = loadBusinessProfile();
+  const businessName = req.query.business || 'Henri';
+  const business = loadBusinessProfile(businessName);
   
   res.json({
     ...config.widget,
