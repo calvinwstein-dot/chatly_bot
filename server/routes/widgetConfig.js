@@ -18,7 +18,10 @@ router.get("/", (req, res) => {
   res.json({
     ...config.widget,
     brandName: business.businessName,
-    logoUrl: business.logoUrl || config.widget.logoUrl
+    logoUrl: business.logoUrl || config.widget.logoUrl,
+    primaryColor: business.primaryColor || config.widget.primaryColor,
+    secondaryColor: business.secondaryColor || config.widget.secondaryColor,
+    textColor: business.textColor || config.widget.textColor
   });
 });
 

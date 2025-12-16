@@ -1,6 +1,9 @@
 {
   "businessName": "HENRI",
   "logoUrl": "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
+  "primaryColor": "#2e7584ff",
+  "secondaryColor": "#0f4476ff",
+  "textColor": "#050604ff",
   "currency": "DKK",
   "phone": "+45 35 12 22 00",
   "phoneHours": "Monday-Friday: 09:00-15:00, Saturday: Closed",
