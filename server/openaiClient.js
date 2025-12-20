@@ -1,17 +1,16 @@
 import OpenAI from "openai";
-import { config, BUSINESS_PROFILE } from "./config.js";
+import { config } from "./config.js";
 import fs from "fs";
 import path from "path";
 
-function loadBusinessProfile() {
-  const filePath = path.resolve(`server/businessProfiles/${BUSINESS_PROFILE}.json`);
+function loadBusinessProfile(businessName = "Henri") {
+  const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
   const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data);
 }
 
-const businessData = loadBusinessProfile();
-
-const systemPrompt = `
+function buildSystemPrompt(businessData) {
+  return `
 You are Chappy, an AI assistant representing the business: ${businessData.businessName}.
 Here is the business information you must use to answer questions:
 
@@ -26,6 +25,7 @@ ${Object.entries(businessData.hours).map(([day, hrs]) => `${day}: ${hrs}`).join(
 FAQ:
 ${businessData.faq.map(f => `Q: ${f.question}\nA: ${f.answer}`).join("\n")}
 `;
+}
 
 if (!config.openaiApiKey) {
   throw new Error("Missing OPENAI_API_KEY in environment");
@@ -34,6 +34,8 @@ if (!config.openaiApiKey) {
 export const openai = new OpenAI({
   apiKey: config.openaiApiKey
 });
+
+export { buildSystemPrompt, loadBusinessProfile };
 
 export async function chatCompletion(messages, options = {}) {
   const response = await openai.chat.completions.create({
