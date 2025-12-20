@@ -12,7 +12,7 @@ function loadBusinessProfile() {
 const businessData = loadBusinessProfile();
 
 const systemPrompt = `
-You are Chatly, an AI assistant representing the business: ${businessData.businessName}.
+You are Chappy, an AI assistant representing the business: ${businessData.businessName}.
 Here is the business information you must use to answer questions:
 
 Description: ${businessData.description}

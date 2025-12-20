@@ -14,7 +14,7 @@ function loadBusinessProfile(businessName) {
 
 function buildSystemPrompt(business) {
   return `
-You are Chatly, the AI assistant for ${business.businessName}.
+You are Chappy, the AI assistant for ${business.businessName}.
 
 Business description:
 ${business.description}

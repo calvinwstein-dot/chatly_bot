@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: chatly-bot
+    name: chappy-bot
     env: node
     buildCommand: npm install
     startCommand: npm run start:prod

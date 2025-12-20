@@ -7,14 +7,14 @@ export const config = {
   port: process.env.PORT || 3000,
   openaiApiKey: process.env.OPENAI_API_KEY,
   elevenLabsApiKey: process.env.ELEVENLABS_API_KEY || null,
-  defaultModel: process.env.OPENAI_MODEL || "gpt-4.1-mini",
+  defaultModel: process.env.OPENAI_MODEL || "gpt-4o-mini",
 
   widget: {
-    brandName: "Chatly",
+    brandName: "Chappy",
     primaryColor: "#2e7584ff",
     secondaryColor: "#0f4476ff",
     textColor: "#050604ff",
     bubbleShape: "rounded-xl",
-    logoUrl: "/widget/chatly-logo.png"
+    logoUrl: "/widget/chappy-logo.png"
   }
 };
