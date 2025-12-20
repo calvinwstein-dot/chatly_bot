@@ -15,6 +15,6 @@ export const config = {
     secondaryColor: "#0f4476ff",
     textColor: "#050604ff",
     bubbleShape: "rounded-xl",
-    logoUrl: "/widget/chappy-logo.png"
+    logoUrl: "/public/logos/chappy-logo.png"
   }
 };

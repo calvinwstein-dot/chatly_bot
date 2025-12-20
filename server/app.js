@@ -20,6 +20,7 @@ const __dirname = path.dirname(__filename);
 // Static widget
 app.use("/widget", express.static(path.join(__dirname, "../widget")));
 app.use("/admin", express.static(path.join(__dirname, "../admin")));
+app.use("/public", express.static(path.join(__dirname, "../public")));
 
 // API routes
 app.use("/api/chat", chatRoute);
