@@ -33,20 +33,20 @@ function appendMessage(text, role) {
   const div = document.createElement("div");
   div.className = `message ${role}`;
   
-  // Convert URLs and emails to clickable links (but not [text](#) or ![image]() patterns)
-  const urlRegex = /(?<!\!)\[([^\]]+)\]\((?!#\))(https?:\/\/[^\)]+)\)/g;
-  const plainUrlRegex = /(?<!\[)(?<!\()(https?:\/\/[^\s<\)]+)(?!\))/g;
-  const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/g;
+  let htmlText = text;
   
-  // Convert [text](url) to clickable links
-  let htmlText = text.replace(urlRegex, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-  
-  // Convert ![alt](imageUrl) to images
+  // Convert ![alt](imageUrl) to images FIRST
   const imageRegex = /!\[([^\]]*)\]\(([^\)]+)\)/g;
   htmlText = htmlText.replace(imageRegex, '<img src="$2" alt="$1" class="chat-image" />');
   
-  // Convert plain URLs to clickable links
-  htmlText = htmlText.replace(plainUrlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  // Convert [text](url) to clickable links (but not [text](#))
+  htmlText = htmlText.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  
+  // Convert plain URLs to clickable links (avoid already linked URLs)
+  htmlText = htmlText.replace(/(?<!["'>])(https?:\/\/[^\s<"']+)(?!["'<])/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  
+  // Convert emails to mailto links
+  const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/g;
   htmlText = htmlText.replace(emailRegex, '<a href="mailto:$1">$1</a>');
   
   // Convert [text](#) to blue highlighted text for service/product names
