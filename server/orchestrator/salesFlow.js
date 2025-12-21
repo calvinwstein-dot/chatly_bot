@@ -28,7 +28,10 @@ Services:
 ${business.services.map(s => `- ${s.name} (${s.price} ${business.currency || 'kr'})`).join("\n")}
 
 Products:
-${business.products ? business.products.map(p => `- ${p.name} (${p.price} ${business.currency} - ${p.size}) - ${p.category}`).join("\n") : 'No products available'}
+${business.products ? business.products.map(p => {
+  const imageInfo = p.imageUrl ? ` IMAGE:${p.imageUrl}` : '';
+  return `- ${p.name} (${p.price} ${business.currency} - ${p.size}) - ${p.category}${imageInfo}`;
+}).join("\n") : 'No products available'}
 
 Gift Cards:
 ${business.giftCards ? business.giftCards.map(g => `- ${g.name} (${g.price} ${business.currency})`).join("\n") : 'Gift cards available in-store'}
@@ -37,7 +40,10 @@ Loyalty Cards (5x Klippekort - Save with prepaid packages):
 ${business.loyaltyCards ? business.loyaltyCards.map(l => `- ${l.name} (${l.price} ${business.currency})`).join("\n") : 'Loyalty cards available'}
 
 Gift Boxes (Curated product sets):
-${business.giftBoxes ? business.giftBoxes.map(gb => `- ${gb.name} (${gb.price} ${business.currency}) - ${gb.description}. Includes: ${gb.includes.join(', ')}`).join("\n") : 'Gift boxes available'}
+${business.giftBoxes ? business.giftBoxes.map(gb => {
+  const imageInfo = gb.imageUrl ? ` IMAGE:${gb.imageUrl}` : '';
+  return `- ${gb.name} (${gb.price} ${business.currency}) - ${gb.description}. Includes: ${gb.includes.join(', ')}${imageInfo}`;
+}).join("\n") : 'Gift boxes available'}
 
 Hours:
 ${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
@@ -46,6 +52,27 @@ FAQs:
 ${business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n")}
 
 Always answer using ONLY this business's information.
+
+CRITICAL: PRODUCT IMAGES - YOU MUST ALWAYS SHOW IMAGES
+Whenever you mention a product or gift box that has "IMAGE:" in the data above, you MUST include the image.
+Use this exact markdown format: ![Product Name](imageUrl)
+
+Examples:
+User: "Show me the Texture Clay Pomade"
+Assistant: "Here's the [Texture Clay Pomade](#):
+![Texture Clay Pomade](/public/products/henri/texture-clay-pomade.webp)
+It costs 199 DKK (60 ml) and provides strong hold with a matte finish."
+
+User: "What products do you have?"
+Assistant: "Here are our styling products:
+
+- [Texture Clay Pomade](#): 199 DKK
+![Texture Clay Pomade](/public/products/henri/texture-clay-pomade.webp)
+
+- [Advanced Forming Cream](#): 199 DKK
+![Advanced Forming Cream](/public/products/henri/advanced-forming-cream.webp)
+
+You can shop all products at henri.dk"
 
 FORMATTING RULES - MANDATORY:
 When listing services, products, locations, gift cards, or loyalty cards, you MUST format like this:
