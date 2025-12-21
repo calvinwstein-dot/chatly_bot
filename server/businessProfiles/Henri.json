@@ -74,13 +74,13 @@
 
   },
   "products": [
-    { "name": "Texture Clay Pomade", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays" },
-    { "name": "Advanced Forming Cream", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays" },
-    { "name": "Crystal Pomade", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays" },
-    { "name": "Upgraded Signature Clay", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays" },
-    { "name": "Refined Salt Water", "price": 199, "size": "120 ml", "category": "Sprays" },
-    { "name": "Liquified Clay Spray", "price": 199, "size": "120 ml", "category": "Sprays" },
-    { "name": "Signature Beard Oil", "price": 199, "size": "30 ml", "category": "Sprays" }
+    { "name": "Texture Clay Pomade", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays", "imageUrl": "/public/products/henri/texture-clay-pomade.webp" },
+    { "name": "Advanced Forming Cream", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays", "imageUrl": "/public/products/henri/advanced-forming-cream.webp" },
+    { "name": "Crystal Pomade", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays", "imageUrl": "/public/products/henri/crystal-pomade.webp" },
+    { "name": "Upgraded Signature Clay", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays", "imageUrl": "/public/products/henri/upgraded-signature-clay.webp" },
+    { "name": "Refined Salt Water", "price": 199, "size": "120 ml", "category": "Sprays", "imageUrl": "/public/products/henri/refined-salt-water.webp" },
+    { "name": "Liquified Clay Spray", "price": 199, "size": "120 ml", "category": "Sprays", "imageUrl": "/public/products/henri/liquified-clay-spray.webp" },
+    { "name": "Signature Beard Oil", "price": 199, "size": "30 ml", "category": "Sprays", "imageUrl": "/public/products/henri/signature-beard-oil.webp" }
   ],
   "giftCards": [
     { "name": "Gavekort - Classic Haircut", "price": 440 },
@@ -111,25 +111,29 @@
       "name": "Path for Wandering", 
       "price": 395,
       "description": "For those who move without a destination. Matte and shine, hold and lightness.",
-      "includes": ["Liquified Clay Spray", "Crystal Pomade"]
+      "includes": ["Liquified Clay Spray", "Crystal Pomade"],
+      "imageUrl": "/public/products/henri/path-for-wandering.webp"
     },
     { 
       "name": "A Bridge Between", 
       "price": 395,
       "description": "For those who find balance in movement. Two essential elements in harmony.",
-      "includes": ["Refined Salt Water", "Advanced Forming Cream"]
+      "includes": ["Refined Salt Water", "Advanced Forming Cream"],
+      "imageUrl": "/public/products/henri/a-bridge-between.webp"
     },
     { 
       "name": "The Chance Encounter", 
       "price": 495,
       "description": "For those who find balance in movement. A texture lifted by salt, a form refined by structure.",
-      "includes": ["Refined Salt Water", "Texture Clay Pomade", "Signature Beard Oil"]
+      "includes": ["Refined Salt Water", "Texture Clay Pomade", "Signature Beard Oil"],
+      "imageUrl": "/public/products/henri/the-chance-encounter.webp"
     },
     { 
       "name": "A Route Onwards", 
       "price": 595,
       "description": "For those who shape what lies ahead. Beard tamed, texture built, form defined.",
-      "includes": ["Liquified Clay Spray", "Crystal Pomade", "Signature Beard Oil", "The Consort Comb"]
+      "includes": ["Liquified Clay Spray", "Crystal Pomade", "Signature Beard Oil", "The Consort Comb"],
+      "imageUrl": "/public/products/henri/a-route-onwards.webp"
     }
   ],
   "faq": [

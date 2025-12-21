@@ -32,7 +32,10 @@ Services:
 ${business.services.map(s => `- ${s.name} (${s.price} ${business.currency || 'kr'})`).join("\n")}
 
 Products:
-${business.products ? business.products.map(p => `- ${p.name} (${p.price} ${business.currency} - ${p.size}) - ${p.category}`).join("\n") : 'No products available'}
+${business.products ? business.products.map(p => {
+  const imageInfo = p.imageUrl ? ` IMAGE:${p.imageUrl}` : '';
+  return `- ${p.name} (${p.price} ${business.currency} - ${p.size}) - ${p.category}${imageInfo}`;
+}).join("\n") : 'No products available'}
 
 Gift Cards:
 ${business.giftCards ? business.giftCards.map(g => `- ${g.name} (${g.price} ${business.currency})`).join("\n") : 'Gift cards available in-store'}
@@ -41,7 +44,10 @@ Loyalty Cards (5x Klippekort - Save with prepaid packages):
 ${business.loyaltyCards ? business.loyaltyCards.map(l => `- ${l.name} (${l.price} ${business.currency})`).join("\n") : 'Loyalty cards available'}
 
 Gift Boxes (Curated product sets):
-${business.giftBoxes ? business.giftBoxes.map(gb => `- ${gb.name} (${gb.price} ${business.currency}) - ${gb.description}. Includes: ${gb.includes.join(', ')}`).join("\n") : 'Gift boxes available'}
+${business.giftBoxes ? business.giftBoxes.map(gb => {
+  const imageInfo = gb.imageUrl ? ` IMAGE:${gb.imageUrl}` : '';
+  return `- ${gb.name} (${gb.price} ${business.currency}) - ${gb.description}. Includes: ${gb.includes.join(', ')}${imageInfo}`;
+}).join("\n") : 'Gift boxes available'}
 
 Hours:
 ${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
@@ -63,11 +69,23 @@ Assistant: "Here are our loyalty cards:
 
 These save you money when booking multiple sessions."
 
+PRODUCT IMAGES:
+When mentioning a product or gift box that has an IMAGE: tag in the data, you MUST include the image using markdown format: ![Product Name](imageUrl)
+Place the image on a new line after mentioning the product.
+
+Example:
+User: "Show me Texture Clay Pomade"
+Assistant: "Here's the [Texture Clay Pomade](#):
+![Texture Clay Pomade](/public/products/henri/texture-clay-pomade.webp)
+
+This pomade costs 199 DKK (60 ml) and provides strong hold with a matte finish."
+
 RULES:
 - Each item MUST be on a NEW LINE starting with "- "
 - Wrap item names in [Name](#)
 - NEVER write items in a sentence or paragraph
 - ALWAYS add blank line before list
+- Include product images when available
 - WRONG: "We have [Item A](#): 100 DKK - [Item B](#): 200 DKK"
 - RIGHT: Put each on separate line with dash
 
