@@ -8,6 +8,7 @@ import chatRoute from "./routes/chat.js";
 import widgetConfigRoute from "./routes/widgetConfig.js";
 import debugRoute from "./routes/debug.js";
 import businessConfigRoute from "./routes/businessConfig.js";
+import subscriptionsRoute from "./routes/subscriptions.js";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use("/api/chat", chatRoute);
 app.use("/api/widget-config", widgetConfigRoute);
 app.use("/api/debug", debugRoute);
 app.use("/api/business-config", businessConfigRoute);
+app.use("/api/subscriptions", subscriptionsRoute);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
