@@ -11,8 +11,17 @@ const demoMessageCounts = new Map();
 const SUBSCRIPTIONS_FILE = path.resolve("server/subscriptions.json");
 
 function loadSubscriptions() {
-  const data = fs.readFileSync(SUBSCRIPTIONS_FILE, "utf-8");
-  return JSON.parse(data);
+  try {
+    if (!fs.existsSync(SUBSCRIPTIONS_FILE)) {
+      // Create file if it doesn't exist
+      fs.writeFileSync(SUBSCRIPTIONS_FILE, JSON.stringify({ subscriptions: [] }, null, 2));
+    }
+    const data = fs.readFileSync(SUBSCRIPTIONS_FILE, "utf-8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Error loading subscriptions:", error);
+    return { subscriptions: [] };
+  }
 }
 
 function hasActiveSubscription(businessName) {
