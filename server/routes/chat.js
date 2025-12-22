@@ -44,7 +44,7 @@ function checkDemoStatus(businessProfile) {
 
 router.post("/", async (req, res) => {
   try {
-    const { sessionId, message, language, business } = req.body;
+    const { sessionId, message, language, business, demoMessageCount } = req.body;
     if (!sessionId || !message) {
       return res.status(400).json({ error: "sessionId and message required" });
     }
@@ -60,9 +60,10 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // If demo mode, track message count
+    // If demo mode, track message count (use client count if provided)
     if (demoStatus.isDemo) {
-      const currentCount = demoMessageCounts.get(sessionId) || 0;
+      // Use the count from client (localStorage) if provided, otherwise use server count
+      const currentCount = typeof demoMessageCount === 'number' ? demoMessageCount : (demoMessageCounts.get(sessionId) || 0);
       
       // Check if limit reached
       if (currentCount >= demoStatus.messageLimit) {
@@ -71,27 +72,30 @@ router.post("/", async (req, res) => {
           demoStatus: {
             ...demoStatus,
             limitReached: true,
-            messagesUsed: currentCount
+            messagesUsed: currentCount,
+            messagesRemaining: 0
           }
         });
       }
 
       // Increment counter
-      demoMessageCounts.set(sessionId, currentCount + 1);
+      const newCount = currentCount + 1;
+      demoMessageCounts.set(sessionId, newCount);
+      
+      const result = await handleChat({ sessionId, message, language: language || 'en', business: business || 'Henri' });
+      
+      // Add demo status to response
+      result.demoStatus = {
+        ...demoStatus,
+        messagesUsed: newCount,
+        messagesRemaining: demoStatus.messageLimit - newCount,
+        limitReached: newCount >= demoStatus.messageLimit
+      };
+      
+      return res.json(result);
     }
 
     const result = await handleChat({ sessionId, message, language: language || 'en', business: business || 'Henri' });
-    
-    // Add demo status to response
-    if (demoStatus.isDemo) {
-      const messagesUsed = demoMessageCounts.get(sessionId) || 0;
-      result.demoStatus = {
-        ...demoStatus,
-        messagesUsed,
-        messagesRemaining: demoStatus.messageLimit - messagesUsed
-      };
-    }
-
     res.json(result);
   } catch (err) {
     console.error("Chat error:", err);

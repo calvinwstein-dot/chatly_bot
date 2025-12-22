@@ -7,6 +7,26 @@ let demoStatus = null;
 const urlParams = new URLSearchParams(window.location.search);
 const businessName = urlParams.get('business') || 'Henri';
 
+// Demo tracking with localStorage
+function getDemoStorageKey() {
+  return `chappy_demo_${businessName}`;
+}
+
+function getDemoMessageCount() {
+  const stored = localStorage.getItem(getDemoStorageKey());
+  return stored ? parseInt(stored, 10) : 0;
+}
+
+function setDemoMessageCount(count) {
+  localStorage.setItem(getDemoStorageKey(), count.toString());
+}
+
+function checkDemoLimitReached() {
+  if (!demoStatus || !demoStatus.isDemo) return false;
+  const count = getDemoMessageCount();
+  return count >= demoStatus.messageLimit;
+}
+
 async function loadWidgetConfig() {
   try {
     const res = await fetch(`${API_BASE}/api/widget-config?business=${businessName}`);
@@ -27,14 +47,16 @@ async function loadWidgetConfig() {
 
     // Check if this is a demo mode business
     if (config.isDemoMode) {
+      const messagesUsed = getDemoMessageCount();
       demoStatus = {
         isDemo: true,
         messageLimit: config.demoMessageLimit || 10,
-        messagesUsed: 0,
-        messagesRemaining: config.demoMessageLimit || 10,
+        messagesUsed: messagesUsed,
+        messagesRemaining: Math.max(0, (config.demoMessageLimit || 10) - messagesUsed),
         expiryDate: config.demoExpiryDate,
         stripePaymentLink: config.stripePaymentLink,
-        subscriptionPrices: config.subscriptionPrices
+        subscriptionPrices: config.subscriptionPrices,
+        limitReached: messagesUsed >= (config.demoMessageLimit || 10)
       };
       updateDemoUI();
     }
@@ -154,15 +176,27 @@ function updateDemoUI() {
     });
   }
 }
+// Check demo limit before sending
+  if (checkDemoLimitReached()) {
+    appendMessage("You've reached the message limit for this demo. Please subscribe to continue.", "bot");
+    return;
+  }
 
-async function sendMessage(message) {
   appendMessage(message, "user");
 
   try {
+    const demoMessageCount = getDemoMessageCount();
+    
     const res = await fetch(`${API_BASE}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId, message, language: currentLanguage, business: businessName })
+      body: JSON.stringify({ 
+        sessionId, 
+        message, 
+        language: currentLanguage, 
+        business: businessName,
+        demoMessageCount: demoMessageCount 
+      })
     });
 
     const data = await res.json();
@@ -171,7 +205,10 @@ async function sendMessage(message) {
       return;
     }
 
-    // Update demo status
+    // Update demo status and localStorage
+    if (data.demoStatus) {
+      demoStatus = data.demoStatus;
+      setDemoMessageCount(demoStatus.messagesUsed)
     if (data.demoStatus) {
       demoStatus = data.demoStatus;
       updateDemoUI();
