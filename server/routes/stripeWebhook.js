@@ -5,8 +5,9 @@ import path from "path";
 
 const router = express.Router();
 
-// Initialize Stripe with your secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// Initialize Stripe with your secret key (only if key exists)
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+const stripe = stripeKey ? new Stripe(stripeKey) : null;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 const SUBSCRIPTIONS_FILE = path.resolve("server/subscriptions.json");
@@ -51,7 +52,13 @@ function updateSubscriptionStatus(subscriptionId, status) {
 }
 
 // Webhook endpoint - MUST use raw body for signature verification
-router.post("/", express.raw({ type: 'application/json' }), async (req, res) => {
+ro// Check if Stripe is configured
+  if (!stripe || !webhookSecret) {
+    console.error('Stripe not configured - webhook disabled');
+    return res.status(503).json({ error: 'Stripe webhook not configured' });
+  }
+
+  uter.post("/", express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
 
