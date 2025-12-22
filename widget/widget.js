@@ -91,7 +91,13 @@ function updateDemoUI() {
     demoBar.innerHTML = `
       <div class="demo-content">
         <span class="demo-badge">DEMO EXPIRED</span>
-        <button id="subscribe-btn" class="subscribe-btn">Subscribe Now</button>
+        <div class="subscribe-dropdown">
+          <button id="subscribe-btn-main" class="subscribe-btn">Activate Subscription ▼</button>
+          <div id="subscribe-menu" class="subscribe-menu">
+            <a href="#" data-plan="monthly" class="subscribe-option">$99/monthly</a>
+            <a href="#" data-plan="yearly" class="subscribe-option">$990/annual</a>
+          </div>
+        </div>
       </div>
     `;
     
@@ -106,16 +112,45 @@ function updateDemoUI() {
       <div class="demo-content">
         <span class="demo-badge">DEMO</span>
         <span class="demo-info">${messagesLeft} messages left${daysLeft ? ` • ${daysLeft} days remaining` : ''}</span>
-        <button id="subscribe-btn" class="subscribe-btn-small">Upgrade</button>
+        <div class="subscribe-dropdown">
+          <button id="subscribe-btn-main" class="subscribe-btn-small">Activate Subscription ▼</button>
+          <div id="subscribe-menu" class="subscribe-menu">
+            <a href="#" data-plan="monthly" class="subscribe-option">$99/monthly</a>
+            <a href="#" data-plan="yearly" class="subscribe-option">$990/annual</a>
+          </div>
+        </div>
       </div>
     `;
   }
 
-  // Add click handler for subscribe button
-  const subscribeBtn = document.getElementById("subscribe-btn");
-  if (subscribeBtn && demoStatus.stripePaymentLink) {
-    subscribeBtn.addEventListener("click", () => {
-      window.open(demoStatus.stripePaymentLink, "_blank");
+  // Add dropdown toggle and click handlers
+  const subscribeBtn = document.getElementById("subscribe-btn-main");
+  const subscribeMenu = document.getElementById("subscribe-menu");
+  
+  if (subscribeBtn) {
+    subscribeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      subscribeMenu.classList.toggle("show");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", () => {
+      subscribeMenu.classList.remove("show");
+    });
+
+    // Handle plan selection
+    const options = subscribeMenu.querySelectorAll(".subscribe-option");
+    options.forEach(option => {
+      option.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const plan = option.getAttribute("data-plan");
+        const link = plan === "monthly" ? demoStatus.stripePaymentLink?.monthly : demoStatus.stripePaymentLink?.yearly;
+        if (link) {
+          window.open(link, "_blank");
+        }
+        subscribeMenu.classList.remove("show");
+      });
     });
   }
 }

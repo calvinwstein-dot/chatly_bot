@@ -13,7 +13,10 @@
   "isDemoMode": true,
   "demoMessageLimit": 10,
   "demoExpiryDate": "2025-12-29",
-  "stripePaymentLink": "https://buy.stripe.com/test_YOURLINK",
+  "stripePaymentLink": {
+    "monthly": "https://buy.stripe.com/test_MONTHLY_LINK",
+    "yearly": "https://buy.stripe.com/test_YEARLY_LINK"
+  },
   "subscriptionPrices": {
     "monthly": "$99/month",
     "yearly": "$990/year (Save $198!)"
