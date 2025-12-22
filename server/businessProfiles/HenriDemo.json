@@ -11,8 +11,7 @@
   "websiteUrl": "https://www.henri.dk",
   "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
   "isDemoMode": true,
-  "demoMessageLimit": 10,
-  "demoExpiryDate": "2025-12-29",
+  "demoMessageLimit": 40,
   "stripePaymentLink": {
     "monthly": "https://buy.stripe.com/test_MONTHLY_LINK",
     "yearly": "https://buy.stripe.com/test_YEARLY_LINK"
