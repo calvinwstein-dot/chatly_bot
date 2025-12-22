@@ -25,69 +25,134 @@
       "name": "01 Christianshavn, Torvegade",
       "address": "Torvegade 32B, 1400 København K",
       "mapUrl": "https://www.google.dk/maps/dir//Torvegade+32B,+1400+K%C3%B8benhavn+K/@55.6728383,12.5077279,12z"
+    },
+    {
+      "name": "02 Frederiksberg, Gl. Kongevej",
+      "address": "Gl. Kongevej 80, 1850 Frederiksberg",
+      "mapUrl": "https://www.google.dk/maps/dir//Gl.+Kongevej+80,+1850+Frederiksberg/@55.6744775,12.4680973,12z"
+    },
+    {
+      "name": "03 Frederiksberg, H.C. Ørstedsvej",
+      "address": "H.C. Ørstedsvej 35, 1879 Frederiksberg",
+      "mapUrl": "https://www.google.com/maps/dir//H.+C.+%C3%98rsteds+Vej+35,+1879+Frederiksberg/@55.6801476,12.4657761,12z"
+    },
+    {
+      "name": "04 København K, Grønnegade",
+      "address": "Grønnegade 4, 1107 København K",
+      "mapUrl": "https://www.google.dk/maps?daddr=Gr%C3%B8nnegade%204%2C%201107%20K%C3%B8benhavn"
+    },
+    {
+      "name": "05 Magasin, Kongens Nytorv",
+      "address": "Magasin du Nord, Kongens Nytorv, København K",
+      "mapUrl": "https://www.google.dk/maps/dir//Magasin+du+Nord,+Kongens+Nytorv,+K%C3%B8benhavn+K/@55.6793132,12.5023845,12z"
+    },
+    {
+      "name": "06 Nordhavn, Århusgade",
+      "address": "Århusgade, Nordhavn",
+      "mapUrl": "https://www.google.dk/maps/dir//henri+nordhavn"
+    },
+    {
+      "name": "07 Nørrebro, Elmegade",
+      "address": "Elmegade 5, 2200 København",
+      "mapUrl": "https://www.google.dk/maps/dir//Elmegade+5,+2200+K%C3%B8benhavn/@55.6896464,12.475526,12z"
+    },
+    {
+      "name": "08 Østerbro, Nordre Frihavnsgade",
+      "address": "Nordre Frihavnsgade, Østerbro",
+      "mapUrl": "https://www.google.com/maps/dir//H.+C.+%C3%98rsteds+Vej+35,+1879+Frederiksberg/@55.6801476,12.4657761,26066m"
     }
   ],
   "services": [
-    {
-      "name": "Classic Haircut",
-      "price": "450"
-    },
-    {
-      "name": "Long Haircut",
-      "price": "750"
-    },
-    {
-      "name": "Classic Beard Trim",
-      "price": "350"
-    }
+    { "name": "Henri's Signature Combo", "price": 995 },
+    { "name": "The Two Classics Combo", "price": 750 },
+    { "name": "Classic Haircut", "price": 440 },
+    { "name": "Zero Fade / Skin Fade", "price": 550 },
+    { "name": "Long Haircut", "price": 750 },
+    { "name": "Head Shave", "price": 395 },
+    { "name": "Signature Hot Towel Shave", "price": 595 },
+    { "name": "Classic Beard Trim", "price": 395 },
+    { "name": "Signature Beard Trim", "price": 595 }
   ],
   "products": [
-    {
-      "name": "Texture Clay Pomade",
-      "price": "199",
-      "size": "60 ml",
-      "category": "Styling",
-      "imageUrl": "/public/products/henri/texture-clay-pomade.webp"
-    }
+    { "name": "Texture Clay Pomade", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays", "imageUrl": "/public/products/henri/texture-clay-pomade.webp" },
+    { "name": "Advanced Forming Cream", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays", "imageUrl": "/public/products/henri/advanced-forming-cream.webp" },
+    { "name": "Crystal Pomade", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays", "imageUrl": "/public/products/henri/crystal-pomade.webp" },
+    { "name": "Upgraded Signature Clay", "price": 199, "size": "60 ml", "category": "Pomades, Creams & Clays", "imageUrl": "/public/products/henri/upgraded-signature-clay.webp" },
+    { "name": "Refined Salt Water", "price": 199, "size": "120 ml", "category": "Sprays", "imageUrl": "/public/products/henri/refined-salt-water.webp" },
+    { "name": "Liquified Clay Spray", "price": 199, "size": "120 ml", "category": "Sprays", "imageUrl": "/public/products/henri/liquified-clay-spray.webp" },
+    { "name": "Signature Beard Oil", "price": 199, "size": "30 ml", "category": "Sprays", "imageUrl": "/public/products/henri/signature-beard-oil.webp" }
   ],
   "giftCards": [
-    {
-      "name": "Gift Card 500 DKK",
-      "price": "500"
-    }
+    { "name": "Gavekort - Classic Haircut", "price": 440 },
+    { "name": "Gavekort - Classic Beard Trim", "price": 395 },
+    { "name": "Gavekort - Head Shave", "price": 395 },
+    { "name": "Gavekort - Signature Haircut", "price": 595 },
+    { "name": "Gavekort - Long Haircut", "price": 750 },
+    { "name": "Gavekort - Signature Beard Trim", "price": 595 },
+    { "name": "Gavekort - Signature Hot Towel Shave", "price": 595 },
+    { "name": "Gavekort - Two Classics Combo", "price": 750 },
+    { "name": "Gavekort - Skin Fade / Zero Fade", "price": 550 },
+    { "name": "Gavekort - HENRI's Signature Combo", "price": 995 }
   ],
   "loyaltyCards": [
-    {
-      "name": "5x Klippekort - Classic Haircut",
-      "price": "1950"
-    }
+    { "name": "5x Klippekort - Classic Haircut", "price": 1950 },
+    { "name": "5x Klippekort - Classic Beard Trim", "price": 1750 },
+    { "name": "5x Klippekort - HENRI's Signature Combo", "price": 4500 },
+    { "name": "5x Klippekort - The Two Classics Combo", "price": 3500 },
+    { "name": "5x Klippekort - Long Haircut", "price": 3500 },
+    { "name": "5x Klippekort - Zero Fade / Skin Fade", "price": 2500 },
+    { "name": "5x Klippekort - Head Shave", "price": 1750 },
+    { "name": "5x Klippekort - HENRI's Signature Haircut", "price": 2750 },
+    { "name": "5x Klippekort - Signature Beard Trim", "price": 2750 },
+    { "name": "5x Klippekort - Signature Hot Towel Shave", "price": 2750 }
   ],
   "giftBoxes": [
-    {
-      "name": "Path for Wandering",
-      "price": "649",
-      "description": "Complete grooming set",
-      "includes": ["Texture Clay Pomade", "Beard Oil"],
+    { 
+      "name": "Path for Wandering", 
+      "price": 395,
+      "description": "For those who move without a destination. Matte and shine, hold and lightness.",
+      "includes": ["Liquified Clay Spray", "Crystal Pomade"],
       "imageUrl": "/public/products/henri/path-for-wandering.webp"
+    },
+    { 
+      "name": "A Bridge Between", 
+      "price": 395,
+      "description": "For those who find balance in movement. Two essential elements in harmony.",
+      "includes": ["Refined Salt Water", "Advanced Forming Cream"],
+      "imageUrl": "/public/products/henri/a-bridge-between.webp"
+    },
+    { 
+      "name": "The Chance Encounter", 
+      "price": 495,
+      "description": "For those who find balance in movement. A texture lifted by salt, a form refined by structure.",
+      "includes": ["Refined Salt Water", "Texture Clay Pomade", "Signature Beard Oil"],
+      "imageUrl": "/public/products/henri/the-chance-encounter.webp"
+    },
+    { 
+      "name": "A Route Onwards", 
+      "price": 595,
+      "description": "For those who shape what lies ahead. Beard tamed, texture built, form defined.",
+      "includes": ["Liquified Clay Spray", "Crystal Pomade", "Signature Beard Oil", "The Consort Comb"],
+      "imageUrl": "/public/products/henri/a-route-onwards.webp"
     }
   ],
   "hours": {
-    "Monday": "10:00 - 19:00",
-    "Tuesday": "10:00 - 19:00",
-    "Wednesday": "10:00 - 19:00",
-    "Thursday": "10:00 - 19:00",
-    "Friday": "10:00 - 19:00",
-    "Saturday": "10:00 - 17:00",
-    "Sunday": "Closed"
+    "monday": "8am - 6pm",
+    "tuesday": "8am - 6pm",
+    "wednesday": "8am - 6pm",
+    "thursday": "8am - 6pm",
+    "friday": "8am - 6pm",
+    "saturday": "9am - 5pm",
+    "sunday": "closed"
   },
   "faq": [
-    {
-      "question": "How do I book an appointment?",
-      "answer": "You can book online at henri.planway.com or call us during phone hours."
-    },
-    {
-      "question": "Do you accept walk-ins?",
-      "answer": "We primarily work by appointment, but walk-ins are welcome if we have availability."
-    }
+    { "question": "Do you take walk-ins?", "answer": "Yes, we accept walk-ins every day if there is space available." },
+    { "question": "Do you accept card payments?", "answer": "Yes, we accept all major debit and credit cards except american express." },
+    { "question": "What is your cancellation policy?", "answer": "We kindly ask for at least 24 hours notice for any cancellations or rescheduling. Late cancellations or no-shows may be subject to a fee." },
+    { "question": "How do I cancel my booking?", "answer": "You can cancel your appointment directly through your booking confirmation link, or alternatively, you may contact us at info@henri.dk and we'll be happy to assist you with the cancellation." },
+    { "question": "Do you offer gift cards?", "answer": "Yes, we offer gift cards that can be purchased in-store or online at https://www.henri.dk/collections/gavekort." },
+    { "question": "What products do you sell?", "answer": "We sell professional styling products including pomades, clays, creams, sprays, and beard oil - all created by our stylists." },
+    { "question": "Do you offer loyalty cards?", "answer": "Yes, we offer 5x Klippekort (loyalty cards) for all our services which provide savings compared to individual bookings." },
+    { "question": "how do i book an appointment", "answer": "you can make a booking at anyone of our stores through our online booking system at https://henri.planway.com/?new_design=1." }
   ]
 }
