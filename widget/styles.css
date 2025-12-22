@@ -212,3 +212,69 @@ body {
   color: #fff;
   cursor: pointer;
 }
+
+/* Demo Mode Styles */
+.demo-bar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.demo-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.demo-badge {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+.demo-info {
+  color: white;
+  font-size: 13px;
+  flex: 1;
+  font-weight: 500;
+}
+
+.subscribe-btn {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.subscribe-btn:hover {
+  transform: scale(1.05);
+}
+
+.subscribe-btn-small {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.subscribe-btn-small:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+

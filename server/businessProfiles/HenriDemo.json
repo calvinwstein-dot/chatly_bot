@@ -1,0 +1,91 @@
+{
+  "businessName": "HENRI",
+  "logoUrl": "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
+  "primaryColor": "#2e7584ff",
+  "secondaryColor": "#0f4476ff",
+  "textColor": "#050604ff",
+  "currency": "DKK",
+  "phone": "+45 35 12 22 00",
+  "phoneHours": "Monday-Friday: 09:00-15:00, Saturday: Closed",
+  "bookingUrl": "https://henri.planway.com/?new_design=1",
+  "websiteUrl": "https://www.henri.dk",
+  "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
+  "isDemoMode": true,
+  "demoMessageLimit": 10,
+  "demoExpiryDate": "2025-12-29",
+  "stripePaymentLink": "https://buy.stripe.com/test_YOURLINK",
+  "subscriptionPrices": {
+    "monthly": "$99/month",
+    "yearly": "$990/year (Save $198!)"
+  },
+  "locations": [
+    {
+      "name": "01 Christianshavn, Torvegade",
+      "address": "Torvegade 32B, 1400 København K",
+      "mapUrl": "https://www.google.dk/maps/dir//Torvegade+32B,+1400+K%C3%B8benhavn+K/@55.6728383,12.5077279,12z"
+    }
+  ],
+  "services": [
+    {
+      "name": "Classic Haircut",
+      "price": "450"
+    },
+    {
+      "name": "Long Haircut",
+      "price": "750"
+    },
+    {
+      "name": "Classic Beard Trim",
+      "price": "350"
+    }
+  ],
+  "products": [
+    {
+      "name": "Texture Clay Pomade",
+      "price": "199",
+      "size": "60 ml",
+      "category": "Styling",
+      "imageUrl": "/public/products/henri/texture-clay-pomade.webp"
+    }
+  ],
+  "giftCards": [
+    {
+      "name": "Gift Card 500 DKK",
+      "price": "500"
+    }
+  ],
+  "loyaltyCards": [
+    {
+      "name": "5x Klippekort - Classic Haircut",
+      "price": "1950"
+    }
+  ],
+  "giftBoxes": [
+    {
+      "name": "Path for Wandering",
+      "price": "649",
+      "description": "Complete grooming set",
+      "includes": ["Texture Clay Pomade", "Beard Oil"],
+      "imageUrl": "/public/products/henri/path-for-wandering.webp"
+    }
+  ],
+  "hours": {
+    "Monday": "10:00 - 19:00",
+    "Tuesday": "10:00 - 19:00",
+    "Wednesday": "10:00 - 19:00",
+    "Thursday": "10:00 - 19:00",
+    "Friday": "10:00 - 19:00",
+    "Saturday": "10:00 - 17:00",
+    "Sunday": "Closed"
+  },
+  "faq": [
+    {
+      "question": "How do I book an appointment?",
+      "answer": "You can book online at henri.planway.com or call us during phone hours."
+    },
+    {
+      "question": "Do you accept walk-ins?",
+      "answer": "We primarily work by appointment, but walk-ins are welcome if we have availability."
+    }
+  ]
+}

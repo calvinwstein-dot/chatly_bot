@@ -1,6 +1,7 @@
 const API_BASE = window.CHATBOT_API_BASE || "";
 const sessionId = crypto.randomUUID();
 let currentLanguage = localStorage.getItem('chatLanguage') || 'en';
+let demoStatus = null;
 
 // Get business from URL parameter (e.g., ?business=Henri)
 const urlParams = new URLSearchParams(window.location.search);
@@ -58,6 +59,53 @@ function appendMessage(text, role) {
   container.scrollTop = container.scrollHeight;
 }
 
+function updateDemoUI() {
+  if (!demoStatus || !demoStatus.isDemo) return;
+
+  let demoBar = document.getElementById("demo-bar");
+  
+  if (!demoBar) {
+    // Create demo bar
+    demoBar = document.createElement("div");
+    demoBar.id = "demo-bar";
+    demoBar.className = "demo-bar";
+    document.getElementById("chat-widget").insertBefore(demoBar, document.getElementById("chat-header"));
+  }
+
+  // Update demo bar content
+  if (demoStatus.limitReached || demoStatus.expired) {
+    demoBar.innerHTML = `
+      <div class="demo-content">
+        <span class="demo-badge">DEMO EXPIRED</span>
+        <button id="subscribe-btn" class="subscribe-btn">Subscribe Now</button>
+      </div>
+    `;
+    
+    // Disable input
+    document.getElementById("chat-input").disabled = true;
+    document.getElementById("chatly-mic-button").disabled = true;
+  } else {
+    const messagesLeft = demoStatus.messagesRemaining;
+    const daysLeft = demoStatus.expiryDate ? Math.ceil((new Date(demoStatus.expiryDate) - new Date()) / (1000 * 60 * 60 * 24)) : null;
+    
+    demoBar.innerHTML = `
+      <div class="demo-content">
+        <span class="demo-badge">DEMO</span>
+        <span class="demo-info">${messagesLeft} messages left${daysLeft ? ` • ${daysLeft} days remaining` : ''}</span>
+        <button id="subscribe-btn" class="subscribe-btn-small">Upgrade</button>
+      </div>
+    `;
+  }
+
+  // Add click handler for subscribe button
+  const subscribeBtn = document.getElementById("subscribe-btn");
+  if (subscribeBtn && demoStatus.stripePaymentLink) {
+    subscribeBtn.addEventListener("click", () => {
+      window.open(demoStatus.stripePaymentLink, "_blank");
+    });
+  }
+}
+
 async function sendMessage(message) {
   appendMessage(message, "user");
 
@@ -72,6 +120,12 @@ async function sendMessage(message) {
     if (data.error) {
       appendMessage("Something went wrong. Please try again.", "bot");
       return;
+    }
+
+    // Update demo status
+    if (data.demoStatus) {
+      demoStatus = data.demoStatus;
+      updateDemoUI();
     }
 
     appendMessage(data.reply, "bot");
