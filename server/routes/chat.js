@@ -61,16 +61,7 @@ function checkDemoStatus(businessProfile) {
     expired: false,
     messageLimit: businessProfile.demoMessageLimit || 10,
     expiryDate: businessProfile.demoExpiryDate,
-    strCheck if business has active subscription - bypass demo restrictions
-    const hasSubscription = hasActiveSubscription(business || 'Henri');
-    
-    if (hasSubscription && demoStatus.isDemo) {
-      // Subscription active - treat as non-demo
-      const result = await handleChat({ sessionId, message, language: language || 'en', business: business || 'Henri' });
-      return res.json(result);
-    }
-
-    // ipePaymentLink: businessProfile.stripePaymentLink,
+    stripePaymentLink: businessProfile.stripePaymentLink,
     subscriptionPrices: businessProfile.subscriptionPrices
   };
 }
@@ -84,6 +75,15 @@ router.post("/", async (req, res) => {
 
     const businessProfile = loadBusinessProfile(business || 'Henri');
     const demoStatus = checkDemoStatus(businessProfile);
+
+    // Check if business has active subscription - bypass demo restrictions
+    const hasSubscription = hasActiveSubscription(business || 'Henri');
+    
+    if (hasSubscription && demoStatus.isDemo) {
+      // Subscription active - treat as non-demo
+      const result = await handleChat({ sessionId, message, language: language || 'en', business: business || 'Henri' });
+      return res.json(result);
+    }
 
     // If demo expired, return error
     if (demoStatus.expired) {
