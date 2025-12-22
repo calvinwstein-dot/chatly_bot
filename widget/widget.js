@@ -24,6 +24,20 @@ async function loadWidgetConfig() {
       logoEl.src = config.logoUrl;
       logoEl.classList.remove("hidden");
     }
+
+    // Check if this is a demo mode business
+    if (config.isDemoMode) {
+      demoStatus = {
+        isDemo: true,
+        messageLimit: config.demoMessageLimit || 10,
+        messagesUsed: 0,
+        messagesRemaining: config.demoMessageLimit || 10,
+        expiryDate: config.demoExpiryDate,
+        stripePaymentLink: config.stripePaymentLink,
+        subscriptionPrices: config.subscriptionPrices
+      };
+      updateDemoUI();
+    }
   } catch (e) {
     console.error("Failed to load widget config", e);
   }

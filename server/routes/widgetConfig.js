@@ -21,7 +21,12 @@ router.get("/", (req, res) => {
     logoUrl: business.logoUrl || config.widget.logoUrl,
     primaryColor: business.primaryColor || config.widget.primaryColor,
     secondaryColor: business.secondaryColor || config.widget.secondaryColor,
-    textColor: business.textColor || config.widget.textColor
+    textColor: business.textColor || config.widget.textColor,
+    isDemoMode: business.isDemoMode || false,
+    demoMessageLimit: business.demoMessageLimit,
+    demoExpiryDate: business.demoExpiryDate,
+    stripePaymentLink: business.stripePaymentLink,
+    subscriptionPrices: business.subscriptionPrices
   });
 });
 
