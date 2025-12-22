@@ -35,14 +35,5 @@ app.get("/api/health", (req, res) => {
 });
 
 app.listen(config.port, () => {
-// Stripe webhook route (load dynamically to avoid startup crash)
-try {
-  const { default: stripeWebhookRoute } = await import("./routes/stripeWebhook.js");
-  app.use("/api/stripe-webhook", express.raw({ type: 'application/json' }), stripeWebhookRoute);
-  console.log("Stripe webhook loaded successfully");
-} catch (error) {
-  console.error("Failed to load Stripe webhook (disabled):", error.message);
-}
-
   console.log(`Server listening on port ${config.port}`);
 });
