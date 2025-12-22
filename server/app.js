@@ -8,10 +8,15 @@ import chatRoute from "./routes/chat.js";
 import widgetConfigRoute from "./routes/widgetConfig.js";
 import debugRoute from "./routes/debug.js";
 import businessConfigRoute from "./routes/businessConfig.js";
+import stripeWebhookRoute from "./routes/stripeWebhook.js";
 
 const app = express();
 
 app.use(cors());
+
+// Stripe webhook needs raw body - BEFORE express.json()
+app.use("/api/stripe-webhook", stripeWebhookRoute);
+
 app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);

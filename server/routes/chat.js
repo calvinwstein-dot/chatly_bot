@@ -8,6 +8,21 @@ const router = express.Router();
 // Track demo message counts per session
 const demoMessageCounts = new Map();
 
+const SUBSCRIPTIONS_FILE = path.resolve("server/subscriptions.json");
+
+function loadSubscriptions() {
+  const data = fs.readFileSync(SUBSCRIPTIONS_FILE, "utf-8");
+  return JSON.parse(data);
+}
+
+function hasActiveSubscription(businessName) {
+  const data = loadSubscriptions();
+  const subscription = data.subscriptions.find(
+    sub => sub.businessName === businessName && sub.status === 'active'
+  );
+  return !!subscription;
+}
+
 function loadBusinessProfile(businessName) {
   const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
   const data = fs.readFileSync(filePath, "utf-8");
@@ -37,7 +52,16 @@ function checkDemoStatus(businessProfile) {
     expired: false,
     messageLimit: businessProfile.demoMessageLimit || 10,
     expiryDate: businessProfile.demoExpiryDate,
-    stripePaymentLink: businessProfile.stripePaymentLink,
+    strCheck if business has active subscription - bypass demo restrictions
+    const hasSubscription = hasActiveSubscription(business || 'Henri');
+    
+    if (hasSubscription && demoStatus.isDemo) {
+      // Subscription active - treat as non-demo
+      const result = await handleChat({ sessionId, message, language: language || 'en', business: business || 'Henri' });
+      return res.json(result);
+    }
+
+    // ipePaymentLink: businessProfile.stripePaymentLink,
     subscriptionPrices: businessProfile.subscriptionPrices
   };
 }
