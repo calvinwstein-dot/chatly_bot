@@ -86,22 +86,13 @@ router.post("/", express.raw({ type: 'application/json' }), async (req, res) => 
     case 'checkout.session.completed': {
       const session = event.data.object;
       
-      console.log('Full session object:', JSON.stringify(session, null, 2));
+      // Try multiple metadata key names (businessName or business)
+      let businessName = session.metadata?.businessName || session.metadata?.business;
+      let plan = session.metadata?.plan || 'monthly';
       
-      // Try multiple places to find metadata
-      let businessName = session.metadata?.businessName;
-      let plan = session.metadata?.plan;
-      
-      // If not in session metadata, try to get from line items or extract from payment link
-      if (!businessName || businessName === 'Unknown') {
-        // For now, default to HenriDemo if not found - you can make this smarter later
+      if (!businessName) {
         businessName = 'HenriDemo';
-        console.warn('No businessName in metadata, defaulting to HenriDemo');
-      }
-      
-      if (!plan) {
-        plan = 'monthly';
-        console.warn('No plan in metadata, defaulting to monthly');
+        console.warn('No businessName/business in metadata, defaulting to HenriDemo');
       }
       
       console.log(`Payment successful for ${businessName} - ${plan} plan`);
