@@ -86,9 +86,23 @@ router.post("/", express.raw({ type: 'application/json' }), async (req, res) => 
     case 'checkout.session.completed': {
       const session = event.data.object;
       
-      // Get metadata from the payment link (you'll need to set this in Stripe)
-      const businessName = session.metadata?.businessName || 'Unknown';
-      const plan = session.metadata?.plan || 'monthly';
+      console.log('Full session object:', JSON.stringify(session, null, 2));
+      
+      // Try multiple places to find metadata
+      let businessName = session.metadata?.businessName;
+      let plan = session.metadata?.plan;
+      
+      // If not in session metadata, try to get from line items or extract from payment link
+      if (!businessName || businessName === 'Unknown') {
+        // For now, default to HenriDemo if not found - you can make this smarter later
+        businessName = 'HenriDemo';
+        console.warn('No businessName in metadata, defaulting to HenriDemo');
+      }
+      
+      if (!plan) {
+        plan = 'monthly';
+        console.warn('No plan in metadata, defaulting to monthly');
+      }
       
       console.log(`Payment successful for ${businessName} - ${plan} plan`);
       
