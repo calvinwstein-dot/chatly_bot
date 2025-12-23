@@ -74,16 +74,19 @@ router.post("/", async (req, res) => {
     }
 
     const businessProfile = loadBusinessProfile(business || 'Henri');
-    const demoStatus = checkDemoStatus(businessProfile);
-
-    // Check if business has active subscription - bypass demo restrictions
-    const hasSubscription = hasActiveSubscription(business || 'Henri');
+    const businessNameForCheck = business || 'Henri';
     
-    if (hasSubscription && demoStatus.isDemo) {
-      // Subscription active - treat as non-demo
-      const result = await handleChat({ sessionId, message, language: language || 'en', business: business || 'Henri' });
+    // Check if business has active subscription FIRST - bypass all demo restrictions
+    const hasSubscription = hasActiveSubscription(businessNameForCheck);
+    
+    if (hasSubscription) {
+      // Subscription active - NO demo restrictions, process normally
+      const result = await handleChat({ sessionId, message, language: language || 'en', business: businessNameForCheck });
       return res.json(result);
     }
+    
+    // No subscription - check demo status
+    const demoStatus = checkDemoStatus(businessProfile);
 
     // If demo expired, return error
     if (demoStatus.expired) {

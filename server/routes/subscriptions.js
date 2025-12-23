@@ -23,6 +23,36 @@ function saveSubscriptions(data) {
   fs.writeFileSync(SUBSCRIPTIONS_FILE, JSON.stringify(data, null, 2));
 }
 
+function hasActiveSubscription(businessName) {
+  try {
+    if (!fs.existsSync(SUBSCRIPTIONS_FILE)) {
+      return false;
+    }
+    const data = JSON.parse(fs.readFileSync(SUBSCRIPTIONS_FILE, 'utf-8'));
+    const subscription = data.subscriptions?.find(
+      sub => sub.businessName === businessName && sub.status === 'active'
+    );
+    return !!subscription;
+  } catch (error) {
+    console.error('Error checking subscription:', error);
+    return false;
+  }
+}
+
+// Check subscription status endpoint
+router.get("/check", (req, res) => {
+  const { business } = req.query;
+  if (!business) {
+    return res.status(400).json({ error: "business parameter required" });
+  }
+  
+  const hasSubscription = hasActiveSubscription(business);
+  res.json({ 
+    hasActiveSubscription: hasSubscription,
+    businessName: business
+  });
+});
+
 // Activate a subscription manually
 router.post("/activate", (req, res) => {
   const { businessName, plan, customerId } = req.body;

@@ -45,6 +45,16 @@ async function loadWidgetConfig() {
       logoEl.classList.remove("hidden");
     }
 
+    // Check if subscription is active - if yes, bypass demo
+    const subRes = await fetch(`${API_BASE}/api/subscriptions/check?business=${businessName}`);
+    const subData = await subRes.json();
+    
+    if (subData.hasActiveSubscription) {
+      // Subscription active - no demo restrictions
+      demoStatus = null;
+      return;
+    }
+
     // Check if this is a demo mode business
     if (config.isDemoMode) {
       const messagesUsed = getDemoMessageCount();
@@ -208,9 +218,7 @@ function updateDemoUI() {
     // Update demo status and localStorage
     if (data.demoStatus) {
       demoStatus = data.demoStatus;
-      setDemoMessageCount(demoStatus.messagesUsed)
-    if (data.demoStatus) {
-      demoStatus = data.demoStatus;
+      setDemoMessageCount(demoStatus.messagesUsed);
       updateDemoUI();
     }
 
