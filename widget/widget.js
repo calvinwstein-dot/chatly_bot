@@ -46,13 +46,18 @@ async function loadWidgetConfig() {
     }
 
     // Check if subscription is active - if yes, bypass demo
-    const subRes = await fetch(`${API_BASE}/api/subscriptions/check?business=${businessName}`);
-    const subData = await subRes.json();
-    
-    if (subData.hasActiveSubscription) {
-      // Subscription active - no demo restrictions
-      demoStatus = null;
-      return;
+    try {
+      const subRes = await fetch(`${API_BASE}/api/subscriptions/check?business=${businessName}`);
+      const subData = await subRes.json();
+      
+      if (subData.hasActiveSubscription) {
+        // Subscription active - no demo restrictions
+        demoStatus = null;
+        return;
+      }
+    } catch (subError) {
+      console.warn("Could not check subscription status:", subError);
+      // Continue to demo mode check even if subscription check fails
     }
 
     // Check if this is a demo mode business
