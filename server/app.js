@@ -13,6 +13,17 @@ import subscriptionsRoute from "./routes/subscriptions.js";
 const app = express();
 
 app.use(cors());
+
+// Load Stripe webhook BEFORE express.json() - needs raw body for signature verification
+try {
+  const { default: stripeWebhookRoute } = await import("./routes/stripeWebhook.js");
+  app.use("/api/stripe-webhook", express.raw({ type: 'application/json' }), stripeWebhookRoute);
+  console.log("✓ Stripe webhook loaded successfully");
+} catch (error) {
+  console.warn("⚠ Stripe webhook disabled:", error.message);
+}
+
+// Now apply JSON parser for all other routes
 app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,15 +40,6 @@ app.use("/api/widget-config", widgetConfigRoute);
 app.use("/api/debug", debugRoute);
 app.use("/api/business-config", businessConfigRoute);
 app.use("/api/subscriptions", subscriptionsRoute);
-
-// Load Stripe webhook dynamically (optional - won't crash if Stripe not configured)
-try {
-  const { default: stripeWebhookRoute } = await import("./routes/stripeWebhook.js");
-  app.use("/api/stripe-webhook", express.raw({ type: 'application/json' }), stripeWebhookRoute);
-  console.log("✓ Stripe webhook loaded successfully");
-} catch (error) {
-  console.warn("⚠ Stripe webhook disabled:", error.message);
-}
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
