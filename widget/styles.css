@@ -215,7 +215,7 @@ body {
 
 /* Demo Mode Styles */
 .demo-bar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #E53935;
   padding: 10px 16px;
   display: flex;
   align-items: center;
@@ -230,8 +230,8 @@ body {
 }
 
 .demo-badge {
-  background: rgba(255, 255, 255, 0.3);
-  color: white;
+  background: white;
+  color: black;
   font-weight: 700;
   font-size: 11px;
   padding: 4px 10px;
@@ -248,7 +248,7 @@ body {
 
 .subscribe-btn {
   background: white;
-  color: #667eea;
+  color: black;
   border: none;
   padding: 8px 20px;
   border-radius: 6px;
@@ -260,6 +260,7 @@ body {
 
 .subscribe-btn:hover {
   transform: scale(1.05);
+  background: #f5f5f5;
 }
 
 .subscribe-btn-small {
