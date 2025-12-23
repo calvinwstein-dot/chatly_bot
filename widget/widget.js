@@ -191,7 +191,9 @@ function updateDemoUI() {
     });
   }
 }
-// Check demo limit before sending
+
+async function sendMessage(message) {
+  // Check demo limit before sending
   if (checkDemoLimitReached()) {
     appendMessage("You've reached the message limit for this demo. Please subscribe to continue.", "bot");
     return;
