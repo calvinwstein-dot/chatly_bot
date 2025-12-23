@@ -30,6 +30,15 @@ app.use("/api/debug", debugRoute);
 app.use("/api/business-config", businessConfigRoute);
 app.use("/api/subscriptions", subscriptionsRoute);
 
+// Load Stripe webhook dynamically (optional - won't crash if Stripe not configured)
+try {
+  const { default: stripeWebhookRoute } = await import("./routes/stripeWebhook.js");
+  app.use("/api/stripe-webhook", express.raw({ type: 'application/json' }), stripeWebhookRoute);
+  console.log("✓ Stripe webhook loaded successfully");
+} catch (error) {
+  console.warn("⚠ Stripe webhook disabled:", error.message);
+}
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
