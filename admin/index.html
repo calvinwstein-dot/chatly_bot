@@ -554,18 +554,21 @@
                 const response = await fetch('/api/business-config');
                 const data = await response.json();
                 
+                // Filter out demo profiles (ending with "Demo")
+                const nonDemoBusinesses = data.businesses.filter(name => !name.endsWith('Demo'));
+                
                 // Load each business profile from server
-                for (const businessName of data.businesses) {
+                for (const businessName of nonDemoBusinesses) {
                     const profileResponse = await fetch(`/api/business-config/${businessName}`);
                     const profile = await profileResponse.json();
                     businesses[businessName] = profile;
                 }
                 
                 // Generate business selector buttons dynamically
-                generateBusinessButtons(data.businesses);
+                generateBusinessButtons(nonDemoBusinesses);
                 
                 // Set first business as current
-                currentBusiness = data.businesses[0] || 'Henri';
+                currentBusiness = nonDemoBusinesses[0] || 'Henri';
                 loadBusiness(currentBusiness);
                 updatePreview();
             } catch (error) {
