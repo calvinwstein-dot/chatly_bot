@@ -198,6 +198,17 @@ async function sendMessage(message) {
     appendMessage("You've reached the message limit for this demo. Please subscribe to continue.", "bot");
     return;
   }
+  
+  // Log message metric
+  try {
+    await fetch(`${API_BASE}/api/metrics/log`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ business: businessName, eventType: 'message' })
+    });
+  } catch (e) {
+    console.warn('Failed to log message metric:', e);
+  }
 
   appendMessage(message, "user");
 
@@ -242,8 +253,19 @@ function init() {
   const form = document.getElementById("chat-form");
   const input = document.getElementById("chat-input");
 
-  launcher.addEventListener("click", () => {
+  launcher.addEventListener("click", async () => {
     widget.classList.toggle("hidden");
+    
+    // Log click metric
+    try {
+      await fetch(`${API_BASE}/api/metrics/log`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ business: businessName, eventType: 'click' })
+      });
+    } catch (e) {
+      console.warn('Failed to log click metric:', e);
+    }
   });
 
   form.addEventListener("submit", (e) => {

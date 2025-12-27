@@ -36,6 +36,7 @@
             gap: 10px;
             justify-content: center;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
         .business-selector button {
@@ -58,6 +59,42 @@
         .business-selector button.active {
             background: white;
             color: #667eea;
+        }
+        
+        .tab-selector {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            padding: 10px 25px;
+            font-size: 15px;
+            border: none;
+            background: rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
 
         .config-panel {
@@ -266,6 +303,105 @@
         .success-message.show {
             display: block;
         }
+        
+        /* Metrics Styles */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .metric-title {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .metric-subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .metrics-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .metrics-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #555;
+        }
+        
+        .metrics-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .metrics-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .copy-report-btn {
+            background: #28a745;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+        
+        .copy-report-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+        }
+        
+        .report-copied {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-left: 15px;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .report-copied.show {
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -276,8 +412,14 @@
             <button class="active" data-business="Henri">HENRI</button>
             <button data-business="BlondeSpecialistCPH">Blonde Specialist CPH</button>
         </div>
+        
+        <div class="tab-selector">
+            <button class="tab-btn active" data-tab="config">Configuration</button>
+            <button class="tab-btn" data-tab="metrics">Metrics & Reports</button>
+        </div>
 
         <div class="config-panel">
+            <div id="config-tab" class="tab-content active">
             <div class="section">
                 <h2>Basic Information</h2>
                 <div class="form-group">
@@ -345,12 +487,65 @@
             <div class="success-message" id="successMessage">
                 ✅ Colors saved successfully!
             </div>
+            </div>
+            
+            <div id="metrics-tab" class="tab-content">
+                <div class="section">
+                    <h2>📊 Chatbot Metrics & Analytics</h2>
+                    
+                    <div class="metrics-grid" id="metricsGrid">
+                        <div class="metric-card">
+                            <div class="metric-title">Total Launcher Clicks</div>
+                            <div class="metric-value" id="totalClicks">0</div>
+                            <div class="metric-subtitle">All time</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Total Messages</div>
+                            <div class="metric-value" id="totalMessages">0</div>
+                            <div class="metric-subtitle">All time</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Last 7 Days</div>
+                            <div class="metric-value" id="last7DaysTotal">0</div>
+                            <div class="metric-subtitle" id="last7DaysBreakdown">0 clicks, 0 messages</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Last 30 Days</div>
+                            <div class="metric-value" id="last30DaysTotal">0</div>
+                            <div class="metric-subtitle" id="last30DaysBreakdown">0 clicks, 0 messages</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin: 30px 0 15px 0; color: #333;">Daily Breakdown</h3>
+                    <table class="metrics-table" id="dailyStatsTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Clicks</th>
+                                <th>Messages</th>
+                                <th>Total Interactions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dailyStatsBody">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #999;">Loading metrics...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="actions" style="margin-top: 25px;">
+                        <button class="copy-report-btn" onclick="copyReport()">📋 Copy Report for Client</button>
+                        <span class="report-copied" id="reportCopied">✅ Report copied!</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         let currentBusiness = 'Henri';
         let businesses = {};
+        let currentMetrics = null;
 
         // Initialize - load business list from server
         loadBusinessList();
@@ -506,6 +701,198 @@
                 alert('Error saving configuration: ' + error.message);
             }
         }
-    </script>
-</body>
-</html>
+        
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetTab = e.target.dataset.tab;
+                
+                // Update tab buttons
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(targetTab + '-tab').classList.add('active');
+                
+                // Load metrics if metrics tab
+                if (targetTab === 'metrics') {
+                    loadMetrics();
+                }
+            });
+        });
+        
+        // Load metrics from server
+        async function loadMetrics() {
+            try {
+                const response = await fetch(`/api/metrics?business=${currentBusiness}`);
+                const data = await response.json();
+                currentMetrics = data;
+                
+                // Update summary cards
+                document.getElementById('totalClicks').textContent = data.clicks || 0;
+                document.getElementById('totalMessages').textContent = data.messages || 0;
+                
+                // Calculate last 7 days and 30 days
+                const last7Days = getLast7DaysStats(data.dailyStats || {});
+                const last30Days = getLast30DaysStats(data.dailyStats || {});
+                
+                const total7 = last7Days.clicks + last7Days.messages;
+                const total30 = last30Days.clicks + last30Days.messages;
+                
+                document.getElementById('last7DaysTotal').textContent = total7;
+                document.getElementById('last7DaysBreakdown').textContent = `${last7Days.clicks} clicks, ${last7Days.messages} messages`;
+                
+                document.getElementById('last30DaysTotal').textContent = total30;
+                document.getElementById('last30DaysBreakdown').textContent = `${last30Days.clicks} clicks, ${last30Days.messages} messages`;
+                
+                // Populate daily stats table
+                populateDailyStats(data.dailyStats || {});
+                
+            } catch (error) {
+                console.error('Error loading metrics:', error);
+                document.getElementById('dailyStatsBody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: #e74c3c;">Error loading metrics</td></tr>';
+            }
+        }
+        
+        function getLast7DaysStats(dailyStats) {
+            const result = { clicks: 0, messages: 0 };
+            const today = new Date();
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                if (dailyStats[dateStr]) {
+                    result.clicks += dailyStats[dateStr].clicks;
+                    result.messages += dailyStats[dateStr].messages;
+                }
+            }
+            
+            return result;
+        }
+        
+        function getLast30DaysStats(dailyStats) {
+            const result = { clicks: 0, messages: 0 };
+            const today = new Date();
+            
+            for (let i = 0; i < 30; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                if (dailyStats[dateStr]) {
+                    result.clicks += dailyStats[dateStr].clicks;
+                    result.messages += dailyStats[dateStr].messages;
+                }
+            }
+            
+            return result;
+        }
+        
+        function populateDailyStats(dailyStats) {
+            const tbody = document.getElementById('dailyStatsBody');
+            const dates = Object.keys(dailyStats).sort().reverse(); // Most recent first
+            
+            if (dates.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #999;">No data yet</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = '';
+            dates.forEach(date => {
+                const stats = dailyStats[date];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${formatDate(date)}</td>
+                    <td>${stats.clicks}</td>
+                    <td>${stats.messages}</td>
+                    <td><strong>${stats.clicks + stats.messages}</strong></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        function copyReport() {
+            if (!currentMetrics) {
+                alert('Please load metrics first');
+                return;
+            }
+            
+            const last7Days = getLast7DaysStats(currentMetrics.dailyStats || {});
+            const last30Days = getLast30DaysStats(currentMetrics.dailyStats || {});
+            
+            const report = `
+CHATBOT PERFORMANCE REPORT
+Business: ${currentBusiness}
+Report Date: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+
+════════════════════════════════════════
+
+SUMMARY METRICS
+• Total Launcher Clicks: ${currentMetrics.clicks || 0}
+• Total Messages Sent: ${currentMetrics.messages || 0}
+• Total Interactions: ${(currentMetrics.clicks || 0) + (currentMetrics.messages || 0)}
+
+RECENT ACTIVITY
+Last 7 Days:
+  - Clicks: ${last7Days.clicks}
+  - Messages: ${last7Days.messages}
+  - Total: ${last7Days.clicks + last7Days.messages}
+
+Last 30 Days:
+  - Clicks: ${last30Days.clicks}
+  - Messages: ${last30Days.messages}
+  - Total: ${last30Days.clicks + last30Days.messages}
+
+════════════════════════════════════════
+
+DAILY BREAKDOWN
+${generateDailyBreakdown(currentMetrics.dailyStats || {})}
+
+════════════════════════════════════════
+Report generated by Chappy Chatbot Analytics
+            `.trim();
+            
+            navigator.clipboard.writeText(report).then(() => {
+                const copiedMsg = document.getElementById('reportCopied');
+                copiedMsg.classList.add('show');
+                setTimeout(() => copiedMsg.classList.remove('show'), 3000);
+            }).catch(err => {
+                alert('Failed to copy report: ' + err.message);
+            });
+        }
+        
+        function generateDailyBreakdown(dailyStats) {
+            const dates = Object.keys(dailyStats).sort().reverse();
+            if (dates.length === 0) return 'No data available';
+            
+            let breakdown = '';
+            dates.forEach(date => {
+                const stats = dailyStats[date];
+                const formattedDate = formatDate(date);
+                const total = stats.clicks + stats.messages;
+                breakdown += `${formattedDate}:\n`;
+                breakdown += `  Clicks: ${stats.clicks} | Messages: ${stats.messages} | Total: ${total}\n\n`;
+            });
+            
+            return breakdown.trim();
+        }
+        
+        // Update business selector to reload metrics
+        document.querySelectorAll('.business-selector button').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Check if metrics tab is active
+                const metricsTab = document.getElementById('metrics-tab');
+                if (metricsTab.classList.contains('active')) {
+                    loadMetrics();
+                }
+            });
+        });
