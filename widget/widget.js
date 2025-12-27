@@ -199,15 +199,17 @@ async function sendMessage(message) {
     return;
   }
   
-  // Log message metric
-  try {
-    await fetch(`${API_BASE}/api/metrics/log`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ business: businessName, eventType: 'message' })
-    });
-  } catch (e) {
-    console.warn('Failed to log message metric:', e);
+  // Log message metric (skip for demo profiles)
+  if (!businessName.endsWith('Demo')) {
+    try {
+      await fetch(`${API_BASE}/api/metrics/log`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ business: businessName, eventType: 'message' })
+      });
+    } catch (e) {
+      console.warn('Failed to log message metric:', e);
+    }
   }
 
   appendMessage(message, "user");
@@ -256,15 +258,17 @@ function init() {
   launcher.addEventListener("click", async () => {
     widget.classList.toggle("hidden");
     
-    // Log click metric
-    try {
-      await fetch(`${API_BASE}/api/metrics/log`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ business: businessName, eventType: 'click' })
-      });
-    } catch (e) {
-      console.warn('Failed to log click metric:', e);
+    // Log click metric (skip for demo profiles)
+    if (!businessName.endsWith('Demo')) {
+      try {
+        await fetch(`${API_BASE}/api/metrics/log`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ business: businessName, eventType: 'click' })
+        });
+      } catch (e) {
+        console.warn('Failed to log click metric:', e);
+      }
     }
   });
 
