@@ -145,6 +145,9 @@ function updateDemoUI() {
     const messagesLeft = demoStatus.messagesRemaining;
     const daysLeft = demoStatus.expiryDate ? Math.ceil((new Date(demoStatus.expiryDate) - new Date()) / (1000 * 60 * 60 * 24)) : null;
     
+    const monthlyPrice = demoStatus.subscriptionPrices?.monthly || '$199/month';
+    const yearlyPrice = demoStatus.subscriptionPrices?.yearly || '$1,990/year';
+    
     demoBar.innerHTML = `
       <div class="demo-content">
         <span class="demo-badge">DEMO</span>
@@ -152,8 +155,8 @@ function updateDemoUI() {
         <div class="subscribe-dropdown">
           <button id="subscribe-btn-main" class="subscribe-btn-small">Activate Subscription ▼</button>
           <div id="subscribe-menu" class="subscribe-menu">
-            <a href="#" data-plan="monthly" class="subscribe-option">$99/monthly</a>
-            <a href="#" data-plan="yearly" class="subscribe-option">$990/annual</a>
+            <a href="#" data-plan="monthly" class="subscribe-option">${monthlyPrice}</a>
+            <a href="#" data-plan="yearly" class="subscribe-option">${yearlyPrice}</a>
           </div>
         </div>
       </div>
