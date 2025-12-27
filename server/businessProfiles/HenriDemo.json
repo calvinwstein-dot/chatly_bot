@@ -13,12 +13,12 @@
   "isDemoMode": true,
   "demoMessageLimit": 40,
   "stripePaymentLink": {
-    "monthly": "https://buy.stripe.com/test_5kQcN50bE3Nd2UY8nn9oc01",
-    "yearly": "https://buy.stripe.com/test_14A28r7E6gzZeDG5bb9oc02"
+    "monthly": "https://buy.stripe.com/dRmcN58Qz6GQaXF3pXfYY06",
+    "yearly": "https://buy.stripe.com/dRm00jc2Le9ifdV3pXfYY07"
   },
   "subscriptionPrices": {
-    "monthly": "$99/month",
-    "yearly": "$990/year (Save $198!)"
+    "monthly": "$199/month",
+    "yearly": "$1,990/year (Save $398!)"
   },
   "locations": [
     {
