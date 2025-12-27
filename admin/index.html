@@ -408,9 +408,8 @@
     <div class="container">
         <h1>🎨 Chatbot Business Config</h1>
 
-        <div class="business-selector">
-            <button class="active" data-business="Henri">HENRI</button>
-            <button data-business="BlondeSpecialistCPH">Blonde Specialist CPH</button>
+        <div class="business-selector" id="businessSelector">
+            <!-- Buttons will be dynamically generated -->
         </div>
         
         <div class="tab-selector">
@@ -543,7 +542,7 @@
     </div>
 
     <script>
-        let currentBusiness = 'Henri';
+        let currentBusiness = null;
         let businesses = {};
         let currentMetrics = null;
 
@@ -562,6 +561,11 @@
                     businesses[businessName] = profile;
                 }
                 
+                // Generate business selector buttons dynamically
+                generateBusinessButtons(data.businesses);
+                
+                // Set first business as current
+                currentBusiness = data.businesses[0] || 'Henri';
                 loadBusiness(currentBusiness);
                 updatePreview();
             } catch (error) {
@@ -585,26 +589,39 @@
                         phone: ""
                     }
                 };
+                generateBusinessButtons(Object.keys(businesses));
+                currentBusiness = 'Henri';
                 loadBusiness(currentBusiness);
                 updatePreview();
             }
         }
-
-        // Business selector
-        document.querySelectorAll('.business-selector button').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.business-selector button').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                currentBusiness = e.target.dataset.business;
-                loadBusiness(currentBusiness);
+        
+        function generateBusinessButtons(businessNames) {
+            const container = document.getElementById('businessSelector');
+            container.innerHTML = '';
+            
+            businessNames.forEach((businessName, index) => {
+                const btn = document.createElement('button');
+                btn.textContent = businesses[businessName]?.businessName || businessName;
+                btn.dataset.business = businessName;
+                if (index === 0) btn.classList.add('active');
                 
-                // If metrics tab is active, reload metrics for new business
-                const metricsTab = document.getElementById('metrics-tab');
-                if (metricsTab && metricsTab.classList.contains('active')) {
-                    loadMetrics();
-                }
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.business-selector button').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentBusiness = e.target.dataset.business;
+                    loadBusiness(currentBusiness);
+                    
+                    // If metrics tab is active, reload metrics for new business
+                    const metricsTab = document.getElementById('metrics-tab');
+                    if (metricsTab && metricsTab.classList.contains('active')) {
+                        loadMetrics();
+                    }
+                });
+                
+                container.appendChild(btn);
             });
-        });
+        }
 
         // Color pickers
         ['primary', 'secondary', 'text'].forEach(type => {
