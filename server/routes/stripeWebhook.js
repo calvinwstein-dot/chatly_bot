@@ -86,36 +86,54 @@ router.post("/", express.raw({ type: 'application/json' }), async (req, res) => 
     case 'checkout.session.completed': {
       const session = event.data.object;
       
-      // Try multiple metadata key names (businessName or business)
-      let businessName = session.metadata?.businessName || session.metadata?.business;
-      let plan = session.metadata?.plan || 'monthly';
-      
-      if (!businessName) {
-        businessName = 'HenriDemo';
-        console.warn('No businessName/business in metadata, defaulting to HenriDemo');
-      }
-      
-      console.log(`Payment successful for ${businessName} - ${plan} plan`);
-      
       // Get subscription ID if it's a subscription
       if (session.subscription) {
-        addSubscription(businessName, session.customer, session.subscription, plan);
-        console.log(`Activated subscription for ${businessName}`);
+        try {
+          // Retrieve the full subscription object to get metadata from payment link
+          const subscription = await stripe.subscriptions.retrieve(session.subscription);
+          
+          // Get businessName from subscription metadata (set on payment link)
+          const businessName = subscription.metadata?.businessName;
+          const plan = subscription.items.data[0]?.price?.recurring?.interval || 'monthly';
+          
+          if (businessName) {
+            addSubscription(businessName, session.customer, session.subscription, plan);
+            console.log(`✓ Activated subscription for ${businessName} (${plan} plan)`);
+          } else {
+            console.warn('⚠️ No businessName in subscription metadata - check payment link metadata');
+          }
+        } catch (error) {
+          console.error('Error retrieving subscription:', error);
+        }
       }
       break;
     }
 
     case 'customer.subscription.updated': {
       const subscription = event.data.object;
+      const businessName = subscription.metadata?.businessName;
+      
       updateSubscriptionStatus(subscription.id, subscription.status);
-      console.log(`Subscription ${subscription.id} updated to ${subscription.status}`);
+      
+      if (businessName) {
+        console.log(`✓ Subscription ${subscription.id} for ${businessName} updated to ${subscription.status}`);
+      } else {
+        console.log(`Subscription ${subscription.id} updated to ${subscription.status}`);
+      }
       break;
     }
 
     case 'customer.subscription.deleted': {
       const subscription = event.data.object;
+      const businessName = subscription.metadata?.businessName;
+      
       updateSubscriptionStatus(subscription.id, 'canceled');
-      console.log(`Subscription ${subscription.id} canceled`);
+      
+      if (businessName) {
+        console.log(`✓ Subscription for ${businessName} canceled`);
+      } else {
+        console.log(`Subscription ${subscription.id} canceled`);
+      }
       break;
     }
 
