@@ -2,6 +2,7 @@ const API_BASE = window.CHATBOT_API_BASE || "";
 const sessionId = crypto.randomUUID();
 let currentLanguage = localStorage.getItem('chatLanguage') || 'en';
 let demoStatus = null;
+let hasActiveSubscription = false;
 
 // Get business from URL parameter (e.g., ?business=Henri)
 const urlParams = new URLSearchParams(window.location.search);
@@ -52,6 +53,7 @@ async function loadWidgetConfig() {
       
       if (subData.hasActiveSubscription) {
         // Subscription active - no demo restrictions
+        hasActiveSubscription = true;
         demoStatus = null;
         return;
       }
@@ -202,8 +204,8 @@ async function sendMessage(message) {
     return;
   }
   
-  // Log message metric (skip for demo profiles)
-  if (!businessName.endsWith('Demo')) {
+  // Log message metric (only for active subscriptions)
+  if (hasActiveSubscription) {
     try {
       await fetch(`${API_BASE}/api/metrics/log`, {
         method: 'POST',
@@ -261,8 +263,8 @@ function init() {
   launcher.addEventListener("click", async () => {
     widget.classList.toggle("hidden");
     
-    // Log click metric (skip for demo profiles)
-    if (!businessName.endsWith('Demo')) {
+    // Log click metric (only for active subscriptions)
+    if (hasActiveSubscription) {
       try {
         await fetch(`${API_BASE}/api/metrics/log`, {
           method: 'POST',
