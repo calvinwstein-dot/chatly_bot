@@ -13,8 +13,8 @@
   "isDemoMode": true,
   "demoMessageLimit": 40,
   "stripePaymentLink": {
-    "monthly": "https://buy.stripe.com/dRmcN58Qz6GQaXF3pXfYY06",
-    "yearly": "https://buy.stripe.com/dRm00jc2Le9ifdV3pXfYY07"
+    "monthly": "https://buy.stripe.com/dRm00jc2Le9ifdV3pXfYY07",
+    "yearly": "https://buy.stripe.com/dRmcN58Qz6GQaXF3pXfYY06"
   },
   "subscriptionPrices": {
     "monthly": "$199/month",
