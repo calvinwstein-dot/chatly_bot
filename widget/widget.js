@@ -7,6 +7,17 @@ let hasActiveSubscription = false;
 // Get business from URL parameter (e.g., ?business=Henri)
 const urlParams = new URLSearchParams(window.location.search);
 const businessName = urlParams.get('business') || 'Henri';
+const testToken = urlParams.get('testMode') || '';
+
+// Simple hash function to generate consistent test token from business name
+function generateTestToken(businessName) {
+  let hash = 0;
+  for (let i = 0; i < businessName.length; i++) {
+    hash = ((hash << 5) - hash) + businessName.charCodeAt(i);
+    hash = hash & hash;
+  }
+  return Math.abs(hash).toString(36);
+}
 
 // Demo tracking with localStorage
 function getDemoStorageKey() {
@@ -52,7 +63,7 @@ async function loadWidgetConfig() {
       const subData = await subRes.json();
       
       if (subData.hasActiveSubscription) {
-        // Subscription active - no demo restrictions
+        // Subscription active - no demo restrictions, works for everyone
         hasActiveSubscription = true;
         demoStatus = null;
         return;
@@ -64,6 +75,21 @@ async function loadWidgetConfig() {
 
     // Check if this is a demo mode business
     if (config.isDemoMode) {
+      // Validate test token
+      const validToken = generateTestToken(businessName);
+      const hasValidToken = testToken === validToken;
+      
+      // If no active subscription and no valid token, show inactive state
+      if (!hasValidToken) {
+        demoStatus = {
+          isDemo: true,
+          inactive: true
+        };
+        updateDemoUI();
+        return;
+      }
+      
+      // Valid token - allow demo testing
       const messagesUsed = getDemoMessageCount();
       demoStatus = {
         isDemo: true,
@@ -125,7 +151,23 @@ function updateDemoUI() {
     document.getElementById("chat-widget").insertBefore(demoBar, document.getElementById("chat-header"));
   }
 
-  // Update demo bar content
+  // Show inactive state if no valid token
+  if (demoStatus.inactive) {
+    demoBar.innerHTML = `
+      <div class="demo-content" style="justify-content: center;">
+        <span class="demo-badge" style="background: #95a5a6;">INACTIVE</span>
+        <span class="demo-info" style="font-size: 12px;">This chatbot is being configured. Check back soon!</span>
+      </div>
+    `;
+    
+    // Disable chat functionality
+    document.getElementById("chat-input").disabled = true;
+    document.getElementById("chat-input").placeholder = "Chatbot is not active";
+    document.getElementById("chatly-mic-button").disabled = true;
+    return;
+  }
+
+  // Update demo bar content for valid testing
   if (demoStatus.limitReached || demoStatus.expired) {
     demoBar.innerHTML = `
       <div class="demo-content">
@@ -198,6 +240,12 @@ function updateDemoUI() {
 }
 
 async function sendMessage(message) {
+  // Block if inactive (no subscription, no token)
+  if (demoStatus && demoStatus.inactive) {
+    appendMessage("This chatbot is not yet active. Please contact the business owner.", "bot");
+    return;
+  }
+  
   // Check demo limit before sending
   if (checkDemoLimitReached()) {
     appendMessage("You've reached the message limit for this demo. Please subscribe to continue.", "bot");

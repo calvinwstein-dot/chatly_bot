@@ -679,7 +679,8 @@
 
         function updateEmbedCode() {
             const baseUrl = window.location.origin;
-            const widgetUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}`;
+            const testToken = generateTestToken(currentBusiness);
+            const widgetUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}&testMode=${testToken}`;
             
             const embedCode = `<iframe 
   src="${widgetUrl}"
@@ -690,6 +691,15 @@
             document.getElementById('embedCode').value = embedCode;
             document.getElementById('directTestUrl').href = widgetUrl;
             document.getElementById('directTestUrl').textContent = widgetUrl;
+        }
+        
+        function generateTestToken(businessName) {
+            let hash = 0;
+            for (let i = 0; i < businessName.length; i++) {
+                hash = ((hash << 5) - hash) + businessName.charCodeAt(i);
+                hash = hash & hash;
+            }
+            return Math.abs(hash).toString(36);
         }
 
         function copyEmbedCode() {
