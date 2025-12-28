@@ -10,6 +10,16 @@
   "bookingUrl": "https://henri.planway.com/?new_design=1",
   "websiteUrl": "https://www.henri.dk",
   "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
+  "isDemoMode": true,
+  "demoMessageLimit": 40,
+  "stripePaymentLink": {
+    "monthly": "https://buy.stripe.com/dRm00jc2Le9ifdV3pXfYY07",
+    "yearly": "https://buy.stripe.com/dRmcN58Qz6GQaXF3pXfYY06"
+  },
+  "subscriptionPrices": {
+    "monthly": "$199/month",
+    "yearly": "$1,990/year (2 months free • Save $398!)"
+  },
   "locations": [
     {
       "name": "01 Christianshavn, Torvegade",
