@@ -3,24 +3,10 @@ const sessionId = crypto.randomUUID();
 let currentLanguage = localStorage.getItem('chatLanguage') || 'en';
 let demoStatus = null;
 let hasActiveSubscription = false;
-let isEmbedded = false;
 
 // Get business from URL parameter (e.g., ?business=Henri)
 const urlParams = new URLSearchParams(window.location.search);
 const businessName = urlParams.get('business') || 'Henri';
-
-// Detect if widget is embedded in iframe on external domain
-function detectEmbedded() {
-  try {
-    return window.self !== window.top && 
-           window.location.hostname !== window.parent.location.hostname;
-  } catch (e) {
-    // Cross-origin error means it's embedded on external domain
-    return true;
-  }
-}
-
-isEmbedded = detectEmbedded();
 
 // Demo tracking with localStorage
 function getDemoStorageKey() {
@@ -139,23 +125,7 @@ function updateDemoUI() {
     document.getElementById("chat-widget").insertBefore(demoBar, document.getElementById("chat-header"));
   }
 
-  // If embedded on external site and no subscription, show inactive message
-  if (isEmbedded && !hasActiveSubscription) {
-    demoBar.innerHTML = `
-      <div class="demo-content" style="justify-content: center;">
-        <span class="demo-badge" style="background: #95a5a6;">INACTIVE</span>
-        <span class="demo-info" style="font-size: 12px;">This chatbot requires activation by the business owner.</span>
-      </div>
-    `;
-    
-    // Disable chat functionality
-    document.getElementById("chat-input").disabled = true;
-    document.getElementById("chat-input").placeholder = "Chatbot is not active";
-    document.getElementById("chatly-mic-button").disabled = true;
-    return;
-  }
-
-  // Update demo bar content for direct access
+  // Update demo bar content
   if (demoStatus.limitReached || demoStatus.expired) {
     demoBar.innerHTML = `
       <div class="demo-content">
@@ -228,12 +198,6 @@ function updateDemoUI() {
 }
 
 async function sendMessage(message) {
-  // Block messages if embedded and inactive
-  if (isEmbedded && !hasActiveSubscription) {
-    appendMessage("This chatbot is not active. Please contact the business owner.", "bot");
-    return;
-  }
-  
   // Check demo limit before sending
   if (checkDemoLimitReached()) {
     appendMessage("You've reached the message limit for this demo. Please subscribe to continue.", "bot");
