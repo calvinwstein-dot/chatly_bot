@@ -479,24 +479,29 @@
             </div>
 
             <div class="section">
-                <h2>📋 Widget Embed Codes</h2>
+                <h2>📋 Widget Embed Code</h2>
                 
-                <div style="margin-bottom: 25px; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px;">
-                    <strong>⚠️ Important:</strong> Use the <strong>Testing URL</strong> for client testing. Use the <strong>Production Code</strong> for their live website.
+                <div style="margin-bottom: 25px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 8px;">
+                    <strong>✅ Smart Detection:</strong> This ONE code works for both testing and production!
+                    <ul style="margin: 10px 0 0 20px; color: #666;">
+                        <li><strong>Client testing directly:</strong> Opens URL in browser → Shows demo with subscription buttons</li>
+                        <li><strong>Embedded on website:</strong> Visitors see INACTIVE until subscription paid</li>
+                        <li><strong>After payment:</strong> Works for everyone automatically</li>
+                    </ul>
                 </div>
 
-                <h3 style="color: #667eea; margin-bottom: 10px;">🧪 Testing URL (For Client Testing Only)</h3>
-                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Send this URL to your client to test the widget with demo mode active:</p>
-                <div style="position: relative; margin-bottom: 30px;">
-                    <input type="text" id="testingUrl" readonly style="width: 100%; padding: 12px; font-family: 'Courier New', monospace; font-size: 13px; border: 2px solid #ddd; border-radius: 8px; background: #f8f9fa;">
-                    <button onclick="copyTestingUrl()" style="position: absolute; top: 8px; right: 10px; background: #667eea; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">📋 Copy</button>
-                </div>
-
-                <h3 style="color: #667eea; margin-bottom: 10px;">🌐 Production Embed Code (For Client's Website)</h3>
-                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Client pastes this into their website HTML, just before the closing &lt;/body&gt; tag. <strong>Visitors will see INACTIVE until subscription is paid.</strong></p>
-                <div style="position: relative;">
+                <h3 style="color: #667eea; margin-bottom: 10px;">🌐 Embed Code (For Client's Website)</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Send this ONE code to your client. They can test it directly AND embed it on their website:</p>
+                <div style="position: relative; margin-bottom: 20px;">
                     <textarea id="embedCode" readonly style="width: 100%; min-height: 120px; font-family: 'Courier New', monospace; font-size: 13px; padding: 15px; border: 2px solid #ddd; border-radius: 8px; background: #f8f9fa; resize: vertical;"></textarea>
                     <button onclick="copyEmbedCode()" style="position: absolute; top: 10px; right: 10px; background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">📋 Copy Code</button>
+                </div>
+                
+                <h3 style="color: #667eea; margin-bottom: 10px;">🧪 Direct Testing URL (Optional)</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Client can also open this URL directly to test before embedding:</p>
+                <div style="position: relative;">
+                    <input type="text" id="testingUrl" readonly style="width: 100%; padding: 12px; font-family: 'Courier New', monospace; font-size: 13px; border: 2px solid #ddd; border-radius: 8px; background: #f8f9fa;">
+                    <button onclick="copyTestingUrl()" style="position: absolute; top: 8px; right: 10px; background: #667eea; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">📋 Copy</button>
                 </div>
             </div>
 
@@ -688,14 +693,14 @@
 
         function updateEmbedCode() {
             const baseUrl = window.location.origin;
-            const testToken = generateTestToken(currentBusiness);
             
-            // Testing URL with token
-            const testingUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}&testMode=${testToken}`;
-            document.getElementById('testingUrl').value = testingUrl;
-            
-            // Production embed code WITHOUT token
+            // Production URL WITHOUT token - works for both testing and embedding
             const productionUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}`;
+            
+            // Testing URL is the same
+            document.getElementById('testingUrl').value = productionUrl;
+            
+            // Production embed code
             const embedCode = `<iframe 
   src="${productionUrl}"
   style="position: fixed; bottom: 20px; right: 20px; width: 400px; height: 600px; border: none; z-index: 9999; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"

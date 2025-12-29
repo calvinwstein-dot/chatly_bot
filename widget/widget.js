@@ -75,12 +75,11 @@ async function loadWidgetConfig() {
 
     // Check if this is a demo mode business
     if (config.isDemoMode) {
-      // Validate test token
-      const validToken = generateTestToken(businessName);
-      const hasValidToken = testToken === validToken;
+      // Detect if widget is embedded in an iframe
+      const isEmbedded = window.self !== window.top;
       
-      // If no active subscription and no valid token, show inactive state
-      if (!hasValidToken) {
+      // If embedded without token, show inactive for visitors
+      if (isEmbedded && !testToken) {
         demoStatus = {
           isDemo: true,
           inactive: true
@@ -89,15 +88,20 @@ async function loadWidgetConfig() {
         return;
       }
       
-      // Valid token - allow demo testing
-      const messagesUsed = getDemoMessageCount();
-      demoStatus = {
-        isDemo: true,
-        messageLimit: config.demoMessageLimit || 10,
-        messagesUsed: messagesUsed,
-        messagesRemaining: Math.max(0, (config.demoMessageLimit || 10) - messagesUsed),
-        expiryDate: config.demoExpiryDate,
-        stripePaymentLink: config.stripePaymentLink,
+      // If direct access OR has valid token, allow demo testing
+      const validToken = generateTestToken(businessName);
+      const hasValidToken = testToken === validToken;
+      
+      if (!isEmbedded || hasValidToken) {
+        // Direct access or valid token - allow demo testing
+        const messagesUsed = getDemoMessageCount();
+        demoStatus = {
+          isDemo: true,
+          messageLimit: config.demoMessageLimit || 10,
+          messagesUsed: messagesUsed,
+          messagesRemaining: Math.max(0, (config.demoMessageLimit || 10) - messagesUsed),
+          expiryDate: config.demoExpiryDate,
+          stripePaymentLink: config.stripePaymentLink,
         subscriptionPrices: config.subscriptionPrices,
         limitReached: messagesUsed >= (config.demoMessageLimit || 10)
       };
