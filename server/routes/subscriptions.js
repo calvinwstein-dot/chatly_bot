@@ -29,8 +29,16 @@ function hasActiveSubscription(businessName) {
       return false;
     }
     const data = JSON.parse(fs.readFileSync(SUBSCRIPTIONS_FILE, 'utf-8'));
+    
+    // Check both with and without "Demo" suffix for compatibility
+    const baseName = businessName.replace(/Demo$/, '');
+    const demoName = businessName.endsWith('Demo') ? businessName : `${businessName}Demo`;
+    
     const subscription = data.subscriptions?.find(
-      sub => sub.businessName === businessName && sub.status === 'active'
+      sub => (sub.businessName === businessName || 
+              sub.businessName === baseName || 
+              sub.businessName === demoName) && 
+             sub.status === 'active'
     );
     return !!subscription;
   } catch (error) {
