@@ -479,13 +479,25 @@
             </div>
 
             <div class="section">
-                <h2>📋 Embed Code</h2>
-                <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Copy this code and paste it into your client's website HTML, just before the closing &lt;/body&gt; tag:</p>
-                <div style="position: relative;">
-                    <textarea id="embedCode" readonly style="width: 100%; min-height: 150px; font-family: 'Courier New', monospace; font-size: 13px; padding: 15px; border: 2px solid #ddd; border-radius: 8px; background: #f8f9fa; resize: vertical;"></textarea>
-                    <button onclick="copyEmbedCode()" style="position: absolute; top: 10px; right: 10px; background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">📋 Copy Code</button>
+                <h2>📋 Widget Embed Codes</h2>
+                
+                <div style="margin-bottom: 25px; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px;">
+                    <strong>⚠️ Important:</strong> Use the <strong>Testing URL</strong> for client testing. Use the <strong>Production Code</strong> for their live website.
                 </div>
-                <p style="color: #666; font-size: 13px; margin-top: 10px;">💡 <strong>Direct Test URL:</strong> <a id="directTestUrl" href="#" target="_blank" style="color: var(--primary);"></a></p>
+
+                <h3 style="color: #667eea; margin-bottom: 10px;">🧪 Testing URL (For Client Testing Only)</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Send this URL to your client to test the widget with demo mode active:</p>
+                <div style="position: relative; margin-bottom: 30px;">
+                    <input type="text" id="testingUrl" readonly style="width: 100%; padding: 12px; font-family: 'Courier New', monospace; font-size: 13px; border: 2px solid #ddd; border-radius: 8px; background: #f8f9fa;">
+                    <button onclick="copyTestingUrl()" style="position: absolute; top: 8px; right: 10px; background: #667eea; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">📋 Copy</button>
+                </div>
+
+                <h3 style="color: #667eea; margin-bottom: 10px;">🌐 Production Embed Code (For Client's Website)</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Client pastes this into their website HTML, just before the closing &lt;/body&gt; tag. <strong>Visitors will see INACTIVE until subscription is paid.</strong></p>
+                <div style="position: relative;">
+                    <textarea id="embedCode" readonly style="width: 100%; min-height: 120px; font-family: 'Courier New', monospace; font-size: 13px; padding: 15px; border: 2px solid #ddd; border-radius: 8px; background: #f8f9fa; resize: vertical;"></textarea>
+                    <button onclick="copyEmbedCode()" style="position: absolute; top: 10px; right: 10px; background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">📋 Copy Code</button>
+                </div>
             </div>
 
             <div class="actions">
@@ -677,17 +689,20 @@
         function updateEmbedCode() {
             const baseUrl = window.location.origin;
             const testToken = generateTestToken(currentBusiness);
-            const widgetUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}&testMode=${testToken}`;
             
+            // Testing URL with token
+            const testingUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}&testMode=${testToken}`;
+            document.getElementById('testingUrl').value = testingUrl;
+            
+            // Production embed code WITHOUT token
+            const productionUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}`;
             const embedCode = `<iframe 
-  src="${widgetUrl}"
+  src="${productionUrl}"
   style="position: fixed; bottom: 20px; right: 20px; width: 400px; height: 600px; border: none; z-index: 9999; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"
   title="Customer Support Chat"
 ></iframe>`;
             
             document.getElementById('embedCode').value = embedCode;
-            document.getElementById('directTestUrl').href = widgetUrl;
-            document.getElementById('directTestUrl').textContent = widgetUrl;
         }
         
         function generateTestToken(businessName) {
@@ -697,6 +712,22 @@
                 hash = hash & hash;
             }
             return Math.abs(hash).toString(36);
+        }
+
+        function copyTestingUrl() {
+            const testingUrl = document.getElementById('testingUrl');
+            testingUrl.select();
+            document.execCommand('copy');
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Copied!';
+            btn.style.background = '#27ae60';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#667eea';
+            }, 2000);
         }
 
         function copyEmbedCode() {
@@ -712,7 +743,7 @@
             
             setTimeout(() => {
                 btn.textContent = originalText;
-                btn.style.background = '';
+                btn.style.background = '#28a745';
             }, 2000);
         }
 
