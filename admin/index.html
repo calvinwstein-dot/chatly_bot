@@ -29,6 +29,27 @@
             margin-bottom: 30px;
             font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
 
         .business-selector {
@@ -406,7 +427,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎨 Chatbot Business Config</h1>
+        <h1>
+            🎨 Chatbot Business Config
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+        </h1>
 
         <div class="business-selector" id="businessSelector">
             <!-- Buttons will be dynamically generated -->
@@ -552,12 +576,61 @@
     </div>
 
     <script>
+        // Authentication check - must run first, blocks page loading
+        (async function() {
+            const token = localStorage.getItem('adminToken');
+            
+            // No token - redirect immediately
+            if (!token) {
+                window.location.href = '/admin/login.html';
+                return;
+            }
+
+            // Verify token with server
+            try {
+                const response = await fetch('/api/admin/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token })
+                });
+
+                if (!response.ok) {
+                    localStorage.removeItem('adminToken');
+                    window.location.href = '/admin/login.html';
+                    return;
+                }
+
+                // Token valid - initialize app
+                initializeApp();
+            } catch (error) {
+                console.error('Auth verification failed:', error);
+                localStorage.removeItem('adminToken');
+                window.location.href = '/admin/login.html';
+            }
+        })();
+
+        // Logout function
+        function logout() {
+            const token = localStorage.getItem('adminToken');
+            if (token) {
+                fetch('/api/admin/logout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token })
+                }).catch(console.error);
+            }
+            localStorage.removeItem('adminToken');
+            window.location.href = '/admin/login.html';
+        }
+
         let currentBusiness = null;
         let businesses = {};
         let currentMetrics = null;
 
-        // Initialize - load business list from server
-        loadBusinessList();
+        // Initialize app after authentication
+        function initializeApp() {
+            loadBusinessList();
+        }
 
         async function loadBusinessList() {
             try {
