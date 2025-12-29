@@ -694,15 +694,18 @@
         function updateEmbedCode() {
             const baseUrl = window.location.origin;
             
-            // Production URL WITHOUT token - works for both testing and embedding
-            const productionUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}`;
+            // Generate test token for this business
+            const testToken = generateTestToken(currentBusiness);
             
-            // Testing URL is the same
-            document.getElementById('testingUrl').value = productionUrl;
+            // URL with testMode parameter
+            const embedUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}&testMode=${testToken}`;
             
-            // Production embed code
+            // Testing URL (same as embed URL)
+            document.getElementById('testingUrl').value = embedUrl;
+            
+            // Embed code with test token
             const embedCode = `<iframe 
-  src="${productionUrl}"
+  src="${embedUrl}"
   style="position: fixed; bottom: 20px; right: 20px; width: 400px; height: 600px; border: none; z-index: 9999; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"
   title="Customer Support Chat"
 ></iframe>`;

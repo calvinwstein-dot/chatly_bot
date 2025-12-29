@@ -75,11 +75,15 @@ async function loadWidgetConfig() {
 
     // Check if this is a demo mode business
     if (config.isDemoMode) {
-      // Detect if widget is embedded in an iframe
-      const isEmbedded = window.self !== window.top;
+      // Check for testMode parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const testModeParam = urlParams.get('testMode');
       
-      // If embedded without token, show inactive for visitors
-      if (isEmbedded && !testToken) {
+      // Generate valid test token for this business
+      const validToken = generateTestToken(businessName);
+      
+      // If no testMode parameter or invalid token, show inactive
+      if (!testModeParam || testModeParam !== validToken) {
         demoStatus = {
           isDemo: true,
           inactive: true
@@ -88,20 +92,15 @@ async function loadWidgetConfig() {
         return;
       }
       
-      // If direct access OR has valid token, allow demo testing
-      const validToken = generateTestToken(businessName);
-      const hasValidToken = testToken === validToken;
-      
-      if (!isEmbedded || hasValidToken) {
-        // Direct access or valid token - allow demo testing
-        const messagesUsed = getDemoMessageCount();
-        demoStatus = {
-          isDemo: true,
-          messageLimit: config.demoMessageLimit || 10,
-          messagesUsed: messagesUsed,
-          messagesRemaining: Math.max(0, (config.demoMessageLimit || 10) - messagesUsed),
-          expiryDate: config.demoExpiryDate,
-          stripePaymentLink: config.stripePaymentLink,
+      // Valid test token - allow demo testing
+      const messagesUsed = getDemoMessageCount();
+      demoStatus = {
+        isDemo: true,
+        messageLimit: config.demoMessageLimit || 10,
+        messagesUsed: messagesUsed,
+        messagesRemaining: Math.max(0, (config.demoMessageLimit || 10) - messagesUsed),
+        expiryDate: config.demoExpiryDate,
+        stripePaymentLink: config.stripePaymentLink,
         subscriptionPrices: config.subscriptionPrices,
         limitReached: messagesUsed >= (config.demoMessageLimit || 10)
       };
