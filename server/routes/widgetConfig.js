@@ -6,7 +6,13 @@ import path from "path";
 const router = express.Router();
 
 function loadBusinessProfile(businessName) {
-  const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
+  let filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
+  
+  // If file doesn't exist, try adding "Demo" suffix
+  if (!fs.existsSync(filePath)) {
+    filePath = path.resolve(`server/businessProfiles/${businessName}Demo.json`);
+  }
+  
   const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data);
 }
