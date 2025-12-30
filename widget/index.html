@@ -17,8 +17,8 @@
       </div>
     </header>
     <div id="chat-messages"></div>
-    <form id="chat-form">
-      <input id="chat-input" type="text" placeholder="Type your message..." />
+    <form id="chat-form" autocomplete="off">
+      <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" name="message" />
       <button 
         class="chatly-mic-btn" 
         type="button" 

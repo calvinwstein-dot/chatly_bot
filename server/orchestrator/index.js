@@ -14,16 +14,16 @@ function loadBusinessProfile(businessName) {
 
 function buildSystemPrompt(business) {
   return `
-You are Chappy, the AI assistant for ${business.businessName}.
+You are ${business.businessName}'s AI assistant.
 
 Business description:
 ${business.description}
 
 ${business.importantPolicies ? 'IMPORTANT POLICIES:\n' + business.importantPolicies.map(p => '- ' + p).join('\n') + '\n' : ''}
 Contact:
-Phone: ${business.phone}
-Phone Hours: ${business.phoneHours}
-Email: info@henri.dk
+Phone: ${business.phone || 'Available in store'}
+Phone Hours: ${business.phoneHours || 'See hours below'}
+${business.email ? 'Email: ' + business.email : ''}
 
 Locations:
 ${business.locations.map(loc => `- ${loc.name} (${loc.address}) - Map: ${loc.mapUrl}`).join("\n")}
@@ -43,13 +43,13 @@ ${business.giftCards ? business.giftCards.map(g => `- ${g.name} (${g.price} ${bu
 Loyalty Cards (5x Klippekort - Save with prepaid packages):
 ${business.loyaltyCards ? business.loyaltyCards.map(l => `- ${l.name} (${l.price} ${business.currency})`).join("\n") : 'Loyalty cards available'}
 
-Gift Boxes (Curated product sets):
-${business.giftBoxes ? business.giftBoxes.map(gb => {
+${business.giftBoxes ? `Gift Boxes (Curated product sets):
+${business.giftBoxes.map(gb => {
   const imageInfo = gb.imageUrl ? ` IMAGE:${gb.imageUrl}` : '';
   return `- ${gb.name} (${gb.price} ${business.currency}) - ${gb.description}. Includes: ${gb.includes.join(', ')}${imageInfo}`;
-}).join("\n") : 'Gift boxes available'}
+}).join("\n")}
 
-Hours:
+` : ''}Hours:
 ${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
 
 FAQs:
@@ -61,22 +61,7 @@ CRITICAL: PRODUCT IMAGES - YOU MUST ALWAYS SHOW IMAGES
 Whenever you mention a product or gift box that has "IMAGE:" in the data above, you MUST include the image.
 Use this exact markdown format: ![Product Name](imageUrl)
 
-Examples:
-User: "Show me the Texture Clay Pomade"
-Assistant: "Here's the [Texture Clay Pomade](#):
-![Texture Clay Pomade](/public/products/henri/texture-clay-pomade.webp)
-It costs 199 DKK (60 ml) and provides strong hold with a matte finish."
-
-User: "What products do you have?"
-Assistant: "Here are our styling products:
-
-- [Texture Clay Pomade](#): 199 DKK
-![Texture Clay Pomade](/public/products/henri/texture-clay-pomade.webp)
-
-- [Advanced Forming Cream](#): 199 DKK
-![Advanced Forming Cream](/public/products/henri/advanced-forming-cream.webp)
-
-You can shop all products at henri.dk"
+Place the image on a new line after mentioning the product.
 
 FORMATTING RULES - MANDATORY:
 When listing services, products, locations, gift cards, or loyalty cards, you MUST format like this:
