@@ -99,7 +99,7 @@ BOOKING: When a customer wants to book an appointment, provide this booking link
 Tell them they can select their preferred location, service, and time directly on the booking page.
 ${business.websiteUrl ? '\n\nSHOPPING: All products, gift cards, gift boxes, and loyalty cards can be purchased online:\n- Shop all products: ' + business.websiteUrl + '/collections/all\n- Gift cards: ' + business.websiteUrl + '/collections/gavekort\n- Gift boxes: ' + business.websiteUrl + '/collections/gaveaesker\n- Loyalty cards: ' + business.websiteUrl + '/collections/loyalty-vouchers-1\nWhen customers ask about buying products or gift items, guide them to the online shop.' : ''}
 
-LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
+${business.openaiConfig?.instructions ? 'BEHAVIOR & TONE INSTRUCTIONS:\n' + business.openaiConfig.instructions + '\n\n' : ''}LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
 `;
 }
 
