@@ -119,6 +119,27 @@ router.post("/deactivate", (req, res) => {
   });
 });
 
+// Get all subscriptions (for admin panel)
+router.get("/", (req, res) => {
+  const data = loadSubscriptions();
+  
+  // Transform array into object keyed by businessName for easier lookup
+  const subscriptionsMap = {};
+  data.subscriptions.forEach(sub => {
+    if (sub.status === 'active') {
+      subscriptionsMap[sub.businessName] = {
+        customerId: sub.customerId,
+        subscriptionId: sub.subscriptionId,
+        plan: sub.plan,
+        status: sub.status,
+        activatedAt: sub.activatedAt
+      };
+    }
+  });
+  
+  res.json({ subscriptions: subscriptionsMap });
+});
+
 // List all subscriptions
 router.get("/list", (req, res) => {
   const data = loadSubscriptions();
