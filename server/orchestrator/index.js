@@ -13,11 +13,8 @@ function loadBusinessProfile(businessName) {
 }
 
 function buildSystemPrompt(business) {
-  // Use custom instructions from openaiConfig if available
-  const customInstructions = business.openaiConfig?.instructions || `You are Chappy, the AI assistant for ${business.businessName}.`;
-  
   return `
-${customInstructions}
+You are Chappy, the AI assistant for ${business.businessName}.
 
 Business description:
 ${business.description}
@@ -149,10 +146,7 @@ export async function handleChat({ sessionId, message, language = 'en', business
       content: promptWithLanguage
     };
     const messages = [system, ...session.history, { role: "user", content: message }];
-    
-    // Use model from business profile if available
-    const model = businessProfile.openaiConfig?.model || 'gpt-4o-mini';
-    reply = await chatCompletion(messages, { model });
+    reply = await chatCompletion(messages);
   }
 
   // Post-process to ensure proper formatting
