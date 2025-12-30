@@ -11,6 +11,7 @@ const stripe = stripeKey ? new Stripe(stripeKey) : null;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 const SUBSCRIPTIONS_FILE = path.resolve("server/subscriptions.json");
+const SETUP_FEES_FILE = path.resolve("server/data/setupFees.json");
 
 function loadSubscriptions() {
   try {
@@ -24,6 +25,43 @@ function loadSubscriptions() {
     console.error("Error loading subscriptions:", error);
     return { subscriptions: [] };
   }
+}
+
+function loadSetupFees() {
+  try {
+    if (!fs.existsSync(SETUP_FEES_FILE)) {
+      const dir = path.dirname(SETUP_FEES_FILE);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      fs.writeFileSync(SETUP_FEES_FILE, JSON.stringify({ payments: [] }, null, 2));
+    }
+    const data = fs.readFileSync(SETUP_FEES_FILE, "utf-8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Error loading setup fees:", error);
+    return { payments: [] };
+  }
+}
+
+function saveSetupFees(data) {
+  fs.writeFileSync(SETUP_FEES_FILE, JSON.stringify(data, null, 2));
+}
+
+function addSetupFeePayment(businessName, customerEmail, customerId, amount, paymentIntentId) {
+  const data = loadSetupFees();
+  
+  data.payments.push({
+    businessName,
+    customerEmail,
+    customerId,
+    amount,
+    paymentIntentId,
+    paidAt: new Date().toISOString(),
+    profileCreated: false
+  });
+  
+  saveSetupFees(data);
 }
 
 function saveSubscriptions(data) {
@@ -86,8 +124,22 @@ router.post("/", express.raw({ type: 'application/json' }), async (req, res) => 
     case 'checkout.session.completed': {
       const session = event.data.object;
       
+      // Check if this is a one-time payment (setup fee) or subscription
+      if (session.mode === 'payment') {
+        // This is a one-time setup fee payment
+        const businessName = session.metadata?.businessName;
+        const customerEmail = session.customer_details?.email || session.customer_email;
+        const amount = session.amount_total / 100; // Convert from cents to dollars
+        
+        if (businessName) {
+          addSetupFeePayment(businessName, customerEmail, session.customer, amount, session.payment_intent);
+          console.log(`✓ Setup fee paid: $${amount} for ${businessName} (${customerEmail})`);
+        } else {
+          console.warn('⚠️ No businessName in payment metadata');
+        }
+      }
       // Get subscription ID if it's a subscription
-      if (session.subscription) {
+      else if (session.subscription) {
         try {
           // Retrieve the full subscription object to get metadata from payment link
           const subscription = await stripe.subscriptions.retrieve(session.subscription);

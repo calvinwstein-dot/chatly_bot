@@ -10,6 +10,7 @@ import debugRoute from "./routes/debug.js";
 import businessConfigRoute from "./routes/businessConfig.js";
 import subscriptionsRoute from "./routes/subscriptions.js";
 import metricsRoute from "./routes/metrics.js";
+import setupFeesRoute from "./routes/setupFees.js";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/api/debug", debugRoute);
 app.use("/api/business-config", businessConfigRoute);
 app.use("/api/subscriptions", subscriptionsRoute);
 app.use("/api/metrics", metricsRoute);
+app.use("/api/setup-fees", setupFeesRoute);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
