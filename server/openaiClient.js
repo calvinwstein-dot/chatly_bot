@@ -38,8 +38,9 @@ export const openai = new OpenAI({
 export { buildSystemPrompt, loadBusinessProfile };
 
 export async function chatCompletion(messages, options = {}) {
+  const model = options.model || config.defaultModel;
   const response = await openai.chat.completions.create({
-    model: config.defaultModel,
+    model,
     messages,
     temperature: options.temperature ?? 0.4
   });
