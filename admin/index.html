@@ -421,7 +421,7 @@
         <div class="config-panel">
             <div id="config-tab" class="tab-content active">
             <div class="section">
-                <h2>Basic Information</h2>
+                <h2>🏢 Basic Information</h2>
                 <div class="form-group">
                     <label>Business Name</label>
                     <input type="text" id="businessName" placeholder="Enter business name">
@@ -431,13 +431,37 @@
                     <input type="url" id="logoUrl" placeholder="https://example.com/logo.png">
                 </div>
                 <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" id="phone" placeholder="+45 12 34 56 78">
+                    <label>Business Description</label>
+                    <textarea id="description" rows="3" placeholder="Brief description of your business..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
                 </div>
             </div>
 
             <div class="section">
-                <h2>Color Palette</h2>
+                <h2>📞 Contact Information</h2>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="phone" placeholder="+45 12 34 56 78">
+                </div>
+                <div class="form-group">
+                    <label>Phone Hours</label>
+                    <input type="text" id="phoneHours" placeholder="Monday-Friday: 09:00-15:00">
+                </div>
+                <div class="form-group">
+                    <label>Website URL</label>
+                    <input type="url" id="websiteUrl" placeholder="https://www.example.com">
+                </div>
+                <div class="form-group">
+                    <label>Booking URL</label>
+                    <input type="url" id="bookingUrl" placeholder="https://booking.example.com">
+                </div>
+                <div class="form-group">
+                    <label>Currency</label>
+                    <input type="text" id="currency" placeholder="USD, EUR, DKK, etc." maxlength="3">
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎨 Color Palette</h2>
                 <div class="color-picker-group">
                     <div class="color-picker">
                         <input type="color" id="primaryColor" value="#2e7584">
@@ -464,7 +488,52 @@
             </div>
 
             <div class="section">
-                <h2>Preview</h2>
+                <h2>🤖 Chatbot Behavior</h2>
+                <div class="form-group">
+                    <label>AI Instructions (How should the bot respond?)</label>
+                    <textarea id="aiInstructions" rows="6" placeholder="You are a friendly customer support assistant for [Business]. Be helpful, professional..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 13px; resize: vertical;"></textarea>
+                    <small style="color: #666; display: block; margin-top: 5px;">This controls how the AI responds to customers. Be specific about tone, what it should/shouldn't do.</small>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎯 Demo Settings</h2>
+                <div class="form-group">
+                    <label>Demo Mode</label>
+                    <select id="isDemoMode" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                        <option value="true">Enabled (Limited Messages)</option>
+                        <option value="false">Disabled (Full Access)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Demo Message Limit</label>
+                    <input type="number" id="demoMessageLimit" placeholder="40" min="1" max="999">
+                    <small style="color: #666; display: block; margin-top: 5px;">How many messages allowed before showing subscription prompt?</small>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💳 Stripe Payment Links</h2>
+                <div class="form-group">
+                    <label>Monthly Subscription Link</label>
+                    <input type="url" id="stripeMonthly" placeholder="https://buy.stripe.com/...">
+                </div>
+                <div class="form-group">
+                    <label>Yearly Subscription Link</label>
+                    <input type="url" id="stripeYearly" placeholder="https://buy.stripe.com/...">
+                </div>
+                <div class="form-group">
+                    <label>Monthly Price Display</label>
+                    <input type="text" id="monthlyPrice" placeholder="$199/month">
+                </div>
+                <div class="form-group">
+                    <label>Yearly Price Display</label>
+                    <input type="text" id="yearlyPrice" placeholder="$1,990/year (2 months free)">
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎨 Widget Preview</h2>
                 <div class="preview-section">
                     <h3>Widget Preview</h3>
                     <div class="preview-widget">
@@ -507,12 +576,12 @@
             </div>
 
             <div class="actions">
-                <button class="btn btn-secondary" onclick="resetColors()">Reset Changes</button>
-                <button class="btn btn-primary" onclick="downloadConfig()">💾 Save Colors</button>
+                <button class="btn btn-secondary" onclick="resetForm()">Reset Changes</button>
+                <button class="btn btn-primary" onclick="downloadConfig()">💾 Save Configuration</button>
             </div>
 
             <div class="success-message" id="successMessage">
-                ✅ Colors saved successfully!
+                ✅ Configuration saved successfully!
             </div>
             </div>
             
@@ -715,22 +784,43 @@
             const config = businesses[businessName];
             if (!config) return;
             
-            document.getElementById('businessName').value = config.businessName;
-            document.getElementById('logoUrl').value = config.logoUrl;
-            document.getElementById('phone').value = config.phone;
+            // Basic Information
+            document.getElementById('businessName').value = config.businessName || '';
+            document.getElementById('logoUrl').value = config.logoUrl || '';
+            document.getElementById('description').value = config.description || '';
             
-            // Remove 'ff' suffix if present for color input
-            const primaryColor = config.primaryColor.replace('ff', '').substring(0, 7);
-            const secondaryColor = config.secondaryColor.replace('ff', '').substring(0, 7);
-            const textColor = config.textColor.replace('ff', '').substring(0, 7);
+            // Contact Information
+            document.getElementById('phone').value = config.phone || '';
+            document.getElementById('phoneHours').value = config.phoneHours || '';
+            document.getElementById('websiteUrl').value = config.websiteUrl || '';
+            document.getElementById('bookingUrl').value = config.bookingUrl || '';
+            document.getElementById('currency').value = config.currency || 'USD';
+            
+            // Colors - Remove 'ff' suffix if present for color input
+            const primaryColor = (config.primaryColor || '#2e7584ff').replace('ff', '').substring(0, 7);
+            const secondaryColor = (config.secondaryColor || '#0f4476ff').replace('ff', '').substring(0, 7);
+            const textColor = (config.textColor || '#050604ff').replace('ff', '').substring(0, 7);
             
             document.getElementById('primaryColor').value = primaryColor;
             document.getElementById('secondaryColor').value = secondaryColor;
             document.getElementById('textColor').value = textColor;
             
-            document.getElementById('primaryColorHex').textContent = config.primaryColor;
-            document.getElementById('secondaryColorHex').textContent = config.secondaryColor;
-            document.getElementById('textColorHex').textContent = config.textColor;
+            document.getElementById('primaryColorHex').textContent = config.primaryColor || '#2e7584ff';
+            document.getElementById('secondaryColorHex').textContent = config.secondaryColor || '#0f4476ff';
+            document.getElementById('textColorHex').textContent = config.textColor || '#050604ff';
+            
+            // AI Instructions
+            document.getElementById('aiInstructions').value = config.openaiConfig?.instructions || '';
+            
+            // Demo Settings
+            document.getElementById('isDemoMode').value = String(config.isDemoMode !== false);
+            document.getElementById('demoMessageLimit').value = config.demoMessageLimit || 40;
+            
+            // Stripe Settings
+            document.getElementById('stripeMonthly').value = config.stripePaymentLink?.monthly || '';
+            document.getElementById('stripeYearly').value = config.stripePaymentLink?.yearly || '';
+            document.getElementById('monthlyPrice').value = config.subscriptionPrices?.monthly || '$199/month';
+            document.getElementById('yearlyPrice').value = config.subscriptionPrices?.yearly || '$1,990/year';
             
             updatePreview();
             updateEmbedCode();
@@ -821,18 +911,48 @@
             document.getElementById('previewText').style.background = '#f8f9fa';
         }
 
-        function resetColors() {
+        function resetForm() {
             loadBusiness(currentBusiness);
         }
 
         async function downloadConfig() {
             const config = {
+                // Basic Information
                 businessName: document.getElementById('businessName').value,
                 logoUrl: document.getElementById('logoUrl').value,
+                description: document.getElementById('description').value,
+                
+                // Contact Information
+                phone: document.getElementById('phone').value,
+                phoneHours: document.getElementById('phoneHours').value,
+                websiteUrl: document.getElementById('websiteUrl').value,
+                bookingUrl: document.getElementById('bookingUrl').value,
+                currency: document.getElementById('currency').value,
+                
+                // Colors
                 primaryColor: document.getElementById('primaryColor').value + 'ff',
                 secondaryColor: document.getElementById('secondaryColor').value + 'ff',
                 textColor: document.getElementById('textColor').value + 'ff',
-                phone: document.getElementById('phone').value
+                
+                // AI Instructions
+                openaiConfig: {
+                    model: 'gpt-4o-mini',
+                    instructions: document.getElementById('aiInstructions').value
+                },
+                
+                // Demo Settings
+                isDemoMode: document.getElementById('isDemoMode').value === 'true',
+                demoMessageLimit: parseInt(document.getElementById('demoMessageLimit').value) || 40,
+                
+                // Stripe Settings
+                stripePaymentLink: {
+                    monthly: document.getElementById('stripeMonthly').value,
+                    yearly: document.getElementById('stripeYearly').value
+                },
+                subscriptionPrices: {
+                    monthly: document.getElementById('monthlyPrice').value,
+                    yearly: document.getElementById('yearlyPrice').value
+                }
             };
 
             try {
@@ -847,12 +967,15 @@
 
                 if (response.ok) {
                     const message = document.getElementById('successMessage');
-                    message.textContent = '✅ Colors saved successfully to ' + currentBusiness + '.json!';
+                    message.textContent = '✅ Configuration saved successfully to ' + currentBusiness + '.json!';
                     message.classList.add('show');
                     setTimeout(() => message.classList.remove('show'), 3000);
                     
                     // Update local cache
                     businesses[currentBusiness] = { ...businesses[currentBusiness], ...config };
+                    
+                    // Regenerate buttons to update subscription status if needed
+                    await generateBusinessButtons(Object.keys(businesses));
                 } else {
                     alert('Failed to save configuration. Please try again.');
                 }
