@@ -34,6 +34,7 @@ router.patch("/:businessName", (req, res) => {
       logoUrl, 
       businessName: newBusinessName,
       phone,
+      email,
       phoneHours,
       websiteUrl,
       bookingUrl,
@@ -55,6 +56,7 @@ router.patch("/:businessName", (req, res) => {
     
     // Contact fields
     if (phone !== undefined) profile.phone = phone;
+    if (email !== undefined) profile.email = email;
     if (phoneHours !== undefined) profile.phoneHours = phoneHours;
     if (websiteUrl !== undefined) profile.websiteUrl = websiteUrl;
     if (bookingUrl !== undefined) profile.bookingUrl = bookingUrl;
@@ -89,6 +91,8 @@ router.patch("/:businessName", (req, res) => {
     
     // Write back to file
     fs.writeFileSync(filePath, JSON.stringify(profile, null, 2));
+    
+    console.log(`✓ Business config updated: ${businessName}`);
     
     res.json({ success: true, profile });
   } catch (error) {

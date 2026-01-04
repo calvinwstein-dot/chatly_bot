@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import { config } from "./config.js";
+import { adminAuth } from "./middleware/auth.js";
 import chatRoute from "./routes/chat.js";
 import widgetConfigRoute from "./routes/widgetConfig.js";
 import debugRoute from "./routes/debug.js";
@@ -33,7 +34,7 @@ const __dirname = path.dirname(__filename);
 
 // Static widget
 app.use("/widget", express.static(path.join(__dirname, "../widget")));
-app.use("/admin", express.static(path.join(__dirname, "../admin")));
+app.use("/admin", adminAuth, express.static(path.join(__dirname, "../admin")));
 app.use("/public", express.static(path.join(__dirname, "../public")));
 
 // API routes

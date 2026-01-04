@@ -328,6 +328,11 @@ function init() {
     }
   });
 
+  // Prevent autocomplete suggestions
+  setTimeout(() => {
+    input.removeAttribute('readonly');
+  }, 100);
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const msg = input.value.trim();
