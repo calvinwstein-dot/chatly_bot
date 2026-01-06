@@ -1,0 +1,59 @@
+{
+  "name": "TestCafe",
+  "businessName": "TestCafe",
+  "description": "A cozy cafe serving artisanal coffee and fresh pastries",
+  "isDemoMode": true,
+  "demoMessageLimit": 40,
+  "primaryColor": "#8B4513",
+  "secondaryColor": "#D2691E",
+  "textColor": "#FFFFFF",
+  "chatTitle": "TestCafe Support",
+  "logoUrl": "",
+  "primaryLanguage": "en",
+  "secondaryLanguage": "da",
+  "openaiConfig": {
+    "model": "gpt-4o-mini",
+    "instructions": "You are a friendly and helpful customer service assistant for TestCafe, a cozy artisanal cafe. Help customers with menu questions, orders, hours, and general inquiries. Be warm and welcoming."
+  },
+  "products": [
+    {
+      "name": "Espresso",
+      "price": 35,
+      "category": "Coffee",
+      "description": "Rich and bold Italian espresso"
+    },
+    {
+      "name": "Cappuccino",
+      "price": 45,
+      "category": "Coffee",
+      "description": "Espresso with steamed milk and foam"
+    },
+    {
+      "name": "Latte",
+      "price": 45,
+      "category": "Coffee",
+      "description": "Smooth espresso with steamed milk"
+    },
+    {
+      "name": "Croissant",
+      "price": 30,
+      "category": "Pastries",
+      "description": "Fresh buttery croissant baked daily"
+    },
+    {
+      "name": "Cinnamon Roll",
+      "price": 35,
+      "category": "Pastries",
+      "description": "Homemade cinnamon roll with cream cheese frosting"
+    }
+  ],
+  "hours": {
+    "monday": "7:00 AM - 6:00 PM",
+    "tuesday": "7:00 AM - 6:00 PM",
+    "wednesday": "7:00 AM - 6:00 PM",
+    "thursday": "7:00 AM - 6:00 PM",
+    "friday": "7:00 AM - 8:00 PM",
+    "saturday": "8:00 AM - 8:00 PM",
+    "sunday": "8:00 AM - 6:00 PM"
+  }
+}

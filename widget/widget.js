@@ -270,6 +270,14 @@ async function sendMessage(message) {
 
   appendMessage(message, "user");
 
+  // Show typing indicator
+  const typingIndicator = document.getElementById('typing-indicator');
+  if (typingIndicator) {
+    typingIndicator.classList.remove('hidden');
+    const messagesDiv = document.getElementById("chat-messages");
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
   try {
     const demoMessageCount = getDemoMessageCount();
     
@@ -284,6 +292,11 @@ async function sendMessage(message) {
         demoMessageCount: demoMessageCount 
       })
     });
+
+    // Hide typing indicator
+    if (typingIndicator) {
+      typingIndicator.classList.add('hidden');
+    }
 
     const data = await res.json();
     if (data.error) {
@@ -301,6 +314,11 @@ async function sendMessage(message) {
     appendMessage(data.reply, "bot");
   } catch (e) {
     console.error("Chat error", e);
+    // Hide typing indicator on error
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+      typingIndicator.classList.add('hidden');
+    }
     appendMessage("Network error. Please try again.", "bot");
   }
 }
@@ -341,22 +359,78 @@ function init() {
     sendMessage(msg);
   });
 
-  // Language toggle
-  const langEn = document.getElementById("lang-en");
-  const langDa = document.getElementById("lang-da");
+  // Language dropdown
+  const languageBtn = document.getElementById("language-btn");
+  const languageMenu = document.getElementById("language-menu");
+  const currentLangDisplay = document.getElementById("current-lang");
+  const langOptions = document.querySelectorAll(".lang-option");
   
-  function setLanguage(lang) {
+  // Language code to recognition language mapping
+  const langToRecognition = {
+    'en': 'en-US',
+    'da': 'da-DK',
+    'es': 'es-ES',
+    'fr': 'fr-FR',
+    'de': 'de-DE',
+    'it': 'it-IT',
+    'pt': 'pt-PT',
+    'nl': 'nl-NL',
+    'pl': 'pl-PL',
+    'ru': 'ru-RU',
+    'zh': 'zh-CN',
+    'ja': 'ja-JP',
+    'ko': 'ko-KR',
+    'ar': 'ar-SA',
+    'hi': 'hi-IN',
+    'sv': 'sv-SE'
+  };
+  
+  function setLanguage(lang, label) {
     currentLanguage = lang;
     localStorage.setItem('chatLanguage', lang);
-    langEn.classList.toggle('active', lang === 'en');
-    langDa.classList.toggle('active', lang === 'da');
+    currentLangDisplay.textContent = label;
+    
+    // Update active state on options
+    langOptions.forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.lang === lang);
+    });
+    
+    // Update voice recognition language if active
+    if (recognition) {
+      recognition.lang = langToRecognition[lang] || 'en-US';
+    }
   }
   
-  langEn.addEventListener("click", () => setLanguage('en'));
-  langDa.addEventListener("click", () => setLanguage('da'));
+  // Toggle dropdown menu
+  languageBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    languageMenu.classList.toggle('hidden');
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!languageMenu.contains(e.target) && e.target !== languageBtn) {
+      languageMenu.classList.add('hidden');
+    }
+  });
+  
+  // Handle language selection
+  langOptions.forEach(option => {
+    option.addEventListener("click", () => {
+      const lang = option.dataset.lang;
+      const label = option.dataset.label;
+      setLanguage(lang, label);
+      languageMenu.classList.add('hidden');
+    });
+  });
   
   // Set initial language state
-  setLanguage(currentLanguage);
+  const initialLangOption = document.querySelector(`.lang-option[data-lang="${currentLanguage}"]`);
+  if (initialLangOption) {
+    setLanguage(currentLanguage, initialLangOption.dataset.label);
+  } else {
+    setLanguage('en', 'EN');
+  }
 
   // Voice input with Web Speech API
   const micBtn = document.getElementById("chatly-mic-button");
@@ -392,8 +466,8 @@ function init() {
       if (micBtn.classList.contains('listening')) {
         recognition.stop();
       } else {
-        // Set language for speech recognition
-        recognition.lang = currentLanguage === 'da' ? 'da-DK' : 'en-US';
+        // Set language for speech recognition using mapping
+        recognition.lang = langToRecognition[currentLanguage] || 'en-US';
         recognition.start();
       }
     });
