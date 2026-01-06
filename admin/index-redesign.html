@@ -674,6 +674,70 @@
         .loading-overlay.show {
             display: flex;
         }
+
+        /* Widget Customizer Styles */
+        .color-picker {
+            width: 60px;
+            height: 40px;
+            border: 2px solid var(--gray-300);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .shape-option {
+            cursor: pointer;
+            display: block;
+        }
+
+        .shape-option input[type="radio"] {
+            display: none;
+        }
+
+        .shape-preview {
+            padding: 20px 12px;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .shape-option input[type="radio"]:checked + .shape-preview {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        .shape-preview:hover {
+            transform: scale(1.02);
+        }
+
+        .icon-option {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--gray-300);
+            border-radius: 6px;
+            background: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-option:hover {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .icon-option.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -720,6 +784,10 @@
 
             <div class="nav-section">
                 <div class="nav-section-title">Tools</div>
+                <div class="nav-item" data-view="widget-customizer">
+                    <span class="nav-icon">🎨</span>
+                    Widget Customizer
+                </div>
                 <div class="nav-item" data-view="embed-code">
                     <span class="nav-icon">📋</span>
                     Embed Code
@@ -983,6 +1051,147 @@
                 </div>
                 <div id="subscriptionsContent">
                     <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Widget Customizer View -->
+        <div class="view-content" id="view-widget-customizer" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">Widget Customizer</h1>
+                <p class="page-subtitle">Customize colors, launcher shape, and preview changes in real-time</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 400px; gap: 24px;">
+                <!-- Customization Controls -->
+                <div>
+                    <!-- Color Section -->
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="card-header">
+                            <h2 class="card-title">🎨 Colors</h2>
+                            <p class="card-description">Customize widget colors</p>
+                        </div>
+                        <div class="card-body" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                            <div>
+                                <label class="form-label">Primary Color (Header)</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="color" id="customPrimaryColor" class="color-picker" value="#2563eb">
+                                    <input type="text" id="customPrimaryColorText" class="form-input" value="#2563eb" style="flex: 1;">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Secondary Color</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="color" id="customSecondaryColor" class="color-picker" value="#0f172a">
+                                    <input type="text" id="customSecondaryColorText" class="form-input" value="#0f172a" style="flex: 1;">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Text Color</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="color" id="customTextColor" class="color-picker" value="#111827">
+                                    <input type="text" id="customTextColorText" class="form-input" value="#111827" style="flex: 1;">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Background Color</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="color" id="customBgColor" class="color-picker" value="#ffffff">
+                                    <input type="text" id="customBgColorText" class="form-input" value="#ffffff" style="flex: 1;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Launcher Shape Section -->
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="card-header">
+                            <h2 class="card-title">⬜ Launcher Shape</h2>
+                            <p class="card-description">Choose the shape of the chat launcher button</p>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                                <label class="shape-option">
+                                    <input type="radio" name="launcherShape" value="50px" checked>
+                                    <div class="shape-preview" style="border-radius: 50px;">Rounded</div>
+                                </label>
+                                <label class="shape-option">
+                                    <input type="radio" name="launcherShape" value="12px">
+                                    <div class="shape-preview" style="border-radius: 12px;">Soft</div>
+                                </label>
+                                <label class="shape-option">
+                                    <input type="radio" name="launcherShape" value="4px">
+                                    <div class="shape-preview" style="border-radius: 4px;">Square</div>
+                                </label>
+                                <label class="shape-option">
+                                    <input type="radio" name="launcherShape" value="50%">
+                                    <div class="shape-preview" style="border-radius: 50%;">Circle</div>
+                                </label>
+                                <label class="shape-option">
+                                    <input type="radio" name="launcherShape" value="20px 20px 4px 4px">
+                                    <div class="shape-preview" style="border-radius: 20px 20px 4px 4px;">Top Round</div>
+                                </label>
+                                <label class="shape-option">
+                                    <input type="radio" name="launcherShape" value="4px 20px 20px 4px">
+                                    <div class="shape-preview" style="border-radius: 4px 20px 20px 4px;">Diagonal</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Launcher Icon Section -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">💬 Launcher Icon</h2>
+                            <p class="card-description">Select an icon for the launcher button</p>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px;">
+                                <button class="icon-option active" data-icon="💬">💬</button>
+                                <button class="icon-option" data-icon="💭">💭</button>
+                                <button class="icon-option" data-icon="📧">📧</button>
+                                <button class="icon-option" data-icon="📨">📨</button>
+                                <button class="icon-option" data-icon="📩">📩</button>
+                                <button class="icon-option" data-icon="✉️">✉️</button>
+                                <button class="icon-option" data-icon="🔔">🔔</button>
+                                <button class="icon-option" data-icon="❓">❓</button>
+                                <button class="icon-option" data-icon="❔">❔</button>
+                                <button class="icon-option" data-icon="💡">💡</button>
+                                <button class="icon-option" data-icon="⚡">⚡</button>
+                                <button class="icon-option" data-icon="🎯">🎯</button>
+                                <button class="icon-option" data-icon="🎪">🎪</button>
+                                <button class="icon-option" data-icon="🎨">🎨</button>
+                                <button class="icon-option" data-icon="🚀">🚀</button>
+                                <button class="icon-option" data-icon="⭐">⭐</button>
+                                <button class="icon-option" data-icon="🌟">🌟</button>
+                                <button class="icon-option" data-icon="✨">✨</button>
+                                <button class="icon-option" data-icon="👋">👋</button>
+                                <button class="icon-option" data-icon="🤝">🤝</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; display: flex; gap: 12px;">
+                        <button class="btn btn-primary" onclick="saveWidgetCustomization()">Save to Business Profile</button>
+                        <button class="btn btn-secondary" onclick="resetWidgetCustomization()">Reset to Defaults</button>
+                    </div>
+                </div>
+
+                <!-- Live Preview -->
+                <div>
+                    <div class="card" style="position: sticky; top: 20px;">
+                        <div class="card-header">
+                            <h2 class="card-title">👁️ Live Preview</h2>
+                            <p class="card-description">See changes in real-time</p>
+                        </div>
+                        <div class="card-body" style="padding: 0;">
+                            <iframe 
+                                id="widgetPreviewFrame" 
+                                style="width: 100%; height: 600px; border: none; background: #f3f4f6; border-radius: 0 0 12px 12px;"
+                                src="/widget/index.html?business=HenriDemo&testMode=dzyjmz&preview=true"
+                            ></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1660,10 +1869,121 @@ Report generated by Chatbot Analytics
             alert(message);
         }
 
+        // Widget Customizer Functions
+        function initWidgetCustomizer() {
+            const previewFrame = document.getElementById('widgetPreviewFrame');
+            
+            // Color inputs sync
+            ['Primary', 'Secondary', 'Text', 'Bg'].forEach(colorType => {
+                const picker = document.getElementById(`custom${colorType}Color`);
+                const text = document.getElementById(`custom${colorType}ColorText`);
+                
+                picker.addEventListener('input', (e) => {
+                    text.value = e.target.value;
+                    updatePreview();
+                });
+                
+                text.addEventListener('input', (e) => {
+                    if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                        picker.value = e.target.value;
+                        updatePreview();
+                    }
+                });
+            });
+
+            // Shape options
+            document.querySelectorAll('input[name="launcherShape"]').forEach(radio => {
+                radio.addEventListener('change', updatePreview);
+            });
+
+            // Icon options
+            document.querySelectorAll('.icon-option').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.icon-option').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    updatePreview();
+                });
+            });
+        }
+
+        function updatePreview() {
+            const previewFrame = document.getElementById('widgetPreviewFrame');
+            const previewWindow = previewFrame.contentWindow;
+            
+            if (previewWindow && previewWindow.document) {
+                const root = previewWindow.document.documentElement;
+                
+                // Update colors
+                root.style.setProperty('--primary', document.getElementById('customPrimaryColor').value);
+                root.style.setProperty('--secondary', document.getElementById('customSecondaryColor').value);
+                root.style.setProperty('--text', document.getElementById('customTextColor').value);
+                root.style.setProperty('--bg', document.getElementById('customBgColor').value);
+                
+                // Update launcher shape
+                const selectedShape = document.querySelector('input[name="launcherShape"]:checked').value;
+                root.style.setProperty('--launcher-shape', selectedShape);
+                
+                // Update launcher icon
+                const selectedIcon = document.querySelector('.icon-option.active').dataset.icon;
+                root.style.setProperty('--launcher-icon', `'${selectedIcon}'`);
+            }
+        }
+
+        async function saveWidgetCustomization() {
+            if (!currentBusiness) {
+                showError('Please select a business first');
+                return;
+            }
+
+            showLoading();
+            try {
+                const config = {
+                    primaryColor: document.getElementById('customPrimaryColor').value + 'ff',
+                    secondaryColor: document.getElementById('customSecondaryColor').value + 'ff',
+                    textColor: document.getElementById('customTextColor').value + 'ff',
+                    launcherShape: document.querySelector('input[name="launcherShape"]:checked').value,
+                    launcherIcon: document.querySelector('.icon-option.active').dataset.icon
+                };
+
+                const response = await fetch(`${API_BASE}/api/business-config/${currentBusiness}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+
+                if (response.ok) {
+                    showSuccess('Widget customization saved successfully!');
+                } else {
+                    throw new Error('Failed to save customization');
+                }
+            } catch (error) {
+                showError('Error saving customization: ' + error.message);
+            }
+            hideLoading();
+        }
+
+        function resetWidgetCustomization() {
+            document.getElementById('customPrimaryColor').value = '#2563eb';
+            document.getElementById('customPrimaryColorText').value = '#2563eb';
+            document.getElementById('customSecondaryColor').value = '#0f172a';
+            document.getElementById('customSecondaryColorText').value = '#0f172a';
+            document.getElementById('customTextColor').value = '#111827';
+            document.getElementById('customTextColorText').value = '#111827';
+            document.getElementById('customBgColor').value = '#ffffff';
+            document.getElementById('customBgColorText').value = '#ffffff';
+            
+            document.querySelector('input[name="launcherShape"][value="50px"]').checked = true;
+            document.querySelectorAll('.icon-option').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.icon-option[data-icon="💬"]').classList.add('active');
+            
+            updatePreview();
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             loadBusinessList();
             loadCombinedStatus();
+            initWidgetCustomizer();
         });
     </script>
 </body>
