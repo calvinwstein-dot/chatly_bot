@@ -49,7 +49,7 @@
     <div id="chat-messages">
     </div>
     <form id="chat-form" autocomplete="off">
-      <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" name="message" />
+      <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');" name="message" />
       <button 
         class="chatly-mic-btn" 
         type="button" 
@@ -71,7 +71,7 @@
           <path d="M6 11a6 6 0 0 0 12 0h-2a4 4 0 0 1-8 0H6z" />
         </svg>
       </button>
-      <button type="submit">Send</button>
+      <button type="submit" id="send-button">Send</button>
     </form>
   </div>
   <script src="widget.js"></script>

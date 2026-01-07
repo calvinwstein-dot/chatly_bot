@@ -58,7 +58,22 @@ router.patch("/:businessName", (req, res) => {
       isDemoMode,
       demoMessageLimit,
       stripePaymentLink,
-      subscriptionPrices
+      subscriptionPrices,
+      launcherColor,
+      headerColor,
+      userBubbleColor,
+      userTextColor,
+      botBubbleColor,
+      botTextColor,
+      widgetBgColor,
+      borderColor,
+      launcherStyle,
+      launcherShape,
+      launcherText,
+      sendButtonColor,
+      sendButtonText,
+      primaryLanguage,
+      secondaryLanguage
     } = req.body;
     
     // Basic fields
@@ -67,6 +82,29 @@ router.patch("/:businessName", (req, res) => {
     if (textColor !== undefined) profile.textColor = textColor;
     if (logoUrl !== undefined) profile.logoUrl = logoUrl;
     if (newBusinessName !== undefined) profile.businessName = newBusinessName;
+    
+    // Granular color customization
+    if (launcherColor !== undefined) profile.launcherColor = launcherColor;
+    if (headerColor !== undefined) profile.headerColor = headerColor;
+    if (userBubbleColor !== undefined) profile.userBubbleColor = userBubbleColor;
+    if (userTextColor !== undefined) profile.userTextColor = userTextColor;
+    if (botBubbleColor !== undefined) profile.botBubbleColor = botBubbleColor;
+    if (botTextColor !== undefined) profile.botTextColor = botTextColor;
+    if (widgetBgColor !== undefined) profile.widgetBgColor = widgetBgColor;
+    if (borderColor !== undefined) profile.borderColor = borderColor;
+    
+    // Launcher customization
+    if (launcherStyle !== undefined) profile.launcherStyle = launcherStyle;
+    if (launcherShape !== undefined) profile.launcherShape = launcherShape;
+    if (launcherText !== undefined) profile.launcherText = launcherText;
+    
+    // Send button customization
+    if (sendButtonColor !== undefined) profile.sendButtonColor = sendButtonColor;
+    if (sendButtonText !== undefined) profile.sendButtonText = sendButtonText;
+    
+    // Language settings
+    if (primaryLanguage !== undefined) profile.primaryLanguage = primaryLanguage;
+    if (secondaryLanguage !== undefined) profile.secondaryLanguage = secondaryLanguage;
     
     // Contact fields
     if (phone !== undefined) profile.phone = phone;

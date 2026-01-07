@@ -6,13 +6,13 @@
   "textColor": "#cf0cbfff",
   "launcherColor": "#e68affff",
   "headerColor": "#e68affff",
-  "userBubbleColor": "#e68affff",
+  "userBubbleColor": "#d666f4ff",
   "userTextColor": "#ffffffff",
-  "botBubbleColor": "#fbd0edff",
+  "botBubbleColor": "#f2f3beff",
   "botTextColor": "#cf0cbfff",
   "widgetBgColor": "#ffffffff",
   "borderColor": "#fbd0edff",
-  "launcherStyle": "message",
+  "launcherStyle": "heart",
   "launcherText": "Talk to us",
   "primaryLanguage": "da",
   "secondaryLanguage": "en",
@@ -276,5 +276,6 @@
   "openaiConfig": {
     "model": "gpt-4o-mini",
     "instructions": "You are a friendly and professional customer support assistant for Blonde Specialist CPH, a premium blonde hair salon in Copenhagen. Your role is to help customers with booking appointments, answering questions about services, prices, and policies. Be warm, enthusiastic about beautiful blonde hair, and helpful. Always provide accurate information from the business profile. If you don't know something, politely suggest they contact the salon directly or book a consultation."
-  }
+  },
+  "launcherShape": "pill"
 }

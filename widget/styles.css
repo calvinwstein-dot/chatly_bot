@@ -154,10 +154,6 @@ body {
   z-index: 9999;
 }
 
-.language-menu.open-upward {
-  /* Position set dynamically via JS */
-}
-
 .language-menu.hidden {
   display: none;
 }
@@ -173,6 +169,10 @@ body {
   color: #374151;
   transition: background 0.2s;
   display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .lang-option:hover {
@@ -218,14 +218,14 @@ body {
 }
 
 .message.user {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)), var(--user-bubble-color, var(--primary));
+  background: var(--user-bubble-color, var(--primary));
   color: var(--user-text-color, #fff);
   margin-left: auto;
   position: relative;
 }
 
 .message.bot {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)), var(--bot-bubble-color, #e5e7eb);
+  background: var(--bot-bubble-color, #e5e7eb);
   color: var(--bot-text-color, var(--text));
   position: relative;
 }
@@ -308,11 +308,12 @@ body {
 #chat-form {
   display: flex;
   border-top: 1px solid var(--border-color, #e5e7eb);
+  background: white;
 }
 
 .chatly-mic-btn {
   border: none;
-  background: transparent;
+  background: transparent !important;
   padding: 0 8px;
   cursor: pointer;
   transition: transform 0.2s;
@@ -345,7 +346,7 @@ body {
 }
 
 .chatly-mic-btn.listening .chatly-mic-icon {
-  fill: #ef4444;
+  fill: #fb923c;
 }
 
 @keyframes pulse {
@@ -374,7 +375,7 @@ body {
 
 /* Demo Mode Styles */
 .demo-bar {
-  background: #E53935;
+  background: #fb923c;
   padding: 10px 16px;
   display: flex;
   align-items: center;

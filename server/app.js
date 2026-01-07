@@ -62,6 +62,14 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Set UTF-8 charset for HTML files
+app.use((req, res, next) => {
+  if (req.path.endsWith('.html')) {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  }
+  next();
+});
+
 // Static widget
 app.use("/widget", express.static(path.join(__dirname, "../widget")));
 app.use("/admin", adminAuth, express.static(path.join(__dirname, "../admin")));

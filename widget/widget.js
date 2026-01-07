@@ -66,10 +66,41 @@ async function loadWidgetConfig() {
     document.documentElement.style.setProperty("--widget-bg-color", config.widgetBgColor);
     document.documentElement.style.setProperty("--border-color", config.borderColor);
 
-    // Update launcher text
+    // Apply launcher shape
     const launcherEl = document.getElementById("chat-launcher");
-    if (config.launcherText) {
+    const shapes = {
+      'pill': { borderRadius: '50px', padding: '14px 20px', width: 'auto', height: 'auto', textVisible: true },
+      'circle': { borderRadius: '50%', padding: '16px', width: '56px', height: '56px', textVisible: false },
+      'rounded-square': { borderRadius: '16px', padding: '14px 20px', width: 'auto', height: 'auto', textVisible: true },
+      'square': { borderRadius: '0px', padding: '14px 20px', width: 'auto', height: 'auto', textVisible: true },
+      'stadium': { borderRadius: '50px', padding: '12px 28px', width: 'auto', height: 'auto', textVisible: true },
+      'capsule': { borderRadius: '50px', padding: '18px 16px', width: 'auto', height: 'auto', textVisible: true },
+      'soft-square': { borderRadius: '8px', padding: '14px 20px', width: 'auto', height: 'auto', textVisible: true },
+      'minimal': { borderRadius: '50px', padding: '10px 18px', width: 'auto', height: 'auto', textVisible: true }
+    };
+    
+    const shape = shapes[config.launcherShape] || shapes['pill'];
+    launcherEl.style.borderRadius = shape.borderRadius;
+    launcherEl.style.padding = shape.padding;
+    launcherEl.style.width = shape.width;
+    launcherEl.style.height = shape.height;
+
+    // Update launcher text
+    if (config.launcherText && shape.textVisible) {
       launcherEl.textContent = config.launcherText;
+    } else if (!shape.textVisible) {
+      launcherEl.textContent = '';
+    }
+
+    // Update send button
+    const sendButton = document.getElementById("send-button");
+    if (sendButton) {
+      if (config.sendButtonText) {
+        sendButton.textContent = config.sendButtonText;
+      }
+      if (config.sendButtonColor) {
+        sendButton.style.background = config.sendButtonColor;
+      }
     }
 
     const titleEl = document.getElementById("chat-title");

@@ -8,11 +8,11 @@
   "headerColor": "#2e7584ff",
   "userBubbleColor": "#2e7584ff",
   "userTextColor": "#ffffffff",
-  "botBubbleColor": "#e5e7ebff",
-  "botTextColor": "#050604ff",
-  "widgetBgColor": "#f9fafbff",
-  "borderColor": "#e5e7ebff",
-  "launcherStyle": "message",
+  "botBubbleColor": "#ffffffff",
+  "botTextColor": "#2e7584ff",
+  "widgetBgColor": "#f0f8ffff",
+  "borderColor": "#ffffffff",
+  "launcherStyle": "rocket",
   "launcherText": "Talk to us",
   "primaryLanguage": "da",
   "secondaryLanguage": "en",
@@ -339,5 +339,8 @@
   "openaiConfig": {
     "model": "gpt-4o-mini",
     "instructions": ""
-  }
+  },
+  "launcherShape": "pill",
+  "sendButtonColor": "#2e7584ff",
+  "sendButtonText": "Send"
 }
