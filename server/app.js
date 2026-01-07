@@ -5,12 +5,16 @@ import { fileURLToPath } from "url";
 
 process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled Rejection at:", promise, "reason:", reason);
-  // Don't exit the process, just log the error
+  // Log but don't exit for promise rejections
 });
 
 process.on("uncaughtException", (error) => {
   console.error("Uncaught Exception:", error);
-  // Don't exit the process, just log the error
+  console.error("Server will exit due to uncaught exception");
+  // Exit after a brief delay to allow logs to flush
+  setTimeout(() => {
+    process.exit(1);
+  }, 1000);
 });
 
 import { config } from "./config.js";
