@@ -2,11 +2,14 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Start Server",
+			"label": "Start Server (Manual)",
 			"type": "shell",
-			"command": "Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force; node server/app.js",
-			"isBackground": true,
-			"problemMatcher": []
+			"command": "npm run start:dev",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			}
 		}
 	]
 }

@@ -4,6 +4,20 @@ import path from "path";
 
 const router = express.Router();
 
+// List all business profiles - MUST be before /:businessName route
+router.get("/list", (req, res) => {
+  try {
+    const profilesDir = path.resolve("server/businessProfiles");
+    const files = fs.readdirSync(profilesDir);
+    const businesses = files
+      .filter(file => file.endsWith('.json'))
+      .map(file => file.replace('.json', ''));
+    res.json({ businesses });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to list business profiles" });
+  }
+});
+
 // Get business profile
 router.get("/:businessName", (req, res) => {
   try {
@@ -97,20 +111,6 @@ router.patch("/:businessName", (req, res) => {
     res.json({ success: true, profile });
   } catch (error) {
     res.status(500).json({ error: "Failed to update business profile", details: error.message });
-  }
-});
-
-// List all business profiles
-router.get("/", (req, res) => {
-  try {
-    const profilesDir = path.resolve("server/businessProfiles");
-    const files = fs.readdirSync(profilesDir);
-    const businesses = files
-      .filter(file => file.endsWith('.json'))
-      .map(file => file.replace('.json', ''));
-    res.json({ businesses });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to list business profiles" });
   }
 });
 

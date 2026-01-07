@@ -4,8 +4,7 @@
   "type": "module",
   "main": "server/app.js",
   "scripts": {
-    "dev": "nodemon server/app.js",
-    "start": "nodemon server/app.js",
+    "start:dev": "node server/app.js",
     "start:prod": "node server/app.js"
   },
   "dependencies": {

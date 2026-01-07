@@ -1,3 +1,22 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+// Validate environment variables before proceeding
+const requiredEnvVars = ['OPENAI_API_KEY'];
+const missingVars = requiredEnvVars.filter(v => !process.env[v]);
+if (missingVars.length > 0) {
+  console.error('❌ Missing required environment variables:', missingVars);
+  console.error('Please check your .env file');
+  process.exit(1);
+}
+
+console.log('✅ Environment loaded:', {
+  port: process.env.PORT || 3001,
+  model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+  hasOpenAIKey: !!process.env.OPENAI_API_KEY,
+  hasElevenLabsKey: !!process.env.ELEVENLABS_API_KEY
+});
+
 import express from "express";
 import cors from "cors";
 import path from "path";
