@@ -53,11 +53,35 @@ ${business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n")}
 
 Always answer using ONLY this business's information.
 
-CRITICAL: PRODUCT IMAGES - YOU MUST ALWAYS SHOW IMAGES
-Whenever you mention a product or gift box that has "IMAGE:" in the data above, you MUST include the image.
-Use this exact markdown format: ![Product Name](imageUrl)
+╔══════════════════════════════════════════════════════════════╗
+║  🚨 CRITICAL: YOU MUST SHOW PRODUCT IMAGES - NON-NEGOTIABLE ║
+╚══════════════════════════════════════════════════════════════╝
 
-Place the image on a new line after mentioning the product.
+WHEN TO SHOW IMAGES (ALWAYS - NO EXCEPTIONS):
+1. When user asks "what products do you have?"
+2. When user asks about specific products
+3. When user asks "show me your products"
+4. When recommending products
+5. When mentioning ANY product that has "IMAGE:" in the data
+6. When discussing gift boxes
+
+HOW TO SHOW IMAGES:
+- Extract the imageUrl from the IMAGE: tag
+- Use EXACT markdown format: ![Product Name](imageUrl)
+- Place image on NEW LINE immediately after mentioning product
+- NEVER skip images - they are REQUIRED
+
+EXAMPLE - Showing Products:
+User: "What products do you recommend?"
+Assistant: "Here are our popular styling products:
+
+- [Texture Clay Pomade](#): 199 DKK (60 ml)
+![Texture Clay Pomade](/public/products/henri/texture-clay-pomade.webp)
+
+- [Advanced Forming Cream](#): 199 DKK (60 ml)
+![Advanced Forming Cream](/public/products/henri/advanced-forming-cream.webp)
+
+Both are excellent for daily styling!"
 
 FORMATTING RULES - MANDATORY:
 When listing services, products, locations, gift cards, or loyalty cards, you MUST format like this:
