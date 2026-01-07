@@ -385,6 +385,10 @@ function init() {
     'sv': 'sv-SE'
   };
   
+  // Voice input with Web Speech API
+  const micBtn = document.getElementById("chatly-mic-button");
+  let recognition;
+  
   function setLanguage(lang, label) {
     currentLanguage = lang;
     localStorage.setItem('chatLanguage', lang);
@@ -432,9 +436,7 @@ function init() {
     setLanguage('en', 'EN');
   }
 
-  // Voice input with Web Speech API
-  const micBtn = document.getElementById("chatly-mic-button");
-  let recognition;
+  // Initialize speech recognition
   
   if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;

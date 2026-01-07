@@ -3,6 +3,9 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
+process.on("unhandledRejection", console.error);
+process.on("uncaughtException", console.error);
+
 import { config } from "./config.js";
 import { adminAuth } from "./middleware/auth.js";
 import chatRoute from "./routes/chat.js";

@@ -36,6 +36,30 @@
             line-height: 1.6;
         }
 
+        /* Launcher Preview Styles */
+        .launcher-pill {
+            padding: 14px 20px;
+            border-radius: 50px;
+        }
+
+        .launcher-circle {
+            padding: 14px 20px;
+            border-radius: 50%;
+        }
+
+        .launcher-square {
+            padding: 14px 20px;
+            border-radius: 12px;
+        }
+
+        .launcher-minimal {
+            padding: 12px 18px;
+            border-radius: 8px;
+            background: transparent !important;
+            border: 2px solid var(--preview-launcher-color, #2563eb);
+            color: var(--preview-launcher-color, #2563eb);
+        }
+
         /* Sidebar */
         .sidebar {
             position: fixed;
@@ -674,70 +698,6 @@
         .loading-overlay.show {
             display: flex;
         }
-
-        /* Widget Customizer Styles */
-        .color-picker {
-            width: 60px;
-            height: 40px;
-            border: 2px solid var(--gray-300);
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .shape-option {
-            cursor: pointer;
-            display: block;
-        }
-
-        .shape-option input[type="radio"] {
-            display: none;
-        }
-
-        .shape-preview {
-            padding: 20px 12px;
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s;
-            border: 2px solid transparent;
-        }
-
-        .shape-option input[type="radio"]:checked + .shape-preview {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            transform: scale(1.05);
-        }
-
-        .shape-preview:hover {
-            transform: scale(1.02);
-        }
-
-        .icon-option {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--gray-300);
-            border-radius: 6px;
-            background: white;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .icon-option:hover {
-            border-color: var(--primary);
-            transform: scale(1.1);
-        }
-
-        .icon-option.active {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            transform: scale(1.1);
-        }
     </style>
 </head>
 <body>
@@ -784,10 +744,6 @@
 
             <div class="nav-section">
                 <div class="nav-section-title">Tools</div>
-                <div class="nav-item" data-view="widget-customizer">
-                    <span class="nav-icon">🎨</span>
-                    Widget Customizer
-                </div>
                 <div class="nav-item" data-view="embed-code">
                     <span class="nav-icon">📋</span>
                     Embed Code
@@ -854,29 +810,133 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Brand Colors</h2>
-                    <p class="card-description">Customize your chatbot appearance</p>
+                    <h2 class="card-title">Widget Colors</h2>
+                    <p class="card-description">Customize every aspect of your chatbot appearance</p>
                 </div>
                 <div class="color-grid">
                     <div class="color-picker-box">
-                        <label>Primary Color</label>
+                        <label>Chat Bubble (Launcher)</label>
                         <div class="color-picker-wrapper">
-                            <input type="color" id="primaryColor" value="#6366f1">
-                            <span class="color-hex" id="primaryColorHex">#6366f1</span>
+                            <input type="color" id="launcherColor" value="#2563eb">
+                            <span class="color-hex" id="launcherColorHex">#2563eb</span>
                         </div>
                     </div>
                     <div class="color-picker-box">
-                        <label>Secondary Color</label>
+                        <label>Header Background</label>
                         <div class="color-picker-wrapper">
-                            <input type="color" id="secondaryColor" value="#8b5cf6">
-                            <span class="color-hex" id="secondaryColorHex">#8b5cf6</span>
+                            <input type="color" id="headerColor" value="#2563eb">
+                            <span class="color-hex" id="headerColorHex">#2563eb</span>
                         </div>
                     </div>
                     <div class="color-picker-box">
-                        <label>Text Color</label>
+                        <label>User Message Bubble</label>
                         <div class="color-picker-wrapper">
-                            <input type="color" id="textColor" value="#1f2937">
-                            <span class="color-hex" id="textColorHex">#1f2937</span>
+                            <input type="color" id="userBubbleColor" value="#2563eb">
+                            <span class="color-hex" id="userBubbleColorHex">#2563eb</span>
+                        </div>
+                    </div>
+                    <div class="color-picker-box">
+                        <label>User Message Text</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="userTextColor" value="#ffffff">
+                            <span class="color-hex" id="userTextColorHex">#ffffff</span>
+                        </div>
+                    </div>
+                    <div class="color-picker-box">
+                        <label>Bot Message Bubble</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="botBubbleColor" value="#e5e7eb">
+                            <span class="color-hex" id="botBubbleColorHex">#e5e7eb</span>
+                        </div>
+                    </div>
+                    <div class="color-picker-box">
+                        <label>Bot Message Text</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="botTextColor" value="#1f2937">
+                            <span class="color-hex" id="botTextColorHex">#1f2937</span>
+                        </div>
+                    </div>
+                    <div class="color-picker-box">
+                        <label>Widget Background</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="widgetBgColor" value="#f9fafb">
+                            <span class="color-hex" id="widgetBgColorHex">#f9fafb</span>
+                        </div>
+                    </div>
+                    <div class="color-picker-box">
+                        <label>Widget Border</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="borderColor" value="#e5e7eb">
+                            <span class="color-hex" id="borderColorHex">#e5e7eb</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Launcher Style</h2>
+                    <p class="card-description">Choose how your chat button appears</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Launcher Icon</label>
+                    <select id="launcherStyle" class="form-input">
+                        <option value="message">💬 Message Bubble</option>
+                        <option value="chat">💭 Chat Dots</option>
+                        <option value="headphones">🎧 Headphones Support</option>
+                        <option value="phone">📞 Phone Call</option>
+                        <option value="email">✉️ Email/Message</option>
+                        <option value="question">❓ Question Mark</option>
+                        <option value="help">🛟 Help Circle</option>
+                        <option value="agent">👤 Support Agent</option>
+                        <option value="users">👥 Team Chat</option>
+                        <option value="rocket">🚀 Rocket</option>
+                        <option value="bell">🔔 Notification Bell</option>
+                        <option value="heart">❤️ Heart/Favorite</option>
+                        <option value="star">⭐ Star</option>
+                        <option value="info">ℹ️ Info Circle</option>
+                        <option value="comment">💬 Comment Bubble</option>
+                    </select>
+                    <p class="form-helper">Select an icon for your chat button</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Button Text</label>
+                    <input type="text" id="launcherText" class="form-input" placeholder="Talk to us" maxlength="30">
+                    <p class="form-helper">Customize the text displayed on the chat launcher button</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Live Preview</h2>
+                    <p class="card-description">See your color changes in real-time</p>
+                </div>
+                <div id="widget-preview" style="position: relative; height: 420px; background: #f5f5f5; border-radius: 8px; padding: 20px;">
+                    <div id="preview-launcher" style="position: absolute; bottom: 20px; right: 20px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)), var(--preview-launcher-color, #2563eb); color: white; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 14px 20px; border-radius: 50px; transition: all 0.3s;">
+                        <svg class="launcher-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        <span class="launcher-text">Chat with us</span>
+                    </div>
+                    <div id="preview-widget" style="position: absolute; bottom: 80px; right: 20px; width: 320px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); overflow: hidden;">
+                        <div id="preview-header" style="position: relative; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)), var(--preview-header-color, #2563eb); color: white; padding: 12px 16px 20px 16px; font-weight: 600;">
+                            Your Business Name
+                            <svg style="position: absolute; bottom: -1px; left: 0; width: 100%; height: 20px; pointer-events: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 40" preserveAspectRatio="none">
+                                <path d="M0,0 Q720,25 1440,0 L1440,40 L0,40 Z" fill="var(--preview-widget-bg-color, #f9fafb)"/>
+                            </svg>
+                        </div>
+                        <div id="preview-messages" style="background: var(--preview-widget-bg-color, #f9fafb); padding: 12px; height: 200px;">
+                            <div style="margin-bottom: 8px; max-width: 80%; padding: 8px 10px; border-radius: 12px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)), var(--preview-bot-bubble-color, #e5e7eb); color: var(--preview-bot-text-color, #1f2937); font-size: 14px;">
+                                Hello! How can I help you today?
+                            </div>
+                            <div style="margin-bottom: 8px; max-width: 80%; padding: 8px 10px; border-radius: 12px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)), var(--preview-user-bubble-color, #2563eb); color: var(--preview-user-text-color, #ffffff); font-size: 14px; margin-left: auto; text-align: right;">
+                                What are your hours?
+                            </div>
+                            <div style="margin-bottom: 8px; max-width: 80%; padding: 8px 10px; border-radius: 12px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)), var(--preview-bot-bubble-color, #e5e7eb); color: var(--preview-bot-text-color, #1f2937); font-size: 14px;">
+                                We're open Monday-Friday 9am-5pm!
+                            </div>
+                        </div>
+                        <div style="border-top: 1px solid var(--preview-border-color, #e5e7eb); padding: 8px; display: flex; gap: 8px;">
+                            <input type="text" placeholder="Type a message..." style="flex: 1; border: none; padding: 8px; font-size: 14px; outline: none;">
+                            <button style="background: var(--preview-user-bubble-color, #2563eb); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Send</button>
                         </div>
                     </div>
                 </div>
@@ -921,6 +981,56 @@
                         <label class="form-label">Demo Message Limit</label>
                         <input type="number" class="form-input" id="demoMessageLimit" placeholder="40" min="1" max="999">
                         <p class="form-helper">Number of free messages in demo mode</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Language Settings</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Primary Language</label>
+                        <select id="primaryLanguage" class="form-input">
+                            <option value="en">English</option>
+                            <option value="da">Danish (Dansk)</option>
+                            <option value="de">German (Deutsch)</option>
+                            <option value="es">Spanish (Español)</option>
+                            <option value="fr">French (Français)</option>
+                            <option value="it">Italian (Italiano)</option>
+                            <option value="nl">Dutch (Nederlands)</option>
+                            <option value="pt">Portuguese (Português)</option>
+                            <option value="sv">Swedish (Svenska)</option>
+                            <option value="no">Norwegian (Norsk)</option>
+                            <option value="fi">Finnish (Suomi)</option>
+                            <option value="pl">Polish (Polski)</option>
+                            <option value="ru">Russian (Русский)</option>
+                            <option value="zh">Chinese (中文)</option>
+                            <option value="ja">Japanese (日本語)</option>
+                            <option value="ar">Arabic (العربية)</option>
+                        </select>
+                        <p class="form-helper">First language button in widget</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Secondary Language</label>
+                        <select id="secondaryLanguage" class="form-input">
+                            <option value="en">English</option>
+                            <option value="da">Danish (Dansk)</option>
+                            <option value="de">German (Deutsch)</option>
+                            <option value="es">Spanish (Español)</option>
+                            <option value="fr">French (Français)</option>
+                            <option value="it">Italian (Italiano)</option>
+                            <option value="nl">Dutch (Nederlands)</option>
+                            <option value="pt">Portuguese (Português)</option>
+                            <option value="sv">Swedish (Svenska)</option>
+                            <option value="no">Norwegian (Norsk)</option>
+                            <option value="fi">Finnish (Suomi)</option>
+                            <option value="pl">Polish (Polski)</option>
+                            <option value="ru">Russian (Русский)</option>
+                            <option value="zh">Chinese (中文)</option>
+                            <option value="ja">Japanese (日本語)</option>
+                            <option value="ar">Arabic (العربية)</option>
+                        </select>
+                        <p class="form-helper">Second language button in widget</p>
                     </div>
                 </div>
             </div>
@@ -1055,147 +1165,6 @@
             </div>
         </div>
 
-        <!-- Widget Customizer View -->
-        <div class="view-content" id="view-widget-customizer" style="display: none;">
-            <div class="page-header">
-                <h1 class="page-title">Widget Customizer</h1>
-                <p class="page-subtitle">Customize colors, launcher shape, and preview changes in real-time</p>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 400px; gap: 24px;">
-                <!-- Customization Controls -->
-                <div>
-                    <!-- Color Section -->
-                    <div class="card" style="margin-bottom: 20px;">
-                        <div class="card-header">
-                            <h2 class="card-title">🎨 Colors</h2>
-                            <p class="card-description">Customize widget colors</p>
-                        </div>
-                        <div class="card-body" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-                            <div>
-                                <label class="form-label">Primary Color (Header)</label>
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <input type="color" id="customPrimaryColor" class="color-picker" value="#2563eb">
-                                    <input type="text" id="customPrimaryColorText" class="form-input" value="#2563eb" style="flex: 1;">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="form-label">Secondary Color</label>
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <input type="color" id="customSecondaryColor" class="color-picker" value="#0f172a">
-                                    <input type="text" id="customSecondaryColorText" class="form-input" value="#0f172a" style="flex: 1;">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="form-label">Text Color</label>
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <input type="color" id="customTextColor" class="color-picker" value="#111827">
-                                    <input type="text" id="customTextColorText" class="form-input" value="#111827" style="flex: 1;">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="form-label">Background Color</label>
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <input type="color" id="customBgColor" class="color-picker" value="#ffffff">
-                                    <input type="text" id="customBgColorText" class="form-input" value="#ffffff" style="flex: 1;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Launcher Shape Section -->
-                    <div class="card" style="margin-bottom: 20px;">
-                        <div class="card-header">
-                            <h2 class="card-title">⬜ Launcher Shape</h2>
-                            <p class="card-description">Choose the shape of the chat launcher button</p>
-                        </div>
-                        <div class="card-body">
-                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-                                <label class="shape-option">
-                                    <input type="radio" name="launcherShape" value="50px" checked>
-                                    <div class="shape-preview" style="border-radius: 50px;">Rounded</div>
-                                </label>
-                                <label class="shape-option">
-                                    <input type="radio" name="launcherShape" value="12px">
-                                    <div class="shape-preview" style="border-radius: 12px;">Soft</div>
-                                </label>
-                                <label class="shape-option">
-                                    <input type="radio" name="launcherShape" value="4px">
-                                    <div class="shape-preview" style="border-radius: 4px;">Square</div>
-                                </label>
-                                <label class="shape-option">
-                                    <input type="radio" name="launcherShape" value="50%">
-                                    <div class="shape-preview" style="border-radius: 50%;">Circle</div>
-                                </label>
-                                <label class="shape-option">
-                                    <input type="radio" name="launcherShape" value="20px 20px 4px 4px">
-                                    <div class="shape-preview" style="border-radius: 20px 20px 4px 4px;">Top Round</div>
-                                </label>
-                                <label class="shape-option">
-                                    <input type="radio" name="launcherShape" value="4px 20px 20px 4px">
-                                    <div class="shape-preview" style="border-radius: 4px 20px 20px 4px;">Diagonal</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Launcher Icon Section -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">💬 Launcher Icon</h2>
-                            <p class="card-description">Select an icon for the launcher button</p>
-                        </div>
-                        <div class="card-body">
-                            <div style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px;">
-                                <button class="icon-option active" data-icon="💬">💬</button>
-                                <button class="icon-option" data-icon="💭">💭</button>
-                                <button class="icon-option" data-icon="📧">📧</button>
-                                <button class="icon-option" data-icon="📨">📨</button>
-                                <button class="icon-option" data-icon="📩">📩</button>
-                                <button class="icon-option" data-icon="✉️">✉️</button>
-                                <button class="icon-option" data-icon="🔔">🔔</button>
-                                <button class="icon-option" data-icon="❓">❓</button>
-                                <button class="icon-option" data-icon="❔">❔</button>
-                                <button class="icon-option" data-icon="💡">💡</button>
-                                <button class="icon-option" data-icon="⚡">⚡</button>
-                                <button class="icon-option" data-icon="🎯">🎯</button>
-                                <button class="icon-option" data-icon="🎪">🎪</button>
-                                <button class="icon-option" data-icon="🎨">🎨</button>
-                                <button class="icon-option" data-icon="🚀">🚀</button>
-                                <button class="icon-option" data-icon="⭐">⭐</button>
-                                <button class="icon-option" data-icon="🌟">🌟</button>
-                                <button class="icon-option" data-icon="✨">✨</button>
-                                <button class="icon-option" data-icon="👋">👋</button>
-                                <button class="icon-option" data-icon="🤝">🤝</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 20px; display: flex; gap: 12px;">
-                        <button class="btn btn-primary" onclick="saveWidgetCustomization()">Save to Business Profile</button>
-                        <button class="btn btn-secondary" onclick="resetWidgetCustomization()">Reset to Defaults</button>
-                    </div>
-                </div>
-
-                <!-- Live Preview -->
-                <div>
-                    <div class="card" style="position: sticky; top: 20px;">
-                        <div class="card-header">
-                            <h2 class="card-title">👁️ Live Preview</h2>
-                            <p class="card-description">See changes in real-time</p>
-                        </div>
-                        <div class="card-body" style="padding: 0;">
-                            <iframe 
-                                id="widgetPreviewFrame" 
-                                style="width: 100%; height: 600px; border: none; background: #f3f4f6; border-radius: 0 0 12px 12px;"
-                                src="/widget/index.html?business=HenriDemo&testMode=dzyjmz&preview=true"
-                            ></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Embed Code View -->
         <div class="view-content" id="view-embed-code" style="display: none;">
             <div class="page-header">
@@ -1277,16 +1246,16 @@
                 allBusinesses.forEach((business, index) => {
                     const pill = document.createElement('div');
                     pill.className = 'business-pill';
-                    // Handle both string format and object format
-                    const businessName = typeof business === 'string' ? business : business.businessName;
-                    pill.textContent = businessName;
+                    // allBusinesses contains filenames (strings)
+                    const fileName = business; // This is the filename without .json
+                    pill.textContent = fileName;
                     
-                    if (subscriptionsList[businessName]) {
+                    if (subscriptionsList[fileName]) {
                         pill.classList.add('has-subscription');
                     }
 
                     pill.addEventListener('click', () => {
-                        selectBusiness(businessName);
+                        selectBusiness(fileName); // Use filename for URLs
                     });
 
                     pillsContainer.appendChild(pill);
@@ -1294,7 +1263,7 @@
 
                 // Select first business by default
                 if (allBusinesses.length > 0 && !currentBusiness) {
-                    selectBusiness(allBusinesses[0].businessName);
+                    selectBusiness(allBusinesses[0]); // First element is a filename string
                 }
             } catch (error) {
                 console.error('Error loading businesses:', error);
@@ -1421,13 +1390,23 @@
                     document.getElementById('description').value = config.description || '';
                     
                     // Colors - Remove 'ff' suffix if present for color input
-                    const primaryColor = (config.primaryColor || '#6366f1ff').replace('ff', '').substring(0, 7);
-                    const secondaryColor = (config.secondaryColor || '#8b5cf6ff').replace('ff', '').substring(0, 7);
-                    const textColor = (config.textColor || '#1f2937ff').replace('ff', '').substring(0, 7);
+                    const launcherColor = (config.launcherColor || config.primaryColor || '#2563ebff').replace('ff', '').substring(0, 7);
+                    const headerColor = (config.headerColor || config.primaryColor || '#2563ebff').replace('ff', '').substring(0, 7);
+                    const userBubbleColor = (config.userBubbleColor || config.primaryColor || '#2563ebff').replace('ff', '').substring(0, 7);
+                    const userTextColor = (config.userTextColor || '#ffffffff').replace('ff', '').substring(0, 7);
+                    const botBubbleColor = (config.botBubbleColor || '#e5e7ebff').replace('ff', '').substring(0, 7);
+                    const botTextColor = (config.botTextColor || config.textColor || '#1f2937ff').replace('ff', '').substring(0, 7);
+                    const widgetBgColor = (config.widgetBgColor || '#f9fafbff').replace('ff', '').substring(0, 7);
+                    const borderColor = (config.borderColor || '#e5e7ebff').replace('ff', '').substring(0, 7);
                     
-                    document.getElementById('primaryColor').value = primaryColor;
-                    document.getElementById('secondaryColor').value = secondaryColor;
-                    document.getElementById('textColor').value = textColor;
+                    document.getElementById('launcherColor').value = launcherColor;
+                    document.getElementById('headerColor').value = headerColor;
+                    document.getElementById('userBubbleColor').value = userBubbleColor;
+                    document.getElementById('userTextColor').value = userTextColor;
+                    document.getElementById('botBubbleColor').value = botBubbleColor;
+                    document.getElementById('botTextColor').value = botTextColor;
+                    document.getElementById('widgetBgColor').value = widgetBgColor;
+                    document.getElementById('borderColor').value = borderColor;
                     
                     document.getElementById('phone').value = config.phone || '';
                     document.getElementById('email').value = config.email || '';
@@ -1435,9 +1414,15 @@
                     document.getElementById('websiteUrl').value = config.websiteUrl || '';
                     document.getElementById('bookingUrl').value = config.bookingUrl || '';
                     document.getElementById('demoMessageLimit').value = config.demoMessageLimit || 40;
+                    document.getElementById('primaryLanguage').value = config.primaryLanguage || 'en';
+                    document.getElementById('secondaryLanguage').value = config.secondaryLanguage || 'da';
+                    document.getElementById('launcherStyle').value = config.launcherStyle || 'message';
+                    document.getElementById('launcherText').value = config.launcherText || 'Talk to us';
                     document.getElementById('aiInstructions').value = config.openaiConfig?.instructions || '';
 
                     updateColorHex();
+                    updateLauncherStyle();
+                    updateLauncherText();
                 }
             } catch (error) {
                 showError('Error loading config: ' + error.message);
@@ -1446,14 +1431,77 @@
         }
 
         function updateColorHex() {
-            document.getElementById('primaryColorHex').textContent = document.getElementById('primaryColor').value;
-            document.getElementById('secondaryColorHex').textContent = document.getElementById('secondaryColor').value;
-            document.getElementById('textColorHex').textContent = document.getElementById('textColor').value;
+            document.getElementById('launcherColorHex').textContent = document.getElementById('launcherColor').value;
+            document.getElementById('headerColorHex').textContent = document.getElementById('headerColor').value;
+            document.getElementById('userBubbleColorHex').textContent = document.getElementById('userBubbleColor').value;
+            document.getElementById('userTextColorHex').textContent = document.getElementById('userTextColor').value;
+            document.getElementById('botBubbleColorHex').textContent = document.getElementById('botBubbleColor').value;
+            document.getElementById('botTextColorHex').textContent = document.getElementById('botTextColor').value;
+            document.getElementById('widgetBgColorHex').textContent = document.getElementById('widgetBgColor').value;
+            document.getElementById('borderColorHex').textContent = document.getElementById('borderColor').value;
+            
+            // Update live preview
+            updatePreviewColors();
         }
 
-        document.getElementById('primaryColor').addEventListener('input', updateColorHex);
-        document.getElementById('secondaryColor').addEventListener('input', updateColorHex);
-        document.getElementById('textColor').addEventListener('input', updateColorHex);
+        function updatePreviewColors() {
+            const preview = document.getElementById('widget-preview');
+            preview.style.setProperty('--preview-launcher-color', document.getElementById('launcherColor').value);
+            preview.style.setProperty('--preview-header-color', document.getElementById('headerColor').value);
+            preview.style.setProperty('--preview-user-bubble-color', document.getElementById('userBubbleColor').value);
+            preview.style.setProperty('--preview-user-text-color', document.getElementById('userTextColor').value);
+            preview.style.setProperty('--preview-bot-bubble-color', document.getElementById('botBubbleColor').value);
+            preview.style.setProperty('--preview-bot-text-color', document.getElementById('botTextColor').value);
+            preview.style.setProperty('--preview-widget-bg-color', document.getElementById('widgetBgColor').value);
+            preview.style.setProperty('--preview-border-color', document.getElementById('borderColor').value);
+        }
+
+        function getLauncherIconSVG(iconType) {
+            const icons = {
+                'message': '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>',
+                'chat': '<circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle>',
+                'headphones': '<path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>',
+                'phone': '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>',
+                'email': '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>',
+                'question': '<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line>',
+                'help': '<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line>',
+                'agent': '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>',
+                'users': '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>',
+                'rocket': '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>',
+                'bell': '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path>',
+                'heart': '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>',
+                'star': '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>',
+                'info': '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+                'comment': '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>'
+            };
+            return icons[iconType] || icons['message'];
+        }
+
+        function updateLauncherStyle() {
+            const launcher = document.querySelector('#preview-launcher .launcher-icon');
+            const iconType = document.getElementById('launcherStyle').value;
+            const iconSVG = getLauncherIconSVG(iconType);
+            launcher.innerHTML = iconSVG;
+        }
+
+        function updateLauncherText() {
+            const launcherText = document.getElementById('launcherText').value || 'Talk to us';
+            const previewText = document.querySelector('#preview-launcher .launcher-text');
+            if (previewText) {
+                previewText.textContent = launcherText;
+            }
+        }
+
+        document.getElementById('launcherColor').addEventListener('input', updateColorHex);
+        document.getElementById('headerColor').addEventListener('input', updateColorHex);
+        document.getElementById('userBubbleColor').addEventListener('input', updateColorHex);
+        document.getElementById('userTextColor').addEventListener('input', updateColorHex);
+        document.getElementById('botBubbleColor').addEventListener('input', updateColorHex);
+        document.getElementById('botTextColor').addEventListener('input', updateColorHex);
+        document.getElementById('widgetBgColor').addEventListener('input', updateColorHex);
+        document.getElementById('borderColor').addEventListener('input', updateColorHex);
+        document.getElementById('launcherStyle').addEventListener('change', updateLauncherStyle);
+        document.getElementById('launcherText').addEventListener('input', updateLauncherText);
 
         async function saveBusinessConfig() {
             if (!currentBusiness) return;
@@ -1464,15 +1512,24 @@
                     businessName: document.getElementById('businessName').value,
                     logoUrl: document.getElementById('logoUrl').value,
                     description: document.getElementById('description').value,
-                    primaryColor: document.getElementById('primaryColor').value + 'ff',
-                    secondaryColor: document.getElementById('secondaryColor').value + 'ff',
-                    textColor: document.getElementById('textColor').value + 'ff',
+                    launcherColor: document.getElementById('launcherColor').value + 'ff',
+                    headerColor: document.getElementById('headerColor').value + 'ff',
+                    userBubbleColor: document.getElementById('userBubbleColor').value + 'ff',
+                    userTextColor: document.getElementById('userTextColor').value + 'ff',
+                    botBubbleColor: document.getElementById('botBubbleColor').value + 'ff',
+                    botTextColor: document.getElementById('botTextColor').value + 'ff',
+                    widgetBgColor: document.getElementById('widgetBgColor').value + 'ff',
+                    borderColor: document.getElementById('borderColor').value + 'ff',
                     phone: document.getElementById('phone').value,
                     email: document.getElementById('email').value,
                     phoneHours: document.getElementById('phoneHours').value,
                     websiteUrl: document.getElementById('websiteUrl').value,
                     bookingUrl: document.getElementById('bookingUrl').value,
                     demoMessageLimit: parseInt(document.getElementById('demoMessageLimit').value) || 40,
+                    primaryLanguage: document.getElementById('primaryLanguage').value,
+                    secondaryLanguage: document.getElementById('secondaryLanguage').value,
+                    launcherStyle: document.getElementById('launcherStyle').value,
+                    launcherText: document.getElementById('launcherText').value || 'Talk to us',
                     openaiConfig: {
                         model: 'gpt-4o-mini',
                         instructions: document.getElementById('aiInstructions').value
@@ -1869,121 +1926,10 @@ Report generated by Chatbot Analytics
             alert(message);
         }
 
-        // Widget Customizer Functions
-        function initWidgetCustomizer() {
-            const previewFrame = document.getElementById('widgetPreviewFrame');
-            
-            // Color inputs sync
-            ['Primary', 'Secondary', 'Text', 'Bg'].forEach(colorType => {
-                const picker = document.getElementById(`custom${colorType}Color`);
-                const text = document.getElementById(`custom${colorType}ColorText`);
-                
-                picker.addEventListener('input', (e) => {
-                    text.value = e.target.value;
-                    updatePreview();
-                });
-                
-                text.addEventListener('input', (e) => {
-                    if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
-                        picker.value = e.target.value;
-                        updatePreview();
-                    }
-                });
-            });
-
-            // Shape options
-            document.querySelectorAll('input[name="launcherShape"]').forEach(radio => {
-                radio.addEventListener('change', updatePreview);
-            });
-
-            // Icon options
-            document.querySelectorAll('.icon-option').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.icon-option').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    updatePreview();
-                });
-            });
-        }
-
-        function updatePreview() {
-            const previewFrame = document.getElementById('widgetPreviewFrame');
-            const previewWindow = previewFrame.contentWindow;
-            
-            if (previewWindow && previewWindow.document) {
-                const root = previewWindow.document.documentElement;
-                
-                // Update colors
-                root.style.setProperty('--primary', document.getElementById('customPrimaryColor').value);
-                root.style.setProperty('--secondary', document.getElementById('customSecondaryColor').value);
-                root.style.setProperty('--text', document.getElementById('customTextColor').value);
-                root.style.setProperty('--bg', document.getElementById('customBgColor').value);
-                
-                // Update launcher shape
-                const selectedShape = document.querySelector('input[name="launcherShape"]:checked').value;
-                root.style.setProperty('--launcher-shape', selectedShape);
-                
-                // Update launcher icon
-                const selectedIcon = document.querySelector('.icon-option.active').dataset.icon;
-                root.style.setProperty('--launcher-icon', `'${selectedIcon}'`);
-            }
-        }
-
-        async function saveWidgetCustomization() {
-            if (!currentBusiness) {
-                showError('Please select a business first');
-                return;
-            }
-
-            showLoading();
-            try {
-                const config = {
-                    primaryColor: document.getElementById('customPrimaryColor').value + 'ff',
-                    secondaryColor: document.getElementById('customSecondaryColor').value + 'ff',
-                    textColor: document.getElementById('customTextColor').value + 'ff',
-                    launcherShape: document.querySelector('input[name="launcherShape"]:checked').value,
-                    launcherIcon: document.querySelector('.icon-option.active').dataset.icon
-                };
-
-                const response = await fetch(`${API_BASE}/api/business-config/${currentBusiness}`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(config)
-                });
-
-                if (response.ok) {
-                    showSuccess('Widget customization saved successfully!');
-                } else {
-                    throw new Error('Failed to save customization');
-                }
-            } catch (error) {
-                showError('Error saving customization: ' + error.message);
-            }
-            hideLoading();
-        }
-
-        function resetWidgetCustomization() {
-            document.getElementById('customPrimaryColor').value = '#2563eb';
-            document.getElementById('customPrimaryColorText').value = '#2563eb';
-            document.getElementById('customSecondaryColor').value = '#0f172a';
-            document.getElementById('customSecondaryColorText').value = '#0f172a';
-            document.getElementById('customTextColor').value = '#111827';
-            document.getElementById('customTextColorText').value = '#111827';
-            document.getElementById('customBgColor').value = '#ffffff';
-            document.getElementById('customBgColorText').value = '#ffffff';
-            
-            document.querySelector('input[name="launcherShape"][value="50px"]').checked = true;
-            document.querySelectorAll('.icon-option').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.icon-option[data-icon="💬"]').classList.add('active');
-            
-            updatePreview();
-        }
-
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             loadBusinessList();
             loadCombinedStatus();
-            initWidgetCustomizer();
         });
     </script>
 </body>
