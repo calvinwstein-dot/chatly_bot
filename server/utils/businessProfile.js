@@ -9,6 +9,10 @@ import path from "path";
  * @throws {Error} If the profile cannot be found or loaded
  */
 export function loadBusinessProfile(businessName) {
+  if (!businessName || typeof businessName !== 'string') {
+    throw new Error('Business name is required and must be a string');
+  }
+  
   try {
     let filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
     

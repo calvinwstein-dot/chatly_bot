@@ -8,13 +8,15 @@ process.on("unhandledRejection", (reason, promise) => {
   // Log but don't exit for promise rejections
 });
 
+const GRACEFUL_SHUTDOWN_DELAY = 1000; // 1 second to allow logs to flush
+
 process.on("uncaughtException", (error) => {
   console.error("Uncaught Exception:", error);
   console.error("Server will exit due to uncaught exception");
   // Exit after a brief delay to allow logs to flush
   setTimeout(() => {
     process.exit(1);
-  }, 1000);
+  }, GRACEFUL_SHUTDOWN_DELAY);
 });
 
 import { config } from "./config.js";
