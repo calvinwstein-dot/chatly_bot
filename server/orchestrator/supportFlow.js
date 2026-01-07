@@ -1,12 +1,5 @@
 import { chatCompletion } from "../openaiClient.js";
-import fs from "fs";
-import path from "path";
-
-function loadBusinessProfile(businessName) {
-  const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
-  const data = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(data);
-}
+import { loadBusinessProfile } from "../utils/businessProfile.js";
 
 function buildSystemPrompt(business) {
   return `

@@ -2,31 +2,9 @@ import express from "express";
 import { config } from "../config.js";
 import fs from "fs";
 import path from "path";
+import { loadBusinessProfile } from "../utils/businessProfile.js";
 
 const router = express.Router();
-
-function loadBusinessProfile(businessName) {
-  try {
-    let filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
-    console.log("Looking for:", filePath);
-    
-    // If file doesn't exist, try adding "Demo" suffix
-    if (!fs.existsSync(filePath)) {
-      filePath = path.resolve(`server/businessProfiles/${businessName}Demo.json`);
-      console.log("Trying Demo suffix:", filePath);
-    }
-    
-    if (!fs.existsSync(filePath)) {
-      throw new Error(`Business profile not found: ${businessName}`);
-    }
-    
-    const data = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    console.error("Error loading business profile:", error);
-    throw error;
-  }
-}
 
 router.get("/", (req, res) => {
   try {
