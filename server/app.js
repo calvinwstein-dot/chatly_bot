@@ -3,8 +3,16 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
-process.on("unhandledRejection", console.error);
-process.on("uncaughtException", console.error);
+// Error handlers MUST be first - before any imports that might throw
+process.on("unhandledRejection", (err) => {
+  console.error("🔴 UNHANDLED REJECTION:", err);
+  // Don't exit - log and continue
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("🔴 UNCAUGHT EXCEPTION:", err);
+  // Don't exit - log and continue
+});
 
 import { config } from "./config.js";
 import { adminAuth } from "./middleware/auth.js";
