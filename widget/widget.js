@@ -3,6 +3,7 @@ const sessionId = crypto.randomUUID();
 let currentLanguage = localStorage.getItem('chatLanguage') || 'en';
 let demoStatus = null;
 let hasActiveSubscription = false;
+let widgetConfig = null; // Store config for language settings
 
 // Get business from URL parameter (e.g., ?business=Henri)
 const urlParams = new URLSearchParams(window.location.search);
@@ -43,10 +44,33 @@ async function loadWidgetConfig() {
   try {
     const res = await fetch(`${API_BASE}/api/widget-config?business=${businessName}`);
     const config = await res.json();
+    
+    // Store config globally
+    widgetConfig = config;
+    
+    // Set default language from config if not already set
+    if (!localStorage.getItem('chatLanguage') && config.primaryLanguage) {
+      currentLanguage = config.primaryLanguage;
+    }
 
+    // Apply all color customizations
     document.documentElement.style.setProperty("--primary", config.primaryColor);
     document.documentElement.style.setProperty("--secondary", config.secondaryColor);
     document.documentElement.style.setProperty("--text", config.textColor);
+    document.documentElement.style.setProperty("--launcher-color", config.launcherColor);
+    document.documentElement.style.setProperty("--header-color", config.headerColor);
+    document.documentElement.style.setProperty("--user-bubble-color", config.userBubbleColor);
+    document.documentElement.style.setProperty("--user-text-color", config.userTextColor);
+    document.documentElement.style.setProperty("--bot-bubble-color", config.botBubbleColor);
+    document.documentElement.style.setProperty("--bot-text-color", config.botTextColor);
+    document.documentElement.style.setProperty("--widget-bg-color", config.widgetBgColor);
+    document.documentElement.style.setProperty("--border-color", config.borderColor);
+
+    // Update launcher text
+    const launcherEl = document.getElementById("chat-launcher");
+    if (config.launcherText) {
+      launcherEl.textContent = config.launcherText;
+    }
 
     const titleEl = document.getElementById("chat-title");
     titleEl.textContent = config.brandName || "Assistant";
@@ -271,12 +295,25 @@ async function sendMessage(message) {
   appendMessage(message, "user");
 
   // Show typing indicator
-  const typingIndicator = document.getElementById('typing-indicator');
-  if (typingIndicator) {
-    typingIndicator.classList.remove('hidden');
-    const messagesDiv = document.getElementById("chat-messages");
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  const messagesDiv = document.getElementById("chat-messages");
+  let typingIndicator = document.getElementById('typing-indicator');
+  
+  // Create typing indicator if it doesn't exist
+  if (!typingIndicator) {
+    typingIndicator = document.createElement('div');
+    typingIndicator.id = 'typing-indicator';
+    typingIndicator.className = 'typing-indicator';
+    typingIndicator.innerHTML = `
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    `;
   }
+  
+  // Append to messages and show
+  messagesDiv.appendChild(typingIndicator);
+  typingIndicator.classList.remove('hidden');
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
   try {
     const demoMessageCount = getDemoMessageCount();
@@ -294,8 +331,9 @@ async function sendMessage(message) {
     });
 
     // Hide typing indicator
+    const typingIndicator = document.getElementById('typing-indicator');
     if (typingIndicator) {
-      typingIndicator.classList.add('hidden');
+      typingIndicator.remove();
     }
 
     const data = await res.json();
@@ -317,7 +355,7 @@ async function sendMessage(message) {
     // Hide typing indicator on error
     const typingIndicator = document.getElementById('typing-indicator');
     if (typingIndicator) {
-      typingIndicator.classList.add('hidden');
+      typingIndicator.remove();
     }
     appendMessage("Network error. Please try again.", "bot");
   }
@@ -405,16 +443,44 @@ function init() {
     }
   }
   
-  // Toggle dropdown menu
+  // Toggle dropdown menu with adaptive positioning
   languageBtn.addEventListener("click", (e) => {
     e.stopPropagation();
+    
+    const wasHidden = languageMenu.classList.contains('hidden');
     languageMenu.classList.toggle('hidden');
+    
+    // Position dropdown when opening
+    if (wasHidden && !languageMenu.classList.contains('hidden')) {
+      const btnRect = languageBtn.getBoundingClientRect();
+      const messagesDiv = document.getElementById("chat-messages");
+      const messagesHeight = messagesDiv.scrollHeight;
+      const hasMessages = messagesDiv.children.length > 0;
+      
+      // Determine if should open upward or downward
+      const shouldOpenUpward = !hasMessages || messagesHeight < 100;
+      
+      if (shouldOpenUpward) {
+        // Open upward - position above the button
+        languageMenu.classList.add('open-upward');
+        languageMenu.style.top = 'auto';
+        languageMenu.style.bottom = `${window.innerHeight - btnRect.top + 8}px`;
+        languageMenu.style.right = `${window.innerWidth - btnRect.right}px`;
+      } else {
+        // Open downward - position below the button
+        languageMenu.classList.remove('open-upward');
+        languageMenu.style.top = `${btnRect.bottom + 8}px`;
+        languageMenu.style.bottom = 'auto';
+        languageMenu.style.right = `${window.innerWidth - btnRect.right}px`;
+      }
+    }
   });
   
   // Close dropdown when clicking outside
   document.addEventListener("click", (e) => {
     if (!languageMenu.contains(e.target) && e.target !== languageBtn) {
       languageMenu.classList.add('hidden');
+      languageMenu.classList.remove('open-upward');
     }
   });
   

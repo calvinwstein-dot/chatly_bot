@@ -7,44 +7,46 @@
 </head>
 <body>
   <div id="chat-launcher">Talk to us</div>
+  
+  <!-- Language dropdown menu - rendered outside widget to avoid clipping -->
+  <div id="language-menu" class="language-menu hidden">
+    <button class="lang-option" data-lang="en" data-label="EN">English</button>
+    <button class="lang-option" data-lang="da" data-label="DK">Dansk</button>
+    <button class="lang-option" data-lang="es" data-label="ES">Español</button>
+    <button class="lang-option" data-lang="fr" data-label="FR">Français</button>
+    <button class="lang-option" data-lang="de" data-label="DE">Deutsch</button>
+    <button class="lang-option" data-lang="it" data-label="IT">Italiano</button>
+    <button class="lang-option" data-lang="pt" data-label="PT">Português</button>
+    <button class="lang-option" data-lang="nl" data-label="NL">Nederlands</button>
+    <button class="lang-option" data-lang="pl" data-label="PL">Polski</button>
+    <button class="lang-option" data-lang="ru" data-label="RU">Русский</button>
+    <button class="lang-option" data-lang="zh" data-label="中文">中文</button>
+    <button class="lang-option" data-lang="ja" data-label="日本語">日本語</button>
+    <button class="lang-option" data-lang="ko" data-label="한국어">한국어</button>
+    <button class="lang-option" data-lang="ar" data-label="AR">العربية</button>
+    <button class="lang-option" data-lang="hi" data-label="HI">हिन्दी</button>
+    <button class="lang-option" data-lang="sv" data-label="SV">Svenska</button>
+  </div>
+  
   <div id="chat-widget" class="hidden">
     <header id="chat-header">
       <img id="chat-logo" class="hidden" />
       <span id="chat-title"></span>
       <div id="language-dropdown">
         <button id="language-btn" class="language-btn" title="Change Language">
-          <span class="globe-icon">🌐</span>
+          <svg class="globe-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
           <span id="current-lang">EN</span>
         </button>
-        <div id="language-menu" class="language-menu hidden">
-          <button class="lang-option" data-lang="en" data-label="EN">English</button>
-          <button class="lang-option" data-lang="da" data-label="DK">Dansk</button>
-          <button class="lang-option" data-lang="es" data-label="ES">Español</button>
-          <button class="lang-option" data-lang="fr" data-label="FR">Français</button>
-          <button class="lang-option" data-lang="de" data-label="DE">Deutsch</button>
-          <button class="lang-option" data-lang="it" data-label="IT">Italiano</button>
-          <button class="lang-option" data-lang="pt" data-label="PT">Português</button>
-          <button class="lang-option" data-lang="nl" data-label="NL">Nederlands</button>
-          <button class="lang-option" data-lang="pl" data-label="PL">Polski</button>
-          <button class="lang-option" data-lang="ru" data-label="RU">Русский</button>
-          <button class="lang-option" data-lang="zh" data-label="中文">中文</button>
-          <button class="lang-option" data-lang="ja" data-label="日本語">日本語</button>
-          <button class="lang-option" data-lang="ko" data-label="한국어">한국어</button>
-          <button class="lang-option" data-lang="ar" data-label="AR">العربية</button>
-          <button class="lang-option" data-lang="hi" data-label="HI">हिन्दी</button>
-          <button class="lang-option" data-lang="sv" data-label="SV">Svenska</button>
-        </div>
       </div>
-      <svg class="header-wave" viewBox="0 0 360 20" preserveAspectRatio="none">
-        <path d="M 0,10 Q 90,0 180,10 T 360,10 L 360,20 L 0,20 Z" fill="currentColor"/>
+      <svg class="header-wave" viewBox="0 0 1440 40" preserveAspectRatio="none">
+        <path d="M0,0 Q720,25 1440,0 L1440,40 L0,40 Z" fill="currentColor"/>
       </svg>
     </header>
     <div id="chat-messages">
-      <div id="typing-indicator" class="typing-indicator hidden">
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-      </div>
     </div>
     <form id="chat-form" autocomplete="off">
       <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');" name="message" />
