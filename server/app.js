@@ -86,5 +86,8 @@ const server = app.listen(config.port, () => {
 
 server.on('error', (error) => {
   console.error('❌ Server error:', error);
-  process.exit(1);
+  // Don't exit - log and continue
+  if (error.code === 'EADDRINUSE') {
+    console.error(`Port ${config.port} is already in use. Please free the port or change PORT in .env`);
+  }
 });
