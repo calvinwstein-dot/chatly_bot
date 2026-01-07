@@ -55,6 +55,8 @@ router.get("/", (req, res) => {
       launcherText: business.launcherText || 'Talk to us',
       sendButtonColor: business.sendButtonColor || business.userBubbleColor || business.primaryColor || config.widget.primaryColor,
       sendButtonText: business.sendButtonText || 'Send',
+      sendButtonTextColor: business.sendButtonTextColor || '#ffffffff',
+      sendButtonIcon: business.sendButtonIcon || 'none',
       primaryLanguage: business.primaryLanguage || 'en',
       secondaryLanguage: business.secondaryLanguage || 'da',
       isDemoMode: business.isDemoMode || false,

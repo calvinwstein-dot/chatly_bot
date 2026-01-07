@@ -12,7 +12,7 @@
   "botTextColor": "#2e7584ff",
   "widgetBgColor": "#f0f8ffff",
   "borderColor": "#ffffffff",
-  "launcherStyle": "rocket",
+  "launcherStyle": "scissors",
   "launcherText": "Talk to us",
   "primaryLanguage": "da",
   "secondaryLanguage": "en",
@@ -342,5 +342,7 @@
   },
   "launcherShape": "pill",
   "sendButtonColor": "#2e7584ff",
-  "sendButtonText": "Send"
+  "sendButtonText": "Send",
+  "sendButtonTextColor": "#ffffffff",
+  "sendButtonIcon": "arrow"
 }

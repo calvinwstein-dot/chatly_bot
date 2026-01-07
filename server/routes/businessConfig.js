@@ -72,6 +72,8 @@ router.patch("/:businessName", (req, res) => {
       launcherText,
       sendButtonColor,
       sendButtonText,
+      sendButtonTextColor,
+      sendButtonIcon,
       primaryLanguage,
       secondaryLanguage
     } = req.body;
@@ -101,6 +103,8 @@ router.patch("/:businessName", (req, res) => {
     // Send button customization
     if (sendButtonColor !== undefined) profile.sendButtonColor = sendButtonColor;
     if (sendButtonText !== undefined) profile.sendButtonText = sendButtonText;
+    if (sendButtonTextColor !== undefined) profile.sendButtonTextColor = sendButtonTextColor;
+    if (sendButtonIcon !== undefined) profile.sendButtonIcon = sendButtonIcon;
     
     // Language settings
     if (primaryLanguage !== undefined) profile.primaryLanguage = primaryLanguage;

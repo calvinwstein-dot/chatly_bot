@@ -6,7 +6,10 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="chat-launcher">Talk to us</div>
+  <div id="chat-launcher">
+    <span id="launcher-icon"></span>
+    <span id="launcher-text">Talk to us</span>
+  </div>
   
   <!-- Language dropdown menu - rendered outside widget to avoid clipping -->
   <div id="language-menu" class="language-menu hidden">
@@ -71,7 +74,10 @@
           <path d="M6 11a6 6 0 0 0 12 0h-2a4 4 0 0 1-8 0H6z" />
         </svg>
       </button>
-      <button type="submit" id="send-button">Send</button>
+      <button type="submit" id="send-button">
+        <span id="send-text">Send</span>
+        <span id="send-icon"></span>
+      </button>
     </form>
   </div>
   <script src="widget.js"></script>

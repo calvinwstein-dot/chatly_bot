@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
 #chat-launcher {
@@ -35,11 +35,6 @@ body {
 #chat-launcher:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.35);
-}
-
-#chat-launcher::before {
-  content: var(--launcher-icon);
-  font-size: 20px;
 }
 
 #chat-widget {
@@ -169,7 +164,7 @@ body {
   color: #374151;
   transition: background 0.2s;
   display: block;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -309,6 +304,9 @@ body {
   display: flex;
   border-top: 1px solid var(--border-color, #e5e7eb);
   background: white;
+  padding: 8px;
+  gap: 8px;
+  align-items: center;
 }
 
 .chatly-mic-btn {
@@ -367,10 +365,33 @@ body {
 
 #chat-form button[type="submit"] {
   border: none;
-  padding: 0 14px;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   background: var(--primary);
   color: #fff;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+#chat-form button[type="submit"]:hover {
+  transform: scale(1.08);
+}
+
+#send-text {
+  display: none;
+}
+
+#send-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
 }
 
 /* Demo Mode Styles */
