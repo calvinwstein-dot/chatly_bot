@@ -3,8 +3,15 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
-process.on("unhandledRejection", console.error);
-process.on("uncaughtException", console.error);
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  // Don't exit the process, just log the error
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught Exception:", error);
+  // Don't exit the process, just log the error
+});
 
 import { config } from "./config.js";
 import { adminAuth } from "./middleware/auth.js";
