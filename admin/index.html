@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Admin - Business Config</title>
+    <title>Chatbot Admin Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -11,216 +11,570 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: #FFE5D9;
+            border-right: 1px solid #F5D5C8;
+            padding: 24px 0;
+            overflow-y: auto;
+            z-index: 100;
         }
 
-        h1 {
-            color: white;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--gray-200);
         }
 
-        .business-selector {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
         }
 
-        .business-selector button {
-            padding: 12px 30px;
-            font-size: 16px;
-            border: 2px solid white;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
+        .sidebar-header p {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .sidebar-nav {
+            padding: 16px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            padding: 0 24px 8px;
+            font-size: 11px;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-600);
         }
 
-        .business-selector button:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-
-        .business-selector button.active {
-            background: white;
-            color: #667eea;
-        }
-        
-        .tab-selector {
-            display: flex;
-            gap: 5px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .tab-btn {
-            padding: 10px 25px;
-            font-size: 15px;
-            border: none;
-            background: rgba(255,255,255,0.3);
-            color: white;
-            border-radius: 10px;
+        .nav-item {
+            padding: 10px 24px;
+            font-size: 14px;
+            color: var(--gray-700);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover {
+            background: var(--gray-50);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: var(--gray-100);
+            color: var(--primary);
             font-weight: 600;
+            border-left: 3px solid var(--primary);
         }
-        
-        .tab-btn:hover {
-            background: rgba(255,255,255,0.4);
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
         }
-        
-        .tab-btn.active {
-            background: white;
-            color: #667eea;
+
+        /* Business Pills */
+        .business-pills {
+            padding: 16px 24px;
+            border-top: 1px solid var(--gray-200);
         }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
+
+        .business-pill {
             display: block;
-        }
-
-        .config-panel {
+            width: 100%;
+            padding: 10px 16px;
+            margin-bottom: 8px;
+            border: 1px solid var(--gray-200);
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-700);
+            position: relative;
         }
 
-        .section {
-            margin-bottom: 30px;
+        .business-pill:hover {
+            border-color: var(--primary);
+            background: var(--gray-50);
         }
 
-        .section h2 {
-            color: #667eea;
+        .business-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .business-pill.has-subscription::after {
+            content: "●";
+            position: absolute;
+            right: 12px;
+            color: var(--success);
+            font-size: 16px;
+        }
+
+        .business-pill.active.has-subscription::after {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 32px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--gray-200);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--gray-600);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1;
+        }
+
+        .stat-change {
+            font-size: 13px;
+            margin-top: 8px;
+            color: var(--gray-600);
+        }
+
+        .stat-change.positive {
+            color: var(--success);
+        }
+
+        /* Content Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+
+        /* Forms */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
             margin-bottom: 20px;
-            font-size: 1.5em;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
         }
 
         .form-group {
             margin-bottom: 20px;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
             font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 6px;
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="url"] {
+        .form-input,
+        .form-textarea,
+        .form-select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
+            padding: 10px 14px;
+            border: 1px solid var(--gray-300);
             border-radius: 8px;
             font-size: 14px;
-            transition: border 0.3s;
+            color: var(--gray-900);
+            transition: all 0.2s;
+            background: white;
         }
 
-        .form-group input[type="text"]:focus,
-        .form-group input[type="url"]:focus {
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
-        .color-picker-group {
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .form-helper {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 6px;
+        }
+
+        /* Color Pickers */
+        .color-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
         }
 
-        .color-picker {
+        .color-picker-box {
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .color-picker-box label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+
+        .color-picker-wrapper {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 2px solid #e0e0e0;
+            gap: 12px;
         }
 
-        .color-picker input[type="color"] {
-            width: 60px;
-            height: 60px;
-            border: none;
-            border-radius: 10px;
+        .color-picker-wrapper input[type="color"] {
+            width: 48px;
+            height: 48px;
+            border: 2px solid white;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
             padding: 0;
         }
 
-        .color-picker input[type="color"]::-webkit-color-swatch {
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
-        .color-info {
-            flex: 1;
-        }
-
-        .color-info label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .color-info .hex-value {
-            font-family: 'Courier New', monospace;
-            color: #666;
+        .color-hex {
+            font-family: 'Monaco', 'Courier New', monospace;
             font-size: 13px;
+            color: var(--gray-700);
+            font-weight: 500;
         }
 
-        .preview-section {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
         }
 
-        .preview-section h3 {
-            color: #333;
-            margin-bottom: 15px;
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .preview-widget {
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
             background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--gray-50);
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-700);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        td {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: var(--gray-900);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 12px;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--gray-900);
+            color: #e5e7eb;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        /* Tabs */
+        .tab-list {
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 24px;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+            color: var(--gray-900);
+        }
+
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Preview Widget */
+        .preview-widget {
+            border: 2px dashed var(--gray-300);
+            border-radius: 12px;
+            padding: 24px;
+            background: var(--gray-50);
         }
 
         .preview-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
         }
 
         .preview-logo {
@@ -231,623 +585,882 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 700;
         }
 
-        .preview-button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-
-        .preview-text {
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .btn {
-            padding: 15px 40px;
+        .preview-title {
             font-size: 16px;
             font-weight: 600;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
+        /* Empty State */
+        .empty-state {
             text-align: center;
-            font-weight: 600;
+            padding: 48px 24px;
         }
 
-        .success-message.show {
-            display: block;
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.3;
         }
-        
-        /* Metrics Styles */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 8px;
         }
-        
-        .metric-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .metric-title {
+
+        .empty-state-text {
             font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 10px;
-            font-weight: 500;
+            color: var(--gray-600);
         }
-        
-        .metric-value {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 5px;
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
-        
-        .metric-subtitle {
-            font-size: 12px;
-            opacity: 0.8;
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
-        
-        .metrics-table {
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        
-        .metrics-table th {
-            background: #f8f9fa;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            color: #333;
-            border-bottom: 2px solid #e0e0e0;
-        }
-        
-        .metrics-table td {
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
-            color: #555;
-        }
-        
-        .metrics-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .metrics-table tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .copy-report-btn {
-            background: #28a745;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 15px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-        
-        .copy-report-btn:hover {
-            background: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
-        }
-        
-        .report-copied {
-            background: #d4edda;
-            color: #155724;
-            padding: 10px 20px;
-            border-radius: 8px;
-            margin-left: 15px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
             display: none;
-            font-weight: 600;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
         }
-        
-        .report-copied.show {
-            display: inline-block;
+
+        .loading-overlay.show {
+            display: flex;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎨 Chatbot Business Config</h1>
-
-        <div class="business-selector" id="businessSelector">
-            <!-- Buttons will be dynamically generated -->
-        </div>
-        
-        <div class="tab-selector">
-            <button class="tab-btn active" data-tab="config">Configuration</button>
-            <button class="tab-btn" data-tab="setup-fees">Setup Fees</button>
-            <button class="tab-btn" data-tab="metrics">Metrics & Reports</button>
-        </div>
-
-        <div class="config-panel">
-            <div id="config-tab" class="tab-content active">
-            <div class="section">
-                <h2>🏢 Basic Information</h2>
-                <div class="form-group">
-                    <label>Business Name</label>
-                    <input type="text" id="businessName" placeholder="Enter business name">
-                </div>
-                <div class="form-group">
-                    <label>Logo URL</label>
-                    <input type="url" id="logoUrl" placeholder="https://example.com/logo.png">
-                </div>
-                <div class="form-group">
-                    <label>Business Description</label>
-                    <textarea id="description" rows="3" placeholder="Brief description of your business..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>📞 Contact Information</h2>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" id="phone" placeholder="+45 12 34 56 78">
-                </div>
-                <div class="form-group">
-                    <label>Phone Hours</label>
-                    <input type="text" id="phoneHours" placeholder="Monday-Friday: 09:00-15:00">
-                </div>
-                <div class="form-group">
-                    <label>Website URL</label>
-                    <input type="url" id="websiteUrl" placeholder="https://www.example.com">
-                </div>
-                <div class="form-group">
-                    <label>Booking URL</label>
-                    <input type="url" id="bookingUrl" placeholder="https://booking.example.com">
-                </div>
-                <div class="form-group">
-                    <label>Currency</label>
-                    <input type="text" id="currency" placeholder="USD, EUR, DKK, etc." maxlength="3">
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>🎨 Color Palette</h2>
-                <div class="color-picker-group">
-                    <div class="color-picker">
-                        <input type="color" id="primaryColor" value="#2e7584">
-                        <div class="color-info">
-                            <label>Primary Color</label>
-                            <span class="hex-value" id="primaryColorHex">#2e7584ff</span>
-                        </div>
-                    </div>
-                    <div class="color-picker">
-                        <input type="color" id="secondaryColor" value="#0f4476">
-                        <div class="color-info">
-                            <label>Secondary Color</label>
-                            <span class="hex-value" id="secondaryColorHex">#0f4476ff</span>
-                        </div>
-                    </div>
-                    <div class="color-picker">
-                        <input type="color" id="textColor" value="#050604">
-                        <div class="color-info">
-                            <label>Text Color</label>
-                            <span class="hex-value" id="textColorHex">#050604ff</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>🤖 Chatbot Behavior</h2>
-                <div class="form-group">
-                    <label>AI Instructions (How should the bot respond?)</label>
-                    <textarea id="aiInstructions" rows="6" placeholder="You are a friendly customer support assistant for [Business]. Be helpful, professional..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 13px; resize: vertical;"></textarea>
-                    <small style="color: #666; display: block; margin-top: 5px;">This controls how the AI responds to customers. Be specific about tone, what it should/shouldn't do.</small>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>🎯 Demo Settings</h2>
-                <div class="form-group">
-                    <label>Demo Mode</label>
-                    <select id="isDemoMode" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
-                        <option value="true">Enabled (Limited Messages)</option>
-                        <option value="false">Disabled (Full Access)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Demo Message Limit</label>
-                    <input type="number" id="demoMessageLimit" placeholder="40" min="1" max="999">
-                    <small style="color: #666; display: block; margin-top: 5px;">How many messages allowed before showing subscription prompt?</small>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>💳 Stripe Payment Links</h2>
-                <div class="form-group">
-                    <label>Monthly Subscription Link</label>
-                    <input type="url" id="stripeMonthly" placeholder="https://buy.stripe.com/...">
-                </div>
-                <div class="form-group">
-                    <label>Yearly Subscription Link</label>
-                    <input type="url" id="stripeYearly" placeholder="https://buy.stripe.com/...">
-                </div>
-                <div class="form-group">
-                    <label>Monthly Price Display</label>
-                    <input type="text" id="monthlyPrice" placeholder="$199/month">
-                </div>
-                <div class="form-group">
-                    <label>Yearly Price Display</label>
-                    <input type="text" id="yearlyPrice" placeholder="$1,990/year (2 months free)">
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>🎨 Widget Preview</h2>
-                <div class="preview-section">
-                    <h3>Widget Preview</h3>
-                    <div class="preview-widget">
-                        <div class="preview-header" id="previewHeader">
-                            <div class="preview-logo" id="previewLogo">C</div>
-                            <h3 id="previewBrandName">Business Name</h3>
-                        </div>
-                        <button class="preview-button" id="previewPrimaryBtn">Book Appointment</button>
-                        <button class="preview-button" id="previewSecondaryBtn">View Services</button>
-                        <div class="preview-text" id="previewText">Sample message text</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>📋 Widget Embed Code</h2>
-                
-                <div style="margin-bottom: 25px; padding: 15px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 8px;">
-                    <strong>✅ Smart Detection:</strong> This ONE code works for both testing and production!
-                    <ul style="margin: 10px 0 0 20px; color: #666;">
-                        <li><strong>Client testing directly:</strong> Opens URL in browser → Shows demo with subscription buttons</li>
-                        <li><strong>Embedded on website:</strong> Visitors see INACTIVE until subscription paid</li>
-                        <li><strong>After payment:</strong> Works for everyone automatically</li>
-                    </ul>
-                </div>
-
-                <h3 style="color: #667eea; margin-bottom: 10px;">🌐 Embed Code (For Client's Website)</h3>
-                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Send this ONE code to your client. They can test it directly AND embed it on their website:</p>
-                <div style="position: relative; margin-bottom: 20px;">
-                    <textarea id="embedCode" readonly style="width: 100%; min-height: 120px; font-family: 'Courier New', monospace; font-size: 13px; padding: 15px; border: 2px solid #ddd; border-radius: 8px; background: #f8f9fa; resize: vertical;"></textarea>
-                    <button onclick="copyEmbedCode()" style="position: absolute; top: 10px; right: 10px; background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">📋 Copy Code</button>
-                </div>
-                
-                <h3 style="color: #667eea; margin-bottom: 10px;">🧪 Direct Testing URL (Optional)</h3>
-                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Client can also open this URL directly to test before embedding:</p>
-                <div style="position: relative;">
-                    <input type="text" id="testingUrl" readonly style="width: 100%; padding: 12px; font-family: 'Courier New', monospace; font-size: 13px; border: 2px solid #ddd; border-radius: 8px; background: #f8f9fa;">
-                    <button onclick="copyTestingUrl()" style="position: absolute; top: 8px; right: 10px; background: #667eea; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">📋 Copy</button>
-                </div>
-            </div>
-
-            <div class="actions">
-                <button class="btn btn-secondary" onclick="resetForm()">Reset Changes</button>
-                <button class="btn btn-primary" onclick="downloadConfig()">💾 Save Configuration</button>
-            </div>
-
-            <div class="success-message" id="successMessage">
-                ✅ Configuration saved successfully!
-            </div>
-            </div>
-            
-            <div id="setup-fees-tab" class="tab-content">
-                <div class="section">
-                    <h2>💰 Setup Fee Payments</h2>
-                    <p style="margin-bottom: 20px; opacity: 0.8;">Clients who paid the $169 setup fee. Create their business profile manually.</p>
-                    
-                    <div id="setupFeesList">
-                        <p>Loading payments...</p>
-                    </div>
-                </div>
-                
-                <div class="section" style="margin-top: 40px;">
-                    <h2>📊 Combined Status Overview</h2>
-                    <p style="margin-bottom: 20px; opacity: 0.8;">Complete view of all businesses with setup fee and subscription status.</p>
-                    
-                    <div id="combinedStatusView">
-                        <p>Loading combined status...</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="metrics-tab" class="tab-content">
-                <div class="section">
-                    <h2>📊 Chatbot Metrics & Analytics</h2>
-                    
-                    <div class="metrics-grid" id="metricsGrid">
-                        <div class="metric-card">
-                            <div class="metric-title">Total Launcher Clicks</div>
-                            <div class="metric-value" id="totalClicks">0</div>
-                            <div class="metric-subtitle">All time</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-title">Total Messages</div>
-                            <div class="metric-value" id="totalMessages">0</div>
-                            <div class="metric-subtitle">All time</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-title">Last 7 Days</div>
-                            <div class="metric-value" id="last7DaysTotal">0</div>
-                            <div class="metric-subtitle" id="last7DaysBreakdown">0 clicks, 0 messages</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-title">Last 30 Days</div>
-                            <div class="metric-value" id="last30DaysTotal">0</div>
-                            <div class="metric-subtitle" id="last30DaysBreakdown">0 clicks, 0 messages</div>
-                        </div>
-                    </div>
-                    
-                    <h3 style="margin: 30px 0 15px 0; color: #333;">Daily Breakdown</h3>
-                    <table class="metrics-table" id="dailyStatsTable">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Clicks</th>
-                                <th>Messages</th>
-                                <th>Total Interactions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dailyStatsBody">
-                            <tr>
-                                <td colspan="4" style="text-align: center; color: #999;">Loading metrics...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <div class="actions" style="margin-top: 25px;">
-                        <button class="copy-report-btn" onclick="copyReport()">📋 Copy Report for Client</button>
-                        <span class="report-copied" id="reportCopied">✅ Report copied!</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
     </div>
 
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Admin Dashboard</h1>
+            <p>Chatbot Management</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Overview</div>
+                <div class="nav-item active" data-view="combined-status">
+                    <span class="nav-icon">📊</span>
+                    Combined Status
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Management</div>
+                <div class="nav-item" data-view="business-config">
+                    <span class="nav-icon">⚙️</span>
+                    Business Config
+                </div>
+                <div class="nav-item" data-view="metrics">
+                    <span class="nav-icon">📊</span>
+                    Metrics & Reports
+                </div>
+                <div class="nav-item" data-view="setup-fees">
+                    <span class="nav-icon">💳</span>
+                    Setup Fees
+                </div>
+                <div class="nav-item" data-view="subscriptions">
+                    <span class="nav-icon">🔄</span>
+                    Subscriptions
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Tools</div>
+                <div class="nav-item" data-view="embed-code">
+                    <span class="nav-icon">📋</span>
+                    Embed Code
+                </div>
+            </div>
+        </nav>
+
+        <div class="business-pills">
+            <div class="nav-section-title">Clients</div>
+            <div id="businessPills"></div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Combined Status View -->
+        <div class="view-content" id="view-combined-status">
+            <div class="page-header">
+                <h1 class="page-title">Dashboard Overview</h1>
+                <p class="page-subtitle">Monitor all clients and subscription status</p>
+            </div>
+
+            <div class="stats-grid" id="statsCards"></div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Combined Client Status</h2>
+                    <p class="card-description">All businesses at a glance</p>
+                </div>
+                <div id="combinedStatusContent">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Business Config View -->
+        <div class="view-content" id="view-business-config" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">Business Configuration</h1>
+                <p class="page-subtitle">Manage business profiles and settings</p>
+            </div>
+
+            <div class="alert alert-success" id="successMessage"></div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Basic Information</h2>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Business Name</label>
+                        <input type="text" class="form-input" id="businessName" placeholder="Enter business name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Logo URL</label>
+                        <input type="url" class="form-input" id="logoUrl" placeholder="https://example.com/logo.png">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Business Description</label>
+                    <textarea class="form-textarea" id="description" placeholder="Describe your business..."></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Brand Colors</h2>
+                    <p class="card-description">Customize your chatbot appearance</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-picker-box">
+                        <label>Primary Color</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="primaryColor" value="#6366f1">
+                            <span class="color-hex" id="primaryColorHex">#6366f1</span>
+                        </div>
+                    </div>
+                    <div class="color-picker-box">
+                        <label>Secondary Color</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="secondaryColor" value="#8b5cf6">
+                            <span class="color-hex" id="secondaryColorHex">#8b5cf6</span>
+                        </div>
+                    </div>
+                    <div class="color-picker-box">
+                        <label>Text Color</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="textColor" value="#1f2937">
+                            <span class="color-hex" id="textColorHex">#1f2937</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Contact Information</h2>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="text" class="form-input" id="phone" placeholder="+1 (555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="text" class="form-input" id="email" placeholder="info@business.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Phone Hours</label>
+                        <input type="text" class="form-input" id="phoneHours" placeholder="Mon-Fri 9AM-5PM">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Website URL</label>
+                        <input type="url" class="form-input" id="websiteUrl" placeholder="https://example.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Booking URL</label>
+                    <input type="url" class="form-input" id="bookingUrl" placeholder="https://booking.example.com">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Demo Settings</h2>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Demo Message Limit</label>
+                        <input type="number" class="form-input" id="demoMessageLimit" placeholder="40" min="1" max="999">
+                        <p class="form-helper">Number of free messages in demo mode</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Secondary Language</label>
+                        <select id="secondaryLanguage" class="form-input">
+                            <option value="da">Danish (Dansk)</option>
+                            <option value="de">German (Deutsch)</option>
+                            <option value="es">Spanish (Español)</option>
+                            <option value="fr">French (Français)</option>
+                            <option value="it">Italian (Italiano)</option>
+                            <option value="nl">Dutch (Nederlands)</option>
+                            <option value="pt">Portuguese (Português)</option>
+                            <option value="sv">Swedish (Svenska)</option>
+                            <option value="no">Norwegian (Norsk)</option>
+                            <option value="fi">Finnish (Suomi)</option>
+                            <option value="pl">Polish (Polski)</option>
+                            <option value="ru">Russian (Русский)</option>
+                            <option value="zh">Chinese (中文)</option>
+                            <option value="ja">Japanese (日本語)</option>
+                            <option value="ar">Arabic (العربية)</option>
+                        </select>
+                        <p class="form-helper">Choose the second language option for the widget</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">AI Behavior</h2>
+                    <p class="card-description">Customize chatbot tone and personality</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">AI Instructions (How should the bot respond?)</label>
+                    <textarea class="form-textarea" id="aiInstructions" placeholder="Be friendly and professional. Focus on helping customers book appointments..."></textarea>
+                    <p class="form-helper">These instructions control the chatbot's tone and behavior</p>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="saveBusinessConfig()">Save Changes</button>
+                <button class="btn btn-secondary" onclick="loadBusinessConfig()">Reset</button>
+            </div>
+        </div>
+
+        <!-- Metrics View -->
+        <div class="view-content" id="view-metrics" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">Metrics & Analytics</h1>
+                <p class="page-subtitle">Chatbot performance and usage statistics (Stripe subscription required)</p>
+            </div>
+
+            <div id="metricsSubscriptionAlert" style="display: none; margin-bottom: 20px;">
+                <div class="alert alert-warning show">
+                    ⚠️ <strong>No Active Subscription</strong> - Metrics are only tracked for clients with active Stripe subscriptions. This client is in demo mode.
+                </div>
+            </div>
+
+            <div class="stats-grid" id="metricsStatsGrid" style="margin-bottom: 30px;">
+                <div class="stat-card">
+                    <div class="stat-label">Total Clicks</div>
+                    <div class="stat-value" id="totalClicks">0</div>
+                    <div class="stat-change">All time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Messages</div>
+                    <div class="stat-value" id="totalMessages">0</div>
+                    <div class="stat-change">All time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Last 7 Days</div>
+                    <div class="stat-value" id="last7DaysTotal">0</div>
+                    <div class="stat-change" id="last7DaysBreakdown">0 clicks, 0 messages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Last 30 Days</div>
+                    <div class="stat-value" id="last30DaysTotal">0</div>
+                    <div class="stat-change" id="last30DaysBreakdown">0 clicks, 0 messages</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Daily Breakdown</h2>
+                    <button class="btn btn-secondary" onclick="copyReport()">📋 Copy Report</button>
+                </div>
+                <div id="dailyMetricsContent">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Clicks</th>
+                                    <th>Messages</th>
+                                    <th>Total Interactions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dailyStatsBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--gray-500);">Select a client to view metrics</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Setup Fees View -->
+        <div class="view-content" id="view-setup-fees" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">Setup Fee Tracker</h1>
+                <p class="page-subtitle">Monitor initial setup fee payments</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Setup Fee Payments</h2>
+                </div>
+                <div id="setupFeesContent">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscriptions View -->
+        <div class="view-content" id="view-subscriptions" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">Subscription Management</h1>
+                <p class="page-subtitle">Active subscription tracking</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <h2 class="card-title">Stripe Customer Portal</h2>
+                    <p class="card-description">Manage all subscriptions, billing, and invoices</p>
+                </div>
+                <div style="padding: 20px;">
+                    <a href="https://billing.stripe.com/p/login/7sY4gzeaTghq8Px2lTfYY00" target="_blank" class="btn btn-primary" style="display: inline-block; text-decoration: none;">
+                        🔐 Open Stripe Customer Portal
+                    </a>
+                    <p style="margin-top: 12px; color: var(--gray-600); font-size: 14px;">
+                        Access your Stripe dashboard to view payments, manage subscriptions, and download invoices.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Active Subscriptions</h2>
+                </div>
+                <div id="subscriptionsContent">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Embed Code View -->
+        <div class="view-content" id="view-embed-code" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">Widget Embed Code</h1>
+                <p class="page-subtitle">Get the code to embed on client websites</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Embed Code Generator</h2>
+                    <p class="card-description">Select a business to generate their embed code</p>
+                </div>
+                <div id="embedCodeContent">
+                    <p class="empty-state-text">Select a client from the sidebar to view their embed code</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <script>
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://chatly-bot-1.onrender.com';
+
         let currentBusiness = null;
-        let businesses = {};
-        let currentMetrics = null;
+        let allBusinesses = [];
 
-        // Initialize - load business list from server
-        loadBusinessList();
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const view = item.getAttribute('data-view');
+                switchView(view);
+            });
+        });
 
+        function switchView(viewName) {
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.getAttribute('data-view') === viewName);
+            });
+
+            // Update content
+            document.querySelectorAll('.view-content').forEach(view => {
+                view.style.display = 'none';
+            });
+            document.getElementById(`view-${viewName}`).style.display = 'block';
+
+            // Load data for view
+            if (viewName === 'combined-status') {
+                loadCombinedStatus();
+            } else if (viewName === 'metrics') {
+                loadMetrics();
+            } else if (viewName === 'setup-fees') {
+                loadSetupFees();
+            } else if (viewName === 'subscriptions') {
+                loadSubscriptions();
+            } else if (viewName === 'business-config' && currentBusiness) {
+                loadBusinessConfig();
+            } else if (viewName === 'embed-code' && currentBusiness) {
+                loadEmbedCode();
+            }
+        }
+
+        // Load businesses for sidebar
         async function loadBusinessList() {
             try {
-                const response = await fetch('/api/business-config');
+                const response = await fetch(`${API_BASE}/api/business-config`);
                 const data = await response.json();
-                
-                // Load each business profile from server
-                for (const businessName of data.businesses) {
-                    const profileResponse = await fetch(`/api/business-config/${businessName}`);
-                    const profile = await profileResponse.json();
-                    businesses[businessName] = profile;
+                allBusinesses = data.businesses || [];
+
+                // Load subscriptions to mark active ones
+                const subResponse = await fetch(`${API_BASE}/api/subscriptions`);
+                const subData = await subResponse.json();
+                const subscriptionsList = subData.subscriptions || {};
+
+                const pillsContainer = document.getElementById('businessPills');
+                pillsContainer.innerHTML = '';
+
+                allBusinesses.forEach((business, index) => {
+                    const pill = document.createElement('div');
+                    pill.className = 'business-pill';
+                    // Handle both string format and object format
+                    const businessName = typeof business === 'string' ? business : business.businessName;
+                    pill.textContent = businessName;
+                    
+                    if (subscriptionsList[businessName]) {
+                        pill.classList.add('has-subscription');
+                    }
+
+                    pill.addEventListener('click', () => {
+                        selectBusiness(businessName);
+                    });
+
+                    pillsContainer.appendChild(pill);
+                });
+
+                // Select first business by default
+                if (allBusinesses.length > 0 && !currentBusiness) {
+                    const firstBusiness = typeof allBusinesses[0] === 'string' ? allBusinesses[0] : allBusinesses[0].businessName;
+                    selectBusiness(firstBusiness);
                 }
-                
-                // Generate business selector buttons dynamically
-                generateBusinessButtons(data.businesses);
-                
-                // Set first business as current
-                currentBusiness = data.businesses[0] || 'HenriDemo';
-                loadBusiness(currentBusiness);
-                updatePreview();
             } catch (error) {
                 console.error('Error loading businesses:', error);
-                // Fallback to hardcoded data
-                businesses = {
-                    Henri: {
-                        businessName: "HENRI",
-                        logoUrl: "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
-                        primaryColor: "#2e7584ff",
-                        secondaryColor: "#0f4476ff",
-                        textColor: "#050604ff",
-                        phone: "+45 35 12 22 00"
-                    },
-                    BlondeSpecialistCPH: {
-                        businessName: "Blonde Specialist CPH",
-                        logoUrl: "",
-                        primaryColor: "#D4AF37ff",
-                        secondaryColor: "#FFD700ff",
-                        textColor: "#2C1810ff",
-                        phone: ""
+            }
+        }
+
+        function selectBusiness(businessName) {
+            currentBusiness = businessName;
+            
+            // Update active pill
+            document.querySelectorAll('.business-pill').forEach(pill => {
+                pill.classList.toggle('active', pill.textContent === businessName);
+            });
+
+            // Reload current view if it needs business data
+            const activeNav = document.querySelector('.nav-item.active');
+            if (activeNav) {
+                const view = activeNav.getAttribute('data-view');
+                if (view === 'business-config') {
+                    loadBusinessConfig();
+                } else if (view === 'embed-code') {
+                    loadEmbedCode();
+                }
+            }
+        }
+
+        // Combined Status
+        async function loadCombinedStatus() {
+            const content = document.getElementById('combinedStatusContent');
+            content.innerHTML = '<div class="spinner"></div>';
+
+            try {
+                const [setupRes, subsRes, bizRes] = await Promise.all([
+                    fetch(`${API_BASE}/api/setup-fees`),
+                    fetch(`${API_BASE}/api/subscriptions`),
+                    fetch(`${API_BASE}/api/business-config`)
+                ]);
+
+                const setupFees = await setupRes.json();
+                const subscriptions = await subsRes.json();
+                const businesses = await bizRes.json();
+
+                // Update stats cards with null checks
+                const statsContainer = document.getElementById('statsCards');
+                const businessList = businesses.businesses || [];
+                const subsList = subscriptions.subscriptions || {};
+                const setupList = setupFees.setupFees || [];
+                
+                const totalClients = businessList.length;
+                const activeSubscriptions = Object.keys(subsList).length;
+                const totalSetupFees = setupList.length;
+
+                statsContainer.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-label">Total Clients</div>
+                        <div class="stat-value">${totalClients}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Subscriptions</div>
+                        <div class="stat-value">${activeSubscriptions}</div>
+                        <div class="stat-change positive">+${activeSubscriptions} active</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Setup Fees Collected</div>
+                        <div class="stat-value">${totalSetupFees}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Demo Clients</div>
+                        <div class="stat-value">${totalClients - activeSubscriptions}</div>
+                    </div>
+                `;
+
+                // Build status table
+                let html = `
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Business Name</th>
+                                    <th>Setup Fee</th>
+                                    <th>Subscription</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                businessList.forEach(biz => {
+                    const businessName = typeof biz === 'string' ? biz : biz.businessName;
+                    const hasSetupFee = setupList.find(f => f.businessName === businessName);
+                    const hasSub = subsList[businessName];
+
+                    html += `
+                        <tr>
+                            <td><strong>${businessName}</strong></td>
+                            <td>${hasSetupFee ? '<span class="badge badge-success">✓ Paid</span>' : '<span class="badge badge-warning">Pending</span>'}</td>
+                            <td>${hasSub ? `<span class="badge badge-success">${hasSub.plan}</span>` : '<span class="badge badge-info">Demo</span>'}</td>
+                            <td>${hasSub ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-info">Demo Mode</span>'}</td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table></div>';
+                content.innerHTML = html;
+
+            } catch (error) {
+                content.innerHTML = `<div class="alert alert-error show">Error loading status: ${error.message}</div>`;
+            }
+        }
+
+        // Business Config
+        async function loadBusinessConfig() {
+            if (!currentBusiness) return;
+
+            showLoading();
+            try {
+                // Fetch the specific business config
+                const response = await fetch(`${API_BASE}/api/business-config/${currentBusiness}`);
+                const config = await response.json();
+
+                if (config && config.businessName) {
+                    document.getElementById('businessName').value = config.businessName || '';
+                    document.getElementById('logoUrl').value = config.logoUrl || '';
+                    document.getElementById('description').value = config.description || '';
+                    
+                    // Colors - Remove 'ff' suffix if present for color input
+                    const primaryColor = (config.primaryColor || '#6366f1ff').replace('ff', '').substring(0, 7);
+                    const secondaryColor = (config.secondaryColor || '#8b5cf6ff').replace('ff', '').substring(0, 7);
+                    const textColor = (config.textColor || '#1f2937ff').replace('ff', '').substring(0, 7);
+                    
+                    document.getElementById('primaryColor').value = primaryColor;
+                    document.getElementById('secondaryColor').value = secondaryColor;
+                    document.getElementById('textColor').value = textColor;
+                    
+                    document.getElementById('phone').value = config.phone || '';
+                    document.getElementById('email').value = config.email || '';
+                    document.getElementById('phoneHours').value = config.phoneHours || '';
+                    document.getElementById('websiteUrl').value = config.websiteUrl || '';
+                    document.getElementById('bookingUrl').value = config.bookingUrl || '';
+                    document.getElementById('demoMessageLimit').value = config.demoMessageLimit || 40;
+                    document.getElementById('aiInstructions').value = config.openaiConfig?.instructions || '';
+
+                    updateColorHex();
+                }
+            } catch (error) {
+                showError('Error loading config: ' + error.message);
+            }
+            hideLoading();
+        }
+
+        function updateColorHex() {
+            document.getElementById('primaryColorHex').textContent = document.getElementById('primaryColor').value;
+            document.getElementById('secondaryColorHex').textContent = document.getElementById('secondaryColor').value;
+            document.getElementById('textColorHex').textContent = document.getElementById('textColor').value;
+        }
+
+        document.getElementById('primaryColor').addEventListener('input', updateColorHex);
+        document.getElementById('secondaryColor').addEventListener('input', updateColorHex);
+        document.getElementById('textColor').addEventListener('input', updateColorHex);
+
+        async function saveBusinessConfig() {
+            if (!currentBusiness) return;
+
+            showLoading();
+            try {
+                const config = {
+                    businessName: document.getElementById('businessName').value,
+                    logoUrl: document.getElementById('logoUrl').value,
+                    description: document.getElementById('description').value,
+                    primaryColor: document.getElementById('primaryColor').value + 'ff',
+                    secondaryColor: document.getElementById('secondaryColor').value + 'ff',
+                    textColor: document.getElementById('textColor').value + 'ff',
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    phoneHours: document.getElementById('phoneHours').value,
+                    websiteUrl: document.getElementById('websiteUrl').value,
+                    bookingUrl: document.getElementById('bookingUrl').value,
+                    demoMessageLimit: parseInt(document.getElementById('demoMessageLimit').value) || 40,
+                    secondaryLanguage: document.getElementById('secondaryLanguage').value,
+                    openaiConfig: {
+                        model: 'gpt-4o-mini',
+                        instructions: document.getElementById('aiInstructions').value
                     }
                 };
-                generateBusinessButtons(Object.keys(businesses));
-                currentBusiness = 'Henri';
-                loadBusiness(currentBusiness);
-                updatePreview();
-            }
-        }
-        
-        async function generateBusinessButtons(businessNames) {
-            const container = document.getElementById('businessSelector');
-            container.innerHTML = '';
-            
-            // Fetch subscription data for status indicators
-            let subscriptionData = {};
-            try {
-                const response = await fetch('/api/subscriptions');
-                const data = await response.json();
-                subscriptionData = data.subscriptions || {};
-            } catch (error) {
-                console.error('Error loading subscription data:', error);
-            }
-            
-            businessNames.forEach((businessName, index) => {
-                const btn = document.createElement('button');
-                const displayName = businesses[businessName]?.businessName || businessName;
-                
-                // Check if business has active subscription
-                const hasSubscription = Object.keys(subscriptionData).some(key => {
-                    const baseName = businessName.replace('Demo', '');
-                    return key === businessName || key === baseName || key === `${baseName}Demo`;
+
+                const response = await fetch(`${API_BASE}/api/business-config/${currentBusiness}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
                 });
-                
-                // Create button with subscription status indicator
-                if (hasSubscription) {
-                    btn.innerHTML = `${displayName} <span style="background: #27ae60; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; margin-left: 8px; font-weight: 600;">✓ Active</span>`;
+
+                if (response.ok) {
+                    showSuccess('Configuration saved successfully!');
+                    // Reload business list to update any changes
+                    await loadBusinessList();
                 } else {
-                    btn.textContent = displayName;
+                    throw new Error('Failed to save configuration');
                 }
-                
-                btn.dataset.business = businessName;
-                if (index === 0) btn.classList.add('active');
-                
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.business-selector button').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    currentBusiness = e.target.dataset.business;
-                    loadBusiness(currentBusiness);
-                    
-                    // If metrics tab is active, reload metrics for new business
-                    const metricsTab = document.getElementById('metrics-tab');
-                    if (metricsTab && metricsTab.classList.contains('active')) {
-                        loadMetrics();
-                    }
+            } catch (error) {
+                showError('Error saving config: ' + error.message);
+            }
+            hideLoading();
+        }
+
+        // Setup Fees
+        async function loadSetupFees() {
+            const content = document.getElementById('setupFeesContent');
+            content.innerHTML = '<div class="spinner"></div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/setup-fees`);
+                const data = await response.json();
+                const setupFeesList = data.setupFees || [];
+
+                if (setupFeesList.length === 0) {
+                    content.innerHTML = '<div class="empty-state"><div class="empty-state-title">No setup fees collected yet</div></div>';
+                    return;
+                }
+
+                let html = `
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Business Name</th>
+                                    <th>Customer ID</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                setupFeesList.forEach(fee => {
+                    html += `
+                        <tr>
+                            <td><strong>${fee.businessName}</strong></td>
+                            <td><code>${fee.customerId}</code></td>
+                            <td>$${fee.amount || '169'}</td>
+                            <td>${new Date(fee.paidAt).toLocaleDateString()}</td>
+                        </tr>
+                    `;
                 });
-                
-                container.appendChild(btn);
-            });
+
+                html += '</tbody></table></div>';
+                content.innerHTML = html;
+            } catch (error) {
+                content.innerHTML = `<div class="alert alert-error show">Error loading setup fees: ${error.message}</div>`;
+            }
         }
 
-        // Color pickers
-        ['primary', 'secondary', 'text'].forEach(type => {
-            const colorInput = document.getElementById(`${type}Color`);
-            const hexDisplay = document.getElementById(`${type}ColorHex`);
-            
-            colorInput.addEventListener('input', (e) => {
-                hexDisplay.textContent = e.target.value + 'ff';
-                updatePreview();
-            });
-        });
+        // Subscriptions
+        async function loadSubscriptions() {
+            const content = document.getElementById('subscriptionsContent');
+            content.innerHTML = '<div class="spinner"></div>';
 
-        // Text inputs
-        ['businessName', 'logoUrl', 'phone'].forEach(field => {
-            document.getElementById(field).addEventListener('input', updatePreview);
-        });
+            try {
+                const response = await fetch(`${API_BASE}/api/subscriptions`);
+                const data = await response.json();
+                const subscriptionsList = data.subscriptions || {};
 
-        function loadBusiness(businessName) {
-            const config = businesses[businessName];
-            if (!config) return;
-            
-            // Basic Information
-            document.getElementById('businessName').value = config.businessName || '';
-            document.getElementById('logoUrl').value = config.logoUrl || '';
-            document.getElementById('description').value = config.description || '';
-            
-            // Contact Information
-            document.getElementById('phone').value = config.phone || '';
-            document.getElementById('phoneHours').value = config.phoneHours || '';
-            document.getElementById('websiteUrl').value = config.websiteUrl || '';
-            document.getElementById('bookingUrl').value = config.bookingUrl || '';
-            document.getElementById('currency').value = config.currency || 'USD';
-            
-            // Colors - Remove 'ff' suffix if present for color input
-            const primaryColor = (config.primaryColor || '#2e7584ff').replace('ff', '').substring(0, 7);
-            const secondaryColor = (config.secondaryColor || '#0f4476ff').replace('ff', '').substring(0, 7);
-            const textColor = (config.textColor || '#050604ff').replace('ff', '').substring(0, 7);
-            
-            document.getElementById('primaryColor').value = primaryColor;
-            document.getElementById('secondaryColor').value = secondaryColor;
-            document.getElementById('textColor').value = textColor;
-            
-            document.getElementById('primaryColorHex').textContent = config.primaryColor || '#2e7584ff';
-            document.getElementById('secondaryColorHex').textContent = config.secondaryColor || '#0f4476ff';
-            document.getElementById('textColorHex').textContent = config.textColor || '#050604ff';
-            
-            // AI Instructions
-            document.getElementById('aiInstructions').value = config.openaiConfig?.instructions || '';
-            
-            // Demo Settings
-            document.getElementById('isDemoMode').value = String(config.isDemoMode !== false);
-            document.getElementById('demoMessageLimit').value = config.demoMessageLimit || 40;
-            
-            // Stripe Settings
-            document.getElementById('stripeMonthly').value = config.stripePaymentLink?.monthly || '';
-            document.getElementById('stripeYearly').value = config.stripePaymentLink?.yearly || '';
-            document.getElementById('monthlyPrice').value = config.subscriptionPrices?.monthly || '$199/month';
-            document.getElementById('yearlyPrice').value = config.subscriptionPrices?.yearly || '$1,990/year';
-            
-            updatePreview();
-            updateEmbedCode();
+                const subs = Object.values(subscriptionsList);
+                if (subs.length === 0) {
+                    content.innerHTML = '<div class="empty-state"><div class="empty-state-title">No active subscriptions</div></div>';
+                    return;
+                }
+
+                let html = `
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Business Name</th>
+                                    <th>Plan</th>
+                                    <th>Customer ID</th>
+                                    <th>Status</th>
+                                    <th>Activated</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                subs.forEach(sub => {
+                    html += `
+                        <tr>
+                            <td><strong>${Object.keys(subscriptionsList).find(k => subscriptionsList[k] === sub)}</strong></td>
+                            <td><span class="badge badge-info">${sub.plan}</span></td>
+                            <td><code>${sub.customerId}</code></td>
+                            <td><span class="badge badge-success">${sub.status}</span></td>
+                            <td>${new Date(sub.activatedAt).toLocaleDateString()}</td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table></div>';
+                content.innerHTML = html;
+            } catch (error) {
+                content.innerHTML = `<div class="alert alert-error show">Error loading subscriptions: ${error.message}</div>`;
+            }
         }
 
-        function updateEmbedCode() {
-            const baseUrl = window.location.origin;
-            
-            // Generate test token for this business
+        // Embed Code
+        function loadEmbedCode() {
+            if (!currentBusiness) return;
+
+            // Check if business exists (handle both string and object format)
+            const businessExists = allBusinesses.some(b => 
+                (typeof b === 'string' ? b : b.businessName) === currentBusiness
+            );
+            if (!businessExists) return;
+
             const testToken = generateTestToken(currentBusiness);
-            
-            // URL with testMode parameter
-            const embedUrl = `${baseUrl}/widget/index.html?business=${currentBusiness}&testMode=${testToken}`;
-            
-            // Testing URL (same as embed URL)
-            document.getElementById('testingUrl').value = embedUrl;
-            
-            // Embed code with test token
-            const embedCode = `<iframe 
-  src="${embedUrl}"
-  style="position: fixed; bottom: 20px; right: 20px; width: 400px; height: 600px; border: none; z-index: 9999; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"
-  title="Customer Support Chat"
-></iframe>`;
-            
-            document.getElementById('embedCode').value = embedCode;
+            const baseUrl = API_BASE.replace('http://', 'https://');
+            const embedCode = `<script src="${baseUrl}/widget/widget.js"><\/script>
+<link rel="stylesheet" href="${baseUrl}/widget/styles.css">
+<script>
+  window.CHATBOT_API_BASE = "${baseUrl}";
+  window.CHATBOT_BUSINESS = "${currentBusiness}";
+  window.CHATBOT_TEST_TOKEN = "${testToken}";
+<\/script>`;
+
+            const testingUrl = `${API_BASE}/widget/index.html?business=${currentBusiness}&testMode=${testToken}`;
+
+            document.getElementById('embedCodeContent').innerHTML = `
+                <div style="margin-bottom: 24px;">
+                    <label class="form-label">Testing URL</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" class="form-input" id="testingUrl" value="${testingUrl}" readonly onclick="this.select()" style="flex: 1;">
+                        <button class="btn btn-secondary" onclick="copyTestingUrl()">Copy</button>
+                        <a href="${testingUrl}" target="_blank" class="btn btn-primary" style="text-decoration: none;">Open</a>
+                    </div>
+                    <p class="form-helper">Use this URL to test the widget before deploying to production</p>
+                </div>
+
+                <div>
+                    <label class="form-label">Production Embed Code</label>
+                    <div class="code-block">
+                        <button class="copy-button" onclick="copyEmbedCode()">Copy</button>
+                        <pre id="embedCode"></pre>
+                    </div>
+                    <p class="form-helper" style="margin-top: 16px;">Add this code to the client's website before the closing &lt;/body&gt; tag</p>
+                </div>
+            `;
+            document.getElementById('embedCode').textContent = embedCode;
         }
-        
+
+        function copyTestingUrl() {
+            const url = document.getElementById('testingUrl');
+            url.select();
+            navigator.clipboard.writeText(url.value);
+            showSuccess('Testing URL copied to clipboard!');
+        }
+
         function generateTestToken(businessName) {
             let hash = 0;
             for (let i = 0; i < businessName.length; i++) {
@@ -857,232 +1470,122 @@
             return Math.abs(hash).toString(36);
         }
 
-        function copyTestingUrl() {
-            const testingUrl = document.getElementById('testingUrl');
-            testingUrl.select();
-            document.execCommand('copy');
-            
-            const btn = event.target;
-            const originalText = btn.textContent;
-            btn.textContent = '✅ Copied!';
-            btn.style.background = '#27ae60';
-            
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '#667eea';
-            }, 2000);
-        }
-
         function copyEmbedCode() {
-            const embedCode = document.getElementById('embedCode');
-            embedCode.select();
-            document.execCommand('copy');
-            
-            // Show feedback
-            const btn = event.target;
-            const originalText = btn.textContent;
-            btn.textContent = '✅ Copied!';
-            btn.style.background = '#27ae60';
-            
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '#28a745';
-            }, 2000);
+            const code = document.getElementById('embedCode').textContent;
+            navigator.clipboard.writeText(code);
+            showSuccess('Embed code copied to clipboard!');
         }
 
-        function updatePreview() {
-            const primaryColor = document.getElementById('primaryColor').value;
-            const secondaryColor = document.getElementById('secondaryColor').value;
-            const textColor = document.getElementById('textColor').value;
-            const businessName = document.getElementById('businessName').value || 'Business Name';
-            
-            document.getElementById('previewHeader').style.background = primaryColor;
-            document.getElementById('previewHeader').style.color = 'white';
-            document.getElementById('previewBrandName').textContent = businessName;
-            document.getElementById('previewLogo').textContent = businessName.charAt(0);
-            
-            document.getElementById('previewPrimaryBtn').style.background = primaryColor;
-            document.getElementById('previewPrimaryBtn').style.color = 'white';
-            
-            document.getElementById('previewSecondaryBtn').style.background = secondaryColor;
-            document.getElementById('previewSecondaryBtn').style.color = 'white';
-            
-            document.getElementById('previewText').style.color = textColor;
-            document.getElementById('previewText').style.background = '#f8f9fa';
-        }
+        // Metrics & Reports
+        let currentMetrics = null;
 
-        function resetForm() {
-            loadBusiness(currentBusiness);
-        }
-
-        async function downloadConfig() {
-            const config = {
-                // Basic Information
-                businessName: document.getElementById('businessName').value,
-                logoUrl: document.getElementById('logoUrl').value,
-                description: document.getElementById('description').value,
-                
-                // Contact Information
-                phone: document.getElementById('phone').value,
-                phoneHours: document.getElementById('phoneHours').value,
-                websiteUrl: document.getElementById('websiteUrl').value,
-                bookingUrl: document.getElementById('bookingUrl').value,
-                currency: document.getElementById('currency').value,
-                
-                // Colors
-                primaryColor: document.getElementById('primaryColor').value + 'ff',
-                secondaryColor: document.getElementById('secondaryColor').value + 'ff',
-                textColor: document.getElementById('textColor').value + 'ff',
-                
-                // AI Instructions
-                openaiConfig: {
-                    model: 'gpt-4o-mini',
-                    instructions: document.getElementById('aiInstructions').value
-                },
-                
-                // Demo Settings
-                isDemoMode: document.getElementById('isDemoMode').value === 'true',
-                demoMessageLimit: parseInt(document.getElementById('demoMessageLimit').value) || 40,
-                
-                // Stripe Settings
-                stripePaymentLink: {
-                    monthly: document.getElementById('stripeMonthly').value,
-                    yearly: document.getElementById('stripeYearly').value
-                },
-                subscriptionPrices: {
-                    monthly: document.getElementById('monthlyPrice').value,
-                    yearly: document.getElementById('yearlyPrice').value
-                }
-            };
-
-            try {
-                // Save to server
-                const response = await fetch(`/api/business-config/${currentBusiness}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(config)
-                });
-
-                if (response.ok) {
-                    const message = document.getElementById('successMessage');
-                    message.textContent = '✅ Configuration saved successfully to ' + currentBusiness + '.json!';
-                    message.classList.add('show');
-                    setTimeout(() => message.classList.remove('show'), 3000);
-                    
-                    // Update local cache
-                    businesses[currentBusiness] = { ...businesses[currentBusiness], ...config };
-                    
-                    // Regenerate buttons to update subscription status if needed
-                    await generateBusinessButtons(Object.keys(businesses));
-                } else {
-                    alert('Failed to save configuration. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error saving config:', error);
-                alert('Error saving configuration: ' + error.message);
-            }
-        }
-        
-        // Tab switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const targetTab = e.target.dataset.tab;
-                
-                // Update tab buttons
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                
-                // Update tab content
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-                document.getElementById(targetTab + '-tab').classList.add('active');
-                
-                // Load metrics if metrics tab
-                if (targetTab === 'metrics') {
-                    loadMetrics();
-                }
-            });
-        });
-        
-        // Load metrics from server
         async function loadMetrics() {
+            if (!currentBusiness) {
+                document.getElementById('dailyStatsBody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--gray-500);">Select a client first</td></tr>';
+                return;
+            }
+
             try {
-                const response = await fetch(`/api/metrics?business=${currentBusiness}`);
+                // Check if business has active Stripe subscription
+                const subsResponse = await fetch(`${API_BASE}/api/subscriptions`);
+                const subsData = await subsResponse.json();
+                const subscriptions = subsData.subscriptions || {};
+                
+                const hasSubscription = !!subscriptions[currentBusiness];
+                
+                // Show/hide subscription warning
+                const alert = document.getElementById('metricsSubscriptionAlert');
+                if (!hasSubscription) {
+                    alert.style.display = 'block';
+                    // Clear metrics display
+                    document.getElementById('totalClicks').textContent = '-';
+                    document.getElementById('totalMessages').textContent = '-';
+                    document.getElementById('last7DaysTotal').textContent = '-';
+                    document.getElementById('last7DaysBreakdown').textContent = 'No active subscription';
+                    document.getElementById('last30DaysTotal').textContent = '-';
+                    document.getElementById('last30DaysBreakdown').textContent = 'No active subscription';
+                    document.getElementById('dailyStatsBody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--warning);">⚠️ Metrics only available for clients with active Stripe subscriptions</td></tr>';
+                    return;
+                } else {
+                    alert.style.display = 'none';
+                }
+
+                // Load metrics for subscribed business
+                const response = await fetch(`${API_BASE}/api/metrics?business=${currentBusiness}`);
                 const data = await response.json();
                 currentMetrics = data;
-                
+
                 // Update summary cards
                 document.getElementById('totalClicks').textContent = data.clicks || 0;
                 document.getElementById('totalMessages').textContent = data.messages || 0;
-                
+
                 // Calculate last 7 days and 30 days
                 const last7Days = getLast7DaysStats(data.dailyStats || {});
                 const last30Days = getLast30DaysStats(data.dailyStats || {});
-                
+
                 const total7 = last7Days.clicks + last7Days.messages;
                 const total30 = last30Days.clicks + last30Days.messages;
-                
+
                 document.getElementById('last7DaysTotal').textContent = total7;
                 document.getElementById('last7DaysBreakdown').textContent = `${last7Days.clicks} clicks, ${last7Days.messages} messages`;
-                
+
                 document.getElementById('last30DaysTotal').textContent = total30;
                 document.getElementById('last30DaysBreakdown').textContent = `${last30Days.clicks} clicks, ${last30Days.messages} messages`;
-                
+
                 // Populate daily stats table
                 populateDailyStats(data.dailyStats || {});
-                
+
             } catch (error) {
                 console.error('Error loading metrics:', error);
-                document.getElementById('dailyStatsBody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: #e74c3c;">Error loading metrics</td></tr>';
+                document.getElementById('dailyStatsBody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--danger);">Error loading metrics</td></tr>';
             }
         }
-        
+
         function getLast7DaysStats(dailyStats) {
             const result = { clicks: 0, messages: 0 };
             const today = new Date();
-            
+
             for (let i = 0; i < 7; i++) {
                 const date = new Date(today);
                 date.setDate(date.getDate() - i);
                 const dateStr = date.toISOString().split('T')[0];
-                
+
                 if (dailyStats[dateStr]) {
                     result.clicks += dailyStats[dateStr].clicks;
                     result.messages += dailyStats[dateStr].messages;
                 }
             }
-            
+
             return result;
         }
-        
+
         function getLast30DaysStats(dailyStats) {
             const result = { clicks: 0, messages: 0 };
             const today = new Date();
-            
+
             for (let i = 0; i < 30; i++) {
                 const date = new Date(today);
                 date.setDate(date.getDate() - i);
                 const dateStr = date.toISOString().split('T')[0];
-                
+
                 if (dailyStats[dateStr]) {
                     result.clicks += dailyStats[dateStr].clicks;
                     result.messages += dailyStats[dateStr].messages;
                 }
             }
-            
+
             return result;
         }
-        
+
         function populateDailyStats(dailyStats) {
             const tbody = document.getElementById('dailyStatsBody');
             const dates = Object.keys(dailyStats).sort().reverse(); // Most recent first
-            
+
             if (dates.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #999;">No data yet</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--gray-500);">No data yet</td></tr>';
                 return;
             }
-            
+
             tbody.innerHTML = '';
             dates.forEach(date => {
                 const stats = dailyStats[date];
@@ -1096,22 +1599,22 @@
                 tbody.appendChild(row);
             });
         }
-        
+
         function formatDate(dateStr) {
             const date = new Date(dateStr);
             const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
             return date.toLocaleDateString('en-US', options);
         }
-        
+
         function copyReport() {
-            if (!currentMetrics) {
-                alert('Please load metrics first');
+            if (!currentMetrics || !currentBusiness) {
+                alert('Please select a client and load metrics first');
                 return;
             }
-            
+
             const last7Days = getLast7DaysStats(currentMetrics.dailyStats || {});
             const last30Days = getLast30DaysStats(currentMetrics.dailyStats || {});
-            
+
             const report = `
 CHATBOT PERFORMANCE REPORT
 Business: ${currentBusiness}
@@ -1141,275 +1644,49 @@ DAILY BREAKDOWN
 ${generateDailyBreakdown(currentMetrics.dailyStats || {})}
 
 ════════════════════════════════════════
-Report generated by Chappy Chatbot Analytics
+Report generated by Chatbot Analytics
             `.trim();
-            
+
             navigator.clipboard.writeText(report).then(() => {
-                const copiedMsg = document.getElementById('reportCopied');
-                copiedMsg.classList.add('show');
-                setTimeout(() => copiedMsg.classList.remove('show'), 3000);
-            }).catch(err => {
-                alert('Failed to copy report: ' + err.message);
+                showSuccess('Report copied to clipboard!');
             });
         }
-        
+
         function generateDailyBreakdown(dailyStats) {
             const dates = Object.keys(dailyStats).sort().reverse();
             if (dates.length === 0) return 'No data available';
-            
-            let breakdown = '';
-            dates.forEach(date => {
+
+            return dates.map(date => {
                 const stats = dailyStats[date];
-                const formattedDate = formatDate(date);
-                const total = stats.clicks + stats.messages;
-                breakdown += `${formattedDate}:\n`;
-                breakdown += `  Clicks: ${stats.clicks} | Messages: ${stats.messages} | Total: ${total}\n\n`;
-            });
-            
-            return breakdown.trim();
+                return `${formatDate(date)}: ${stats.clicks} clicks, ${stats.messages} messages (Total: ${stats.clicks + stats.messages})`;
+            }).join('\n');
         }
-        
-        // Setup Fees functionality
-        async function loadSetupFees() {
-            try {
-                const response = await fetch('/api/setup-fees');
-                const data = await response.json();
-                
-                const container = document.getElementById('setupFeesList');
-                
-                if (data.payments.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; opacity: 0.6;">No setup fee payments yet.</p>';
-                    return;
-                }
-                
-                // Sort by most recent first
-                const sortedPayments = data.payments.sort((a, b) => 
-                    new Date(b.paidAt) - new Date(a.paidAt)
-                );
-                
-                let html = '<table style="width: 100%; border-collapse: collapse;">';
-                html += '<thead><tr style="background: rgba(0,0,0,0.05);">';
-                html += '<th style="padding: 12px; text-align: left;">Business Name</th>';
-                html += '<th style="padding: 12px; text-align: left;">Email</th>';
-                html += '<th style="padding: 12px; text-align: left;">Customer ID</th>';
-                html += '<th style="padding: 12px; text-align: left;">Amount</th>';
-                html += '<th style="padding: 12px; text-align: left;">Date</th>';
-                html += '<th style="padding: 12px; text-align: center;">Status</th>';
-                html += '</tr></thead><tbody>';
-                
-                sortedPayments.forEach(payment => {
-                    const date = new Date(payment.paidAt).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                    
-                    const statusBadge = payment.profileCreated 
-                        ? '<span style="background: #27ae60; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">✓ Profile Created</span>'
-                        : '<span style="background: #f39c12; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">⚠ Pending</span>';
-                    
-                    const customerId = payment.customerId || 'N/A';
-                    const customerIdDisplay = customerId !== 'N/A' 
-                        ? `<code style="background: rgba(0,0,0,0.05); padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer;" onclick="navigator.clipboard.writeText('${customerId}'); this.style.background='#27ae60'; this.style.color='white'; setTimeout(() => { this.style.background='rgba(0,0,0,0.05)'; this.style.color='inherit'; }, 1000);" title="Click to copy">${customerId}</code>`
-                        : '<span style="opacity: 0.4;">N/A</span>';
-                    
-                    html += `<tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">`;
-                    html += `<td style="padding: 12px; font-weight: 600;">${payment.businessName}</td>`;
-                    html += `<td style="padding: 12px;">${payment.customerEmail}</td>`;
-                    html += `<td style="padding: 12px;">${customerIdDisplay}</td>`;
-                    html += `<td style="padding: 12px; font-weight: 600; color: #27ae60;">$${payment.amount}</td>`;
-                    html += `<td style="padding: 12px; font-size: 14px; opacity: 0.8;">${date}</td>`;
-                    html += `<td style="padding: 12px; text-align: center;">${statusBadge}</td>`;
-                    html += `</tr>`;
-                });
-                
-                html += '</tbody></table>';
-                container.innerHTML = html;
-                
-            } catch (error) {
-                console.error('Error loading setup fees:', error);
-                document.getElementById('setupFeesList').innerHTML = 
-                    '<p style="color: #e74c3c;">Error loading setup fee payments.</p>';
-            }
+
+        // Utility functions
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.add('show');
         }
-        
-        // Combined Status View
-        async function loadCombinedStatus() {
-            try {
-                // Fetch all data
-                const [setupFeesRes, subscriptionsRes, businessesRes] = await Promise.all([
-                    fetch('/api/setup-fees'),
-                    fetch('/api/subscriptions'),
-                    fetch('/api/business-config')
-                ]);
-                
-                // Check if all requests were successful
-                if (!setupFeesRes.ok) {
-                    throw new Error(`Setup fees API failed: ${setupFeesRes.status}`);
-                }
-                if (!subscriptionsRes.ok) {
-                    throw new Error(`Subscriptions API failed: ${subscriptionsRes.status}`);
-                }
-                if (!businessesRes.ok) {
-                    throw new Error(`Business config API failed: ${businessesRes.status}`);
-                }
-                
-                const setupFeesData = await setupFeesRes.json();
-                const subscriptionsData = await subscriptionsRes.json();
-                const businessesResponse = await businessesRes.json();
-                
-                // Extract businesses array from response
-                const businessesData = businessesResponse.businesses || [];
-                
-                const container = document.getElementById('combinedStatusView');
-                
-                // Create a map of all businesses
-                const businessMap = {};
-                
-                // Add all profile businesses
-                businessesData.forEach(businessName => {
-                    businessMap[businessName] = {
-                        name: businessName,
-                        hasProfile: true,
-                        setupFeePaid: false,
-                        profileCreated: false,
-                        hasSubscription: false,
-                        subscriptionPlan: null
-                    };
-                });
-                
-                // Add setup fee information
-                setupFeesData.payments.forEach(payment => {
-                    const name = payment.businessName;
-                    if (!businessMap[name]) {
-                        businessMap[name] = {
-                            name: name,
-                            hasProfile: false,
-                            setupFeePaid: true,
-                            profileCreated: payment.profileCreated,
-                            hasSubscription: false,
-                            subscriptionPlan: null
-                        };
-                    } else {
-                        businessMap[name].setupFeePaid = true;
-                        businessMap[name].profileCreated = payment.profileCreated;
-                    }
-                });
-                
-                // Add subscription information
-                Object.entries(subscriptionsData.subscriptions || {}).forEach(([key, sub]) => {
-                    // Try to match with existing businesses
-                    let matchedName = null;
-                    Object.keys(businessMap).forEach(businessName => {
-                        const baseName = businessName.replace('Demo', '');
-                        if (key === businessName || key === baseName || key === `${baseName}Demo`) {
-                            matchedName = businessName;
-                        }
-                    });
-                    
-                    if (matchedName) {
-                        businessMap[matchedName].hasSubscription = true;
-                        businessMap[matchedName].subscriptionPlan = sub.plan || 'monthly';
-                    } else {
-                        // Subscription exists but no profile yet
-                        businessMap[key] = {
-                            name: key,
-                            hasProfile: false,
-                            setupFeePaid: false,
-                            profileCreated: false,
-                            hasSubscription: true,
-                            subscriptionPlan: sub.plan || 'monthly'
-                        };
-                    }
-                });
-                
-                const businesses = Object.values(businessMap).sort((a, b) => {
-                    // Sort by subscription active first, then setup fee paid, then alphabetically
-                    if (a.hasSubscription !== b.hasSubscription) return b.hasSubscription - a.hasSubscription;
-                    if (a.setupFeePaid !== b.setupFeePaid) return b.setupFeePaid - a.setupFeePaid;
-                    return a.name.localeCompare(b.name);
-                });
-                
-                if (businesses.length === 0) {
-                    container.innerHTML = '<p style=\"text-align: center; opacity: 0.6;\">No businesses yet.</p>';
-                    return;
-                }
-                
-                let html = '<table style=\"width: 100%; border-collapse: collapse;\">';
-                html += '<thead><tr style=\"background: rgba(0,0,0,0.05);\">';
-                html += '<th style=\"padding: 12px; text-align: left;\">Business Name</th>';
-                html += '<th style=\"padding: 12px; text-align: center;\">Profile</th>';
-                html += '<th style=\"padding: 12px; text-align: center;\">Setup Fee</th>';
-                html += '<th style=\"padding: 12px; text-align: center;\">Subscription</th>';
-                html += '<th style=\"padding: 12px; text-align: center;\">Status</th>';
-                html += '</tr></thead><tbody>';
-                
-                businesses.forEach(business => {
-                    const profileBadge = business.hasProfile 
-                        ? '<span style=\"color: #27ae60; font-size: 18px;\" title=\"Profile exists\">✓</span>'
-                        : '<span style=\"opacity: 0.3; font-size: 18px;\" title=\"No profile\">✗</span>';
-                    
-                    const setupFeeBadge = business.setupFeePaid
-                        ? '<span style=\"background: #27ae60; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;\">Paid</span>'
-                        : '<span style=\"opacity: 0.3;\">—</span>';
-                    
-                    const subscriptionBadge = business.hasSubscription
-                        ? `<span style=\"background: #27ae60; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;\">✓ ${business.subscriptionPlan === 'yearly' ? 'Yearly' : 'Monthly'}</span>`
-                        : '<span style=\"opacity: 0.3;\">—</span>';
-                    
-                    let overallStatus = '';
-                    if (business.hasSubscription) {
-                        overallStatus = '<span style=\"background: #27ae60; color: white; padding: 6px 16px; border-radius: 15px; font-size: 13px; font-weight: 600;\">🟢 ACTIVE</span>';
-                    } else if (business.hasProfile) {
-                        overallStatus = '<span style=\"background: #3498db; color: white; padding: 6px 16px; border-radius: 15px; font-size: 13px; font-weight: 600;\">🔵 DEMO</span>';
-                    } else if (business.setupFeePaid) {
-                        overallStatus = '<span style=\"background: #f39c12; color: white; padding: 6px 16px; border-radius: 15px; font-size: 13px; font-weight: 600;\">⚠ PENDING</span>';
-                    } else {
-                        overallStatus = '<span style=\"background: #95a5a6; color: white; padding: 6px 16px; border-radius: 15px; font-size: 13px; font-weight: 600;\">⚪ NEW</span>';
-                    }
-                    
-                    html += `<tr style=\"border-bottom: 1px solid rgba(0,0,0,0.1);\">`;
-                    html += `<td style=\"padding: 12px; font-weight: 600;\">${business.name}</td>`;
-                    html += `<td style=\"padding: 12px; text-align: center;\">${profileBadge}</td>`;
-                    html += `<td style=\"padding: 12px; text-align: center;\">${setupFeeBadge}</td>`;
-                    html += `<td style=\"padding: 12px; text-align: center;\">${subscriptionBadge}</td>`;
-                    html += `<td style=\"padding: 12px; text-align: center;\">${overallStatus}</td>`;
-                    html += `</tr>`;
-                });
-                
-                html += '</tbody></table>';
-                
-                // Add legend
-                html += '<div style=\"margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.02); border-radius: 8px; font-size: 14px;\">';
-                html += '<strong>Status Legend:</strong><br>';
-                html += '<span style=\"margin-right: 20px;\">🟢 ACTIVE = Subscription active, chatbot fully operational</span>';
-                html += '<span style=\"margin-right: 20px;\">🔵 DEMO = Profile created, demo mode (40 messages)</span><br>';
-                html += '<span style=\"margin-right: 20px;\">⚠ PENDING = Setup fee paid, awaiting profile creation</span>';
-                html += '<span style=\"margin-right: 20px;\">⚪ NEW = Subscription exists but no profile/setup fee</span>';
-                html += '</div>';
-                
-                container.innerHTML = html;
-                
-            } catch (error) {
-                console.error('Error loading combined status:', error);
-                document.getElementById('combinedStatusView').innerHTML = 
-                    `<p style="color: #e74c3c;">Error loading combined status: ${error.message}</p>
-                    <p style="color: #666; font-size: 14px; margin-top: 10px;">Check browser console for details.</p>`;
-            }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('show');
         }
-        
-        // Load setup fees and combined status when tab is opened
+
+        function showSuccess(message) {
+            const alert = document.getElementById('successMessage');
+            alert.textContent = message;
+            alert.classList.add('show');
+            setTimeout(() => alert.classList.remove('show'), 3000);
+        }
+
+        function showError(message) {
+            // Create error alert if needed
+            alert(message);
+        }
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (btn.dataset.tab === 'setup-fees') {
-                        loadSetupFees();
-                        loadCombinedStatus();
-                    }
-                });
-            });
+            loadBusinessList();
+            loadCombinedStatus();
         });
     </script>
 </body>
