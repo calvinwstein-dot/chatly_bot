@@ -1,0 +1,25 @@
+{
+  // Ensure git operations use a separate terminal from the server
+  "git.terminalAuthentication": false,
+  "git.openDiffOnClick": false,
+  
+  // Terminal configuration to prevent interference
+  "terminal.integrated.splitCwd": "workspaceRoot",
+  
+  // Ensure each task gets its own dedicated terminal
+  "task.autoDetect": "off",
+  
+  // Prevent automatic task running
+  "task.runOnFolderOpen": false,
+  
+  // Git configuration
+  "git.autofetch": false,
+  "git.confirmSync": false,
+  
+  // Ensure file watchers don't trigger server restarts unnecessarily
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
+  }
+}

@@ -6,9 +6,17 @@
 			"type": "shell",
 			"command": "npm run start:dev",
 			"problemMatcher": [],
+			"isBackground": false,
 			"presentation": {
 				"reveal": "always",
-				"panel": "dedicated"
+				"panel": "dedicated",
+				"focus": false,
+				"clear": false,
+				"showReuseMessage": false,
+				"close": false
+			},
+			"runOptions": {
+				"instanceLimit": 1
 			}
 		}
 	]
