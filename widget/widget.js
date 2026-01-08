@@ -197,7 +197,6 @@ async function loadWidgetConfig() {
     // Check if this is a demo mode business
     if (config.isDemoMode) {
       // Check for testMode parameter
-      const urlParams = new URLSearchParams(window.location.search);
       const testModeParam = urlParams.get('testMode');
       
       // Generate valid test token for this business
@@ -214,7 +213,6 @@ async function loadWidgetConfig() {
       }
       
       // Valid test token - allow demo testing
-      const urlParams = new URLSearchParams(window.location.search);
       const messagesUsed = getDemoMessageCount();
       demoStatus = {
         isDemo: true,
