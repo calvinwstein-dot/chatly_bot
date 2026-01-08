@@ -214,9 +214,11 @@ async function loadWidgetConfig() {
       }
       
       // Valid test token - allow demo testing
+      const urlParams = new URLSearchParams(window.location.search);
       const messagesUsed = getDemoMessageCount();
       demoStatus = {
         isDemo: true,
+        isTestMode: true, // Flag for test mode
         messageLimit: config.demoMessageLimit || 10,
         messagesUsed: messagesUsed,
         messagesRemaining: Math.max(0, (config.demoMessageLimit || 10) - messagesUsed),
@@ -266,6 +268,14 @@ function updateDemoUI() {
   if (!demoStatus || !demoStatus.isDemo) return;
 
   let demoBar = document.getElementById("demo-bar");
+  
+  // If in testMode, don't show any demo bar or subscription UI
+  if (demoStatus.isTestMode) {
+    if (demoBar) {
+      demoBar.remove();
+    }
+    return;
+  }
   
   if (!demoBar) {
     // Create demo bar
