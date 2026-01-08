@@ -474,7 +474,13 @@ function init() {
   const form = document.getElementById("chat-form");
   const input = document.getElementById("chat-input");
 
+  if (!launcher || !widget) {
+    console.error('Widget elements not found');
+    return;
+  }
+
   launcher.addEventListener("click", async () => {
+    console.log('Launcher clicked');
     widget.classList.toggle("hidden");
     
     // Log click metric (only for active subscriptions)
