@@ -473,8 +473,8 @@ async function sendMessage(message) {
       return;
     }
 
-    // Update demo status and localStorage
-    if (data.demoStatus) {
+    // Update demo status and localStorage (skip for URL testMode)
+    if (data.demoStatus && !isUrlTestMode) {
       demoStatus = data.demoStatus;
       setDemoMessageCount(demoStatus.messagesUsed);
       updateDemoUI();
