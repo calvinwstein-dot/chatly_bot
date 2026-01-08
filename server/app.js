@@ -84,6 +84,13 @@ app.use("/api/subscriptions", subscriptionsRoute);
 app.use("/api/metrics", metricsRoute);
 app.use("/api/setup-fees", setupFeesRoute);
 
+// Log iframe embedding attempts
+app.post("/api/log-iframe-attempt", (req, res) => {
+  const { business, domain } = req.body;
+  console.log(`⚠️  IFRAME ATTEMPT: Business "${business}" testing URL embedded on: ${domain}`);
+  res.json({ logged: true });
+});
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });

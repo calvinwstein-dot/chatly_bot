@@ -12,6 +12,32 @@ const businessName = urlParams.get('business') || scriptTag?.getAttribute('data-
 const testToken = urlParams.get('testMode') || scriptTag?.getAttribute('data-testmode') || '';
 const isUrlTestMode = !!urlParams.get('testMode'); // True if testMode from URL (full access)
 
+// Detect if testing URL is embedded in iframe and block it
+if (isUrlTestMode && window.self !== window.top) {
+  // Testing URL embedded in iframe - block and log
+  try {
+    const parentDomain = document.referrer || 'unknown';
+    fetch(`${API_BASE}/api/log-iframe-attempt`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ business: businessName, domain: parentDomain })
+    }).catch(() => {}); // Silent fail
+  } catch (e) {}
+  
+  // Show error and stop widget initialization
+  document.body.innerHTML = `
+    <div style="font-family: Inter, sans-serif; padding: 40px; text-align: center; background: #fff; height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <div>
+        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+        <h2 style="color: #dc2626; margin: 0 0 12px 0;">Testing URL Cannot Be Embedded</h2>
+        <p style="color: #6b7280; margin: 0 0 20px 0;">This testing URL is for preview only and cannot be embedded on websites.</p>
+        <p style="color: #374151; font-weight: 500;">Please use the embed code snippet provided in your dashboard.</p>
+      </div>
+    </div>
+  `;
+  throw new Error('Testing URL embedded in iframe');
+}
+
 // Simple hash function to generate consistent test token from business name
 function generateTestToken(businessName) {
   let hash = 0;
