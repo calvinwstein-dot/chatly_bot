@@ -291,7 +291,8 @@ function appendMessage(text, role) {
   div.innerHTML = htmlText;
   
   container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
+  // Scroll to show the start of the new message
+  div.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function updateDemoUI() {
@@ -442,7 +443,8 @@ async function sendMessage(message) {
   // Append to messages and show
   messagesDiv.appendChild(typingIndicator);
   typingIndicator.classList.remove('hidden');
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  // Scroll to show typing indicator at start position
+  typingIndicator.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   try {
     const demoMessageCount = getDemoMessageCount();
