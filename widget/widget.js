@@ -5,10 +5,11 @@ let demoStatus = null;
 let hasActiveSubscription = false;
 let widgetConfig = null; // Store config for language settings
 
-// Get business from URL parameter (e.g., ?business=Henri)
+// Get business from URL parameter OR script tag data attribute
 const urlParams = new URLSearchParams(window.location.search);
-const businessName = urlParams.get('business') || 'Henri';
-const testToken = urlParams.get('testMode') || '';
+const scriptTag = document.currentScript || document.querySelector('script[data-business]');
+const businessName = urlParams.get('business') || scriptTag?.getAttribute('data-business') || 'Henri';
+const testToken = urlParams.get('testMode') || scriptTag?.getAttribute('data-testmode') || '';
 
 // Simple hash function to generate consistent test token from business name
 function generateTestToken(businessName) {
