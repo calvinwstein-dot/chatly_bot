@@ -128,7 +128,7 @@ function formatListItems(text) {
 export async function handleSupportTurn(session, userMessage, language = 'en', business = 'Henri') {
   const businessProfile = loadBusinessProfile(business);
   const systemPrompt = buildSystemPrompt(businessProfile);
-  const languageName = language === 'da' ? 'Danish' : 'English';
+  const languageName = getLanguageName(language);
   const promptWithLanguage = systemPrompt.replace(/{{LANGUAGE}}/g, languageName);
   
   const system = {
