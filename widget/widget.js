@@ -10,6 +10,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const scriptTag = document.currentScript || document.querySelector('script[data-business]');
 const businessName = urlParams.get('business') || scriptTag?.getAttribute('data-business') || 'Henri';
 const testToken = urlParams.get('testMode') || scriptTag?.getAttribute('data-testmode') || '';
+const isUrlTestMode = !!urlParams.get('testMode'); // True if testMode from URL (full access)
 
 // Simple hash function to generate consistent test token from business name
 function generateTestToken(businessName) {
@@ -197,14 +198,11 @@ async function loadWidgetConfig() {
 
     // Check if this is a demo mode business
     if (config.isDemoMode) {
-      // Check for testMode parameter
-      const testModeParam = urlParams.get('testMode');
-      
       // Generate valid test token for this business
       const validToken = generateTestToken(businessName);
       
-      // If no testMode parameter or invalid token, show inactive
-      if (!testModeParam || testModeParam !== validToken) {
+      // If no testToken or invalid token, show inactive
+      if (!testToken || testToken !== validToken) {
         demoStatus = {
           isDemo: true,
           inactive: true
@@ -213,20 +211,27 @@ async function loadWidgetConfig() {
         return;
       }
       
-      // Valid test token - allow demo testing
-      const messagesUsed = getDemoMessageCount();
-      demoStatus = {
-        isDemo: true,
-        isTestMode: true, // Flag for test mode
-        messageLimit: config.demoMessageLimit || 10,
-        messagesUsed: messagesUsed,
-        messagesRemaining: Math.max(0, (config.demoMessageLimit || 10) - messagesUsed),
-        expiryDate: config.demoExpiryDate,
-        stripePaymentLink: config.stripePaymentLink,
-        subscriptionPrices: config.subscriptionPrices,
-        limitReached: messagesUsed >= (config.demoMessageLimit || 10)
-      };
-      updateDemoUI();
+      // Valid test token - check source
+      if (isUrlTestMode) {
+        // URL testMode: Full access, no limits, no demo UI (acts like paid subscription)
+        demoStatus = null; // No demo status = acts like paid subscription
+        hasActiveSubscription = true; // Treat as subscribed
+        // Don't call updateDemoUI - no demo bar at all
+      } else {
+        // Snippet testMode: Demo with 40 message limit and subscription bar
+        const messagesUsed = getDemoMessageCount();
+        demoStatus = {
+          isDemo: true,
+          messageLimit: config.demoMessageLimit || 10,
+          messagesUsed: messagesUsed,
+          messagesRemaining: Math.max(0, (config.demoMessageLimit || 10) - messagesUsed),
+          expiryDate: config.demoExpiryDate,
+          stripePaymentLink: config.stripePaymentLink,
+          subscriptionPrices: config.subscriptionPrices,
+          limitReached: messagesUsed >= (config.demoMessageLimit || 10)
+        };
+        updateDemoUI();
+      }
     }
   } catch (e) {
     console.error("Failed to load widget config", e);
@@ -267,14 +272,6 @@ function updateDemoUI() {
   if (!demoStatus || !demoStatus.isDemo) return;
 
   let demoBar = document.getElementById("demo-bar");
-  
-  // If in testMode, don't show any demo bar or subscription UI
-  if (demoStatus.isTestMode) {
-    if (demoBar) {
-      demoBar.remove();
-    }
-    return;
-  }
   
   if (!demoBar) {
     // Create demo bar
