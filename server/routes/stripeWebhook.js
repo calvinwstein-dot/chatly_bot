@@ -6,9 +6,17 @@ import path from "path";
 const router = express.Router();
 
 // Initialize Stripe with your secret key (only if key exists)
-const stripeKey = process.env.STRIPE_SECRET_KEY;
+// Automatically uses test keys in development, live keys in production
+const isProduction = process.env.NODE_ENV === 'production';
+const stripeKey = isProduction 
+  ? process.env.STRIPE_LIVE_SECRET_KEY 
+  : process.env.STRIPE_TEST_SECRET_KEY;
 const stripe = stripeKey ? new Stripe(stripeKey) : null;
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+const webhookSecret = isProduction 
+  ? process.env.STRIPE_LIVE_WEBHOOK_SECRET 
+  : process.env.STRIPE_TEST_WEBHOOK_SECRET;
+
+console.log(`✓ Stripe initialized in ${isProduction ? 'PRODUCTION' : 'TEST'} mode`);
 
 const SUBSCRIPTIONS_FILE = path.resolve("server/subscriptions.json");
 const SETUP_FEES_FILE = path.resolve("server/data/setupFees.json");

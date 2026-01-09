@@ -34,12 +34,27 @@ function hasActiveSubscription(businessName) {
     const baseName = businessName.replace(/Demo$/, '');
     const demoName = businessName.endsWith('Demo') ? businessName : `${businessName}Demo`;
     
-    const subscription = data.subscriptions?.find(
-      sub => (sub.businessName === businessName || 
-              sub.businessName === baseName || 
-              sub.businessName === demoName) && 
-             sub.status === 'active'
-    );
+    // Handle both object and array formats
+    let subscription;
+    if (Array.isArray(data.subscriptions)) {
+      // Old format: array
+      subscription = data.subscriptions.find(
+        sub => (sub.businessName === businessName || 
+                sub.businessName === baseName || 
+                sub.businessName === demoName) && 
+               sub.status === 'active'
+      );
+    } else {
+      // New format: object keyed by business name
+      subscription = data.subscriptions[businessName] || 
+                     data.subscriptions[baseName] || 
+                     data.subscriptions[demoName];
+      // Verify it's active
+      if (subscription && subscription.status !== 'active') {
+        subscription = null;
+      }
+    }
+    
     return !!subscription;
   } catch (error) {
     console.error('Error checking subscription:', error);
@@ -123,19 +138,26 @@ router.post("/deactivate", (req, res) => {
 router.get("/", (req, res) => {
   const data = loadSubscriptions();
   
-  // Transform array into object keyed by businessName for easier lookup
-  const subscriptionsMap = {};
-  data.subscriptions.forEach(sub => {
-    if (sub.status === 'active') {
-      subscriptionsMap[sub.businessName] = {
-        customerId: sub.customerId,
-        subscriptionId: sub.subscriptionId,
-        plan: sub.plan,
-        status: sub.status,
-        activatedAt: sub.activatedAt
-      };
-    }
-  });
+  // Handle both object and array formats
+  let subscriptionsMap = {};
+  
+  if (Array.isArray(data.subscriptions)) {
+    // Old format: array
+    data.subscriptions.forEach(sub => {
+      if (sub.status === 'active') {
+        subscriptionsMap[sub.businessName] = {
+          customerId: sub.customerId,
+          subscriptionId: sub.subscriptionId,
+          plan: sub.plan,
+          status: sub.status,
+          activatedAt: sub.activatedAt
+        };
+      }
+    });
+  } else {
+    // New format: already an object
+    subscriptionsMap = data.subscriptions || {};
+  }
   
   res.json({ subscriptions: subscriptionsMap });
 });

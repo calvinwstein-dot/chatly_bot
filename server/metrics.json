@@ -1,11 +1,25 @@
 {
   "businesses": {
     "HenriDemo": {
-      "clicks": 3,
-      "messages": 0,
+      "clicks": 13,
+      "messages": 4,
       "dailyStats": {
         "2026-01-08": {
           "clicks": 3,
+          "messages": 0
+        },
+        "2026-01-09": {
+          "clicks": 10,
+          "messages": 4
+        }
+      }
+    },
+    "BlondeSpecialistCPHDemo": {
+      "clicks": 1,
+      "messages": 0,
+      "dailyStats": {
+        "2026-01-09": {
+          "clicks": 1,
           "messages": 0
         }
       }

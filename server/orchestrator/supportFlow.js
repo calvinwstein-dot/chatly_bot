@@ -125,6 +125,28 @@ function formatListItems(text) {
   return text.replace(listPattern, '$1\n');
 }
 
+function getLanguageName(langCode) {
+  const languageMap = {
+    'en': 'English',
+    'da': 'Danish',
+    'de': 'German',
+    'fr': 'French',
+    'es': 'Spanish',
+    'it': 'Italian',
+    'pt': 'Portuguese',
+    'nl': 'Dutch',
+    'pl': 'Polish',
+    'ru': 'Russian',
+    'zh': 'Chinese',
+    'ja': 'Japanese',
+    'ko': 'Korean',
+    'ar': 'Arabic',
+    'hi': 'Hindi',
+    'sv': 'Swedish'
+  };
+  return languageMap[langCode] || 'English';
+}
+
 export async function handleSupportTurn(session, userMessage, language = 'en', business = 'Henri') {
   const businessProfile = loadBusinessProfile(business);
   const systemPrompt = buildSystemPrompt(businessProfile);

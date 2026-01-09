@@ -26,8 +26,14 @@
   "isDemoMode": true,
   "demoMessageLimit": 100,
   "stripePaymentLink": {
-    "monthly": "https://buy.stripe.com/dRm00jc2Le9ifdV3pXfYY07",
-    "yearly": "https://buy.stripe.com/dRmcN58Qz6GQaXF3pXfYY06"
+    "test": {
+      "monthly": "https://buy.stripe.com/test_dRm5kDf6yfvVbru4779oc06",
+      "yearly": "https://buy.stripe.com/test_dRm5kDf6yfvVbru4779oc06"
+    },
+    "live": {
+      "monthly": "https://buy.stripe.com/dRm00jc2Le9ifdV3pXfYY07",
+      "yearly": "https://buy.stripe.com/dRmcN58Qz6GQaXF3pXfYY06"
+    }
   },
   "subscriptionPrices": {
     "monthly": "$199/month",

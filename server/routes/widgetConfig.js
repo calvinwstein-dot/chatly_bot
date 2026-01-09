@@ -33,6 +33,15 @@ router.get("/", (req, res) => {
     const businessName = req.query.business || 'Henri';
     const business = loadBusinessProfile(businessName);
     
+    // Automatically select test or live payment links based on NODE_ENV
+    const isProduction = process.env.NODE_ENV === 'production';
+    let stripePaymentLink = business.stripePaymentLink;
+    
+    // If payment links have test/live structure, select the appropriate one
+    if (stripePaymentLink && stripePaymentLink.test && stripePaymentLink.live) {
+      stripePaymentLink = isProduction ? stripePaymentLink.live : stripePaymentLink.test;
+    }
+    
     res.json({
       ...config.widget,
       brandName: business.businessName,
@@ -62,7 +71,7 @@ router.get("/", (req, res) => {
       isDemoMode: business.isDemoMode || false,
       demoMessageLimit: business.demoMessageLimit,
       demoExpiryDate: business.demoExpiryDate,
-      stripePaymentLink: business.stripePaymentLink,
+      stripePaymentLink: stripePaymentLink,
       subscriptionPrices: business.subscriptionPrices
     });
   } catch (error) {

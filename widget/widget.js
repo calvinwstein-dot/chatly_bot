@@ -311,16 +311,61 @@ function updateDemoUI() {
 
   // Show inactive state if no valid token
   if (demoStatus.inactive) {
+    const monthlyPrice = widgetConfig?.subscriptionPrices?.monthly || '$99/monthly';
+    const yearlyPrice = widgetConfig?.subscriptionPrices?.yearly || '$990/annual';
+    
     demoBar.innerHTML = `
-      <div class="demo-content" style="justify-content: center;">
+      <div class="demo-content">
         <span class="demo-badge" style="background: #95a5a6;">INACTIVE</span>
-        <span class="demo-info" style="font-size: 12px;">This chatbot is being configured. Check back soon!</span>
+        <div class="subscribe-dropdown">
+          <button id="subscribe-btn-main" class="subscribe-btn">Activate Subscription ▼</button>
+          <div id="subscribe-menu" class="subscribe-menu">
+            <a href="#" data-plan="monthly" class="subscribe-option">${monthlyPrice}</a>
+            <a href="#" data-plan="yearly" class="subscribe-option">${yearlyPrice}</a>
+          </div>
+        </div>
       </div>
     `;
     
+    // Add subscription button handlers
+    setTimeout(() => {
+      const subscribeBtn = document.getElementById('subscribe-btn-main');
+      const subscribeMenu = document.getElementById('subscribe-menu');
+      
+      if (subscribeBtn && subscribeMenu) {
+        subscribeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          subscribeMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+          subscribeMenu.classList.remove('show');
+        });
+
+        const options = subscribeMenu.querySelectorAll('.subscribe-option');
+        options.forEach(option => {
+          option.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const plan = option.getAttribute('data-plan');
+            // Get payment links from widgetConfig
+            const link = plan === 'monthly' 
+              ? widgetConfig?.stripePaymentLink?.monthly 
+              : widgetConfig?.stripePaymentLink?.yearly;
+            if (link) {
+              window.open(link, '_blank');
+            } else {
+              console.error('No payment link configured for plan:', plan);
+            }
+            subscribeMenu.classList.remove('show');
+          });
+        });
+      }
+    }, 100);
+    
     // Disable chat functionality
     document.getElementById("chat-input").disabled = true;
-    document.getElementById("chat-input").placeholder = "Chatbot is not active";
+    document.getElementById("chat-input").placeholder = "Activate subscription to chat";
     document.getElementById("chatly-mic-button").disabled = true;
     return;
   }
