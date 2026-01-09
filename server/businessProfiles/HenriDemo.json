@@ -25,6 +25,10 @@
   "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
   "isDemoMode": true,
   "demoMessageLimit": 100,
+  "setupFeeLink": {
+    "test": "PASTE_YOUR_TEST_SETUP_FEE_LINK_HERE",
+    "live": "https://buy.stripe.com/6oU5kD1o7fdm0j10dLfYY0a"
+  },
   "stripePaymentLink": {
     "test": {
       "monthly": "https://buy.stripe.com/test_dRm5kDf6yfvVbru4779oc06",

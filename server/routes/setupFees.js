@@ -25,7 +25,8 @@ function saveSetupFees(data) {
 // Get all setup fee payments
 router.get("/", (req, res) => {
   const data = loadSetupFees();
-  res.json(data);
+  // Return in format expected by admin: { setupFees: [...] }
+  res.json({ setupFees: data.payments || [] });
 });
 
 // Mark a setup fee payment as "profile created"

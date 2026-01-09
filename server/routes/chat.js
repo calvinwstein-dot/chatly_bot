@@ -26,10 +26,19 @@ function loadSubscriptions() {
 
 function hasActiveSubscription(businessName) {
   const data = loadSubscriptions();
-  const subscription = data.subscriptions.find(
-    sub => sub.businessName === businessName && sub.status === 'active'
-  );
-  return !!subscription;
+  
+  // Handle both object and array formats
+  if (Array.isArray(data.subscriptions)) {
+    // Old format: array
+    const subscription = data.subscriptions.find(
+      sub => sub.businessName === businessName && sub.status === 'active'
+    );
+    return !!subscription;
+  } else {
+    // New format: object keyed by business name
+    const subscription = data.subscriptions[businessName];
+    return subscription && subscription.status === 'active';
+  }
 }
 
 function loadBusinessProfile(businessName) {

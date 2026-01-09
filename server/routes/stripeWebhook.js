@@ -79,30 +79,36 @@ function saveSubscriptions(data) {
 function addSubscription(businessName, customerId, subscriptionId, plan) {
   const data = loadSubscriptions();
   
-  // Remove any existing subscription for this business
-  data.subscriptions = data.subscriptions.filter(sub => sub.businessName !== businessName);
+  // Use object format keyed by business name
+  if (!data.subscriptions || Array.isArray(data.subscriptions)) {
+    data.subscriptions = {};
+  }
   
-  // Add new subscription
-  data.subscriptions.push({
-    businessName,
+  // Add or update subscription for this business
+  data.subscriptions[businessName] = {
     customerId,
     subscriptionId,
     plan, // 'monthly' or 'yearly'
     status: 'active',
     activatedAt: new Date().toISOString()
-  });
+  };
   
   saveSubscriptions(data);
 }
 
 function updateSubscriptionStatus(subscriptionId, status) {
   const data = loadSubscriptions();
-  const subscription = data.subscriptions.find(sub => sub.subscriptionId === subscriptionId);
   
-  if (subscription) {
-    subscription.status = status;
-    subscription.updatedAt = new Date().toISOString();
-    saveSubscriptions(data);
+  // Find subscription by subscriptionId in object format
+  if (data.subscriptions && !Array.isArray(data.subscriptions)) {
+    for (const businessName in data.subscriptions) {
+      if (data.subscriptions[businessName].subscriptionId === subscriptionId) {
+        data.subscriptions[businessName].status = status;
+        data.subscriptions[businessName].updatedAt = new Date().toISOString();
+        saveSubscriptions(data);
+        return;
+      }
+    }
   }
 }
 

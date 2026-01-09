@@ -1,7 +1,7 @@
 {
   "businesses": {
     "HenriDemo": {
-      "clicks": 13,
+      "clicks": 22,
       "messages": 4,
       "dailyStats": {
         "2026-01-08": {
@@ -9,17 +9,17 @@
           "messages": 0
         },
         "2026-01-09": {
-          "clicks": 10,
+          "clicks": 19,
           "messages": 4
         }
       }
     },
     "BlondeSpecialistCPHDemo": {
-      "clicks": 1,
+      "clicks": 13,
       "messages": 0,
       "dailyStats": {
         "2026-01-09": {
-          "clicks": 1,
+          "clicks": 13,
           "messages": 0
         }
       }
