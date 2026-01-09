@@ -186,7 +186,8 @@ async function loadWidgetConfig() {
         'rocket': '▲',
         'lightning': '↯',
         'star': '★',
-        'scissors': '✂'
+        'scissors': '✂',
+        'pacman': '<svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="currentColor"/><polygon points="12,12 24,6 24,18" fill="white"/><circle cx="10" cy="9" r="1.2" fill="white"/></svg>'
       };
       
       const icon = iconMap[config.sendButtonIcon] || '';

@@ -1,3 +1,14 @@
 {
-  "businesses": {}
+  "businesses": {
+    "HenriDemo": {
+      "clicks": 3,
+      "messages": 0,
+      "dailyStats": {
+        "2026-01-08": {
+          "clicks": 3,
+          "messages": 0
+        }
+      }
+    }
+  }
 }

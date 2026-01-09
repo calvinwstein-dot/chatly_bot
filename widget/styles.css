@@ -392,6 +392,11 @@ body {
   align-items: center;
   justify-content: center;
   line-height: 0;
+  color: white;
+}
+
+#send-icon svg {
+  transform: rotate(0deg) !important;
 }
 
 /* Demo Mode Styles */
