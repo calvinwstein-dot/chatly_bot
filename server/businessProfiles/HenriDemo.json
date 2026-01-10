@@ -26,7 +26,7 @@
   "isDemoMode": true,
   "demoMessageLimit": 100,
   "setupFeeLink": {
-    "test": "PASTE_YOUR_TEST_SETUP_FEE_LINK_HERE",
+    "test": "https://buy.stripe.com/test_bJe9AT0bE2J92UY3339oc05PASTE_YOUR_TEST_SETUP_FEE_LINK_HERE",
     "live": "https://buy.stripe.com/6oU5kD1o7fdm0j10dLfYY0a"
   },
   "stripePaymentLink": {
