@@ -1,0 +1,73 @@
+# Gitpod configuration for Chatly Bot
+# This enables cloud-based development with automatic environment setup
+
+image:
+  file: .gitpod.Dockerfile
+
+# Tasks run on workspace start
+tasks:
+  - name: Setup and Start Server
+    init: |
+      # Install dependencies
+      npm install
+      
+      # Copy .env.example to .env if it doesn't exist
+      if [ ! -f .env ]; then
+        cp .env.example .env
+        echo ""
+        echo "⚠️  IMPORTANT: .env file created from .env.example"
+        echo "Please update .env with your API keys:"
+        echo "  - OPENAI_API_KEY"
+        echo "  - ELEVENLABS_API_KEY (optional)"
+        echo ""
+      fi
+      
+      # Display environment setup status
+      gp sync-done setup
+    command: |
+      # Wait for setup to complete
+      gp sync-await setup
+      
+      echo ""
+      echo "✅ Chatly Bot environment ready!"
+      echo ""
+      echo "📝 Before starting the server, update your .env file with:"
+      echo "   - OPENAI_API_KEY (required)"
+      echo "   - ELEVENLABS_API_KEY (optional)"
+      echo ""
+      echo "To start the development server, run:"
+      echo "   npm run start:dev"
+      echo ""
+      echo "Server will be available at: https://3001-${GITPOD_WORKSPACE_URL#https://}"
+      echo ""
+
+# Ports to expose
+ports:
+  - port: 3001
+    name: Server
+    description: Main application server
+    onOpen: notify
+    visibility: public
+  - port: 3000
+    name: Alternative Port
+    description: Alternative server port (if PORT=3000 in .env)
+    onOpen: ignore
+    visibility: public
+
+# VS Code extensions to install
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+
+# GitHub integration
+github:
+  prebuilds:
+    # Enable prebuilds for faster workspace starts
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: false
+    addCheck: false
+    addComment: false
+    addBadge: false
