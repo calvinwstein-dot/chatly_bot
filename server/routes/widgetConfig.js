@@ -72,7 +72,8 @@ router.get("/", (req, res) => {
       demoMessageLimit: business.demoMessageLimit,
       demoExpiryDate: business.demoExpiryDate,
       stripePaymentLink: stripePaymentLink,
-      subscriptionPrices: business.subscriptionPrices
+      subscriptionPrices: business.subscriptionPrices,
+      voiceEnabled: business.voiceEnabled || false
     });
   } catch (error) {
     console.error("Widget config error:", error);

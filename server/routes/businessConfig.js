@@ -75,7 +75,11 @@ router.patch("/:businessName", (req, res) => {
       sendButtonTextColor,
       sendButtonIcon,
       primaryLanguage,
-      secondaryLanguage
+      secondaryLanguage,
+      voiceEnabled,
+      elevenLabsVoiceId,
+      voiceMinutesLimit,
+      subscriptionTier
     } = req.body;
     
     // Basic fields
@@ -130,6 +134,12 @@ router.patch("/:businessName", (req, res) => {
     // Demo Settings
     if (isDemoMode !== undefined) profile.isDemoMode = isDemoMode;
     if (demoMessageLimit !== undefined) profile.demoMessageLimit = demoMessageLimit;
+    
+    // Voice Settings
+    if (voiceEnabled !== undefined) profile.voiceEnabled = voiceEnabled;
+    if (elevenLabsVoiceId !== undefined) profile.elevenLabsVoiceId = elevenLabsVoiceId;
+    if (voiceMinutesLimit !== undefined) profile.voiceMinutesLimit = voiceMinutesLimit;
+    if (subscriptionTier !== undefined) profile.subscriptionTier = subscriptionTier;
     
     // Stripe Settings
     if (stripePaymentLink !== undefined) {

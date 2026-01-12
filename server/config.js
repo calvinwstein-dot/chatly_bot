@@ -1,5 +1,15 @@
 import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const envPath = path.resolve(__dirname, "../.env");
+console.log("🔍 DEBUG - Loading .env from:", envPath);
+dotenv.config({ path: envPath });
+
+console.log("🔍 DEBUG - ELEVENLABS_API_KEY from env:", process.env.ELEVENLABS_API_KEY);
 
 export const BUSINESS_PROFILE = "Henri"; // change per client
 

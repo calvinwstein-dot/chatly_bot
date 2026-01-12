@@ -4,7 +4,7 @@
   "primaryColor": "#fbd0edff",
   "secondaryColor": "#e68affff",
   "textColor": "#cf0cbfff",
-  "launcherColor": "#ffd6f4ff",
+  "launcherColor": "#d6f4ffff",
   "headerColor": "#f599dcff",
   "userBubbleColor": "#d666f4ff",
   "userTextColor": "#ffffffff",
@@ -25,6 +25,10 @@
   "description": "At Blonde Specialist CPH, we believe that beautiful blonde hair is an art form. Our expert stylists specialize in creating stunning, dimensional blondes that complement your natural beauty and lifestyle. Whether you're looking for subtle babylights, a dramatic balayage, or maintaining your perfect shade, we use premium products and techniques to ensure your hair stays healthy and radiant.",
   "isDemoMode": true,
   "demoMessageLimit": 40,
+  "voiceEnabled": false,
+  "voiceMinutesLimit": 500,
+  "subscriptionTier": "standard",
+  "elevenLabsVoiceId": "EXAVITQu4vr4xnSDxMaL",
   "stripePaymentLink": {
     "monthly": "https://buy.stripe.com/eVq9AT9UDaX6e9R3pXfYY09",
     "yearly": "https://buy.stripe.com/5kQeVdd6Pc1afdVaSpfYY08"

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Test</title>
+</head>
+<body>
+    <h1>Widget Config Test</h1>
+    <button onclick="testConfig()">Load Widget Config</button>
+    <button onclick="testVoice()">Test Voice API</button>
+    <pre id="output"></pre>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        async function testConfig() {
+            try {
+                const response = await fetch('http://localhost:3001/api/widget-config?business=HenriDemo');
+                const config = await response.json();
+                output.textContent = `Widget Config:\nvoiceEnabled: ${config.voiceEnabled}\nelevenLabsVoiceId: ${config.elevenLabsVoiceId || 'NOT IN CONFIG'}\n\nFull config:\n${JSON.stringify(config, null, 2)}`;
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+            }
+        }
+        
+        async function testVoice() {
+            try {
+                const response = await fetch('http://localhost:3001/api/voice/speak', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        businessName: 'HenriDemo',
+                        text: 'Testing voice generation'
+                    })
+                });
+                
+                if (response.ok) {
+                    const audioBlob = await response.blob();
+                    const audio = new Audio(URL.createObjectURL(audioBlob));
+                    audio.play();
+                    output.textContent = 'Voice playing...';
+                } else {
+                    const error = await response.json();
+                    output.textContent = `Voice error: ${JSON.stringify(error, null, 2)}`;
+                }
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

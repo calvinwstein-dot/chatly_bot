@@ -1,0 +1,11 @@
+# Ignore these files to prevent constant restarts
+node_modules/
+.git/
+*.log
+.env
+test-voice.html
+widget/*.html
+widget/*.css
+admin/*.html
+admin/*.css
+server/data/*.json

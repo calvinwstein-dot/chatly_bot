@@ -75,6 +75,7 @@ async function loadWidgetConfig() {
     
     // Store config globally
     widgetConfig = config;
+    console.log('🎤 Widget config loaded:', { voiceEnabled: config.voiceEnabled, businessName });
     
     // Set default language from config if not already set
     if (!localStorage.getItem('chatLanguage') && config.primaryLanguage) {
@@ -527,6 +528,15 @@ async function sendMessage(message) {
     }
 
     appendMessage(data.reply, "bot");
+    
+    // Auto-play voice if enabled
+    console.log('🎤 Voice check:', { voiceEnabled: widgetConfig?.voiceEnabled, hasConfig: !!widgetConfig });
+    if (widgetConfig?.voiceEnabled) {
+      console.log('🎤 Playing voice for bot response');
+      playVoiceMessage(data.reply);
+    } else {
+      console.log('🎤 Voice disabled or config missing');
+    }
   } catch (e) {
     console.error("Chat error", e);
     // Hide typing indicator on error
@@ -535,6 +545,37 @@ async function sendMessage(message) {
       typingIndicator.remove();
     }
     appendMessage("Network error. Please try again.", "bot");
+  }
+}
+
+// Voice playback function
+async function playVoiceMessage(text) {
+  try {
+    const response = await fetch(`${API_BASE}/api/voice/speak`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        businessName: businessName,
+        text: text
+      })
+    });
+
+    if (response.ok) {
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      
+      audio.onended = () => {
+        URL.revokeObjectURL(audioUrl);
+      };
+      
+      audio.play().catch(err => {
+        console.log('Voice playback blocked:', err);
+      });
+    }
+  } catch (error) {
+    console.error('Voice generation error:', error);
+    // Silently fail - don't disrupt chat experience
   }
 }
 

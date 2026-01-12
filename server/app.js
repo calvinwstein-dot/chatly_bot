@@ -42,6 +42,8 @@ import businessConfigRoute from "./routes/businessConfig.js";
 import subscriptionsRoute from "./routes/subscriptions.js";
 import metricsRoute from "./routes/metrics.js";
 import setupFeesRoute from "./routes/setupFees.js";
+import voiceUsageRoute from "./routes/voiceUsage.js";
+import voiceRoute from "./routes/voice.js";
 
 const app = express();
 
@@ -83,6 +85,8 @@ app.use("/api/business-config", businessConfigRoute);
 app.use("/api/subscriptions", subscriptionsRoute);
 app.use("/api/metrics", metricsRoute);
 app.use("/api/setup-fees", setupFeesRoute);
+app.use("/api/voice-usage", voiceUsageRoute);
+app.use("/api/voice", voiceRoute);
 
 // Log iframe embedding attempts
 app.post("/api/log-iframe-attempt", (req, res) => {
