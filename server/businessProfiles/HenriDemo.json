@@ -25,7 +25,7 @@
   "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
   "isDemoMode": true,
   "demoMessageLimit": 100,
-  "voiceEnabled": false,
+  "voiceEnabled": true,
   "voiceMinutesLimit": 500,
   "subscriptionTier": "premium",
   "elevenLabsVoiceId": "IKne3meq5aSn9XLyUdCD",
