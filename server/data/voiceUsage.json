@@ -1,7 +1,7 @@
 {
   "usage": {
     "HenriDemo": {
-      "minutesUsed": 5.0666666666666655,
+      "minutesUsed": 5.999999999999998,
       "lastReset": "2026-01-12T20:26:33.968Z",
       "requests": [
         {
@@ -153,6 +153,16 @@
           "timestamp": "2026-01-17T21:29:43.671Z",
           "seconds": 7,
           "minutes": 0.11666666666666667
+        },
+        {
+          "timestamp": "2026-01-17T21:41:14.490Z",
+          "seconds": 7,
+          "minutes": 0.11666666666666667
+        },
+        {
+          "timestamp": "2026-01-17T21:48:32.391Z",
+          "seconds": 49,
+          "minutes": 0.8166666666666667
         }
       ]
     }
