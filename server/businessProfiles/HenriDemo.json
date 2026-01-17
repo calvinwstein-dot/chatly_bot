@@ -28,7 +28,7 @@
   "voiceEnabled": true,
   "voiceMinutesLimit": 500,
   "subscriptionTier": "premium",
-  "elevenLabsVoiceId": "IKne3meq5aSn9XLyUdCD",
+  "elevenLabsVoiceId": "ErXwobaYiN019PkySvjV",
   "setupFeeLink": {
     "test": "https://buy.stripe.com/test_bJe9AT0bE2J92UY3339oc05PASTE_YOUR_TEST_SETUP_FEE_LINK_HERE",
     "live": "https://buy.stripe.com/6oU5kD1o7fdm0j10dLfYY0a"
