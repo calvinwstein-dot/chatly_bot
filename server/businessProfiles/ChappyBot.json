@@ -1,0 +1,127 @@
+{
+  "businessName": "Chappy",
+  "logoUrl": "/public/logos/chappy-logo.png",
+  "primaryColor": "#3b82f6",
+  "secondaryColor": "#1e40af",
+  "textColor": "#111827",
+  "launcherColor": "#f05a35ff",
+  "headerColor": "#f35b35ff",
+  "userBubbleColor": "#48adc7ff",
+  "userTextColor": "#ffffffff",
+  "botBubbleColor": "#fd955dff",
+  "botTextColor": "#000000ff",
+  "widgetBgColor": "#ffffffff",
+  "borderColor": "#ffffffff",
+  "launcherStyle": "agent",
+  "launcherText": "Lets chat",
+  "primaryLanguage": "en",
+  "secondaryLanguage": "da",
+  "currency": "USD",
+  "phone": "",
+  "phoneHours": "24/7",
+  "bookingUrl": "https://www.chappybot.com/demo",
+  "websiteUrl": "https://www.chappybot.com",
+  "email": "support@chappybot.com",
+  "description": "Chappy delivers a custom AI chatbot that knows your services, prices, hours and all other relevant information—answering customer questions and handling tasks around the clock even while you sleep.",
+  "isDemoMode": false,
+  "demoMessageLimit": 999999,
+  "voiceEnabled": false,
+  "voiceMinutesLimit": 500,
+  "subscriptionTier": "premium",
+  "elevenLabsVoiceId": "21m00Tcm4TlvDq8ikWAM",
+  "setupFeeLink": {
+    "test": "",
+    "live": ""
+  },
+  "stripePaymentLink": {
+    "test": {
+      "monthly": "",
+      "yearly": ""
+    },
+    "live": {
+      "monthly": "",
+      "yearly": ""
+    }
+  },
+  "subscriptionPrices": {
+    "monthly": "$199/month",
+    "yearly": "$1,990/year (2 months free • Save $390!)"
+  },
+  "hours": {
+    "Monday": "24/7",
+    "Tuesday": "24/7",
+    "Wednesday": "24/7",
+    "Thursday": "24/7",
+    "Friday": "24/7",
+    "Saturday": "24/7",
+    "Sunday": "24/7"
+  },
+  "locations": [],
+  "services": [
+    {
+      "name": "Setup Fee",
+      "price": 169,
+      "description": "One-time setup fee. We build and train your chatbot using your company's information. Setup fee credited back if you subscribe annually!"
+    },
+    {
+      "name": "Monthly Subscription",
+      "price": 199,
+      "description": "Unlimited messages, full features, 24/7 automated customer support"
+    },
+    {
+      "name": "Annual Subscription",
+      "price": 1990,
+      "description": "2 months free! Save $390/year + $169 setup fee credited back"
+    }
+  ],
+  "products": [],
+  "giftCards": [],
+  "giftBoxes": [],
+  "faq": [
+    {
+      "question": "What is Chappy and how does it work?",
+      "answer": "Chappy is an AI-powered chatbot customized for your business. It handles customer questions, provides service info, and assists with bookings 24/7. Powered by OpenAI, it knows your services, prices, locations, and hours."
+    },
+    {
+      "question": "What is the setup fee?",
+      "answer": "The $169 one-time setup fee covers building and training your custom chatbot with your business information. If you subscribe annually, this fee is credited back!"
+    },
+    {
+      "question": "How long does setup take?",
+      "answer": "Setup takes 24-72 hours. We create a custom chatbot with your logo, colors, services, prices, and business hours."
+    },
+    {
+      "question": "Do I need technical skills to add Chappy to my website?",
+      "answer": "No! We provide a simple copy-paste embed code that works with any website builder. No developer needed."
+    },
+    {
+      "question": "What happens after setup?",
+      "answer": "You receive your embed code and can test your chatbot before choosing a monthly ($199) or annual ($1,990) subscription. There's no obligation to continue if it's not a good fit."
+    },
+    {
+      "question": "What's included in the subscription?",
+      "answer": "Unlimited messages, fully customized branding, 24/7 support, booking assistance, FAQ handling, optional voice responses, real-time analytics, easy embed code, and automatic updates."
+    },
+    {
+      "question": "Can I cancel my subscription anytime?",
+      "answer": "Yes, you can cancel anytime through the customer portal."
+    },
+    {
+      "question": "What types of businesses use Chappy?",
+      "answer": "Salons, restaurants, shops, spas, and local businesses use Chappy to deliver better customer service around the clock."
+    },
+    {
+      "question": "What are the pricing plans?",
+      "answer": "Monthly: $199/month. Annual: $1,990/year (2 months free, save $390). Setup fee: $169 one-time (credited back on annual plan)."
+    }
+  ],
+  "openaiConfig": {
+    "model": "gpt-4o-mini",
+    "instructions": "You are Chappy, a very calm and friendly AI assistant helping potential customers learn about Chappy chatbot services. Focus on: 1) $169 setup fee (credited back on annual plans) 2) $199/month or $1,990/year pricing 3) Unlimited messages 4) 24-72 hour setup time 5) Easy embed code 6) Features: custom branding, multi-language, voice responses, analytics 7) No technical skills needed. When discussing pricing, ALWAYS provide the demo link: [Request Demo](https://www.chappybot.com/demo) and pricing link: [View Pricing](https://www.chappybot.com/pricing). Be helpful, friendly, and emphasize the value of 24/7 automated customer support and a fully customizable interface"
+  },
+  "launcherShape": "pill",
+  "sendButtonColor": "#48adc7ff",
+  "sendButtonText": "Send",
+  "sendButtonTextColor": "#000000ff",
+  "sendButtonIcon": "send"
+}

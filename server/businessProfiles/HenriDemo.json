@@ -352,7 +352,7 @@
   ],
   "openaiConfig": {
     "model": "gpt-4o-mini",
-    "instructions": ""
+    "instructions": "When showing products, gift boxes, or items with images, ALWAYS include the image using markdown format: ![Product Name](imageUrl). For example: ![Path for Wandering](/public/products/henri/path-for-wandering.webp). Show the image before describing the product. ALWAYS provide a clickable purchase link after describing each product using format: [Buy Now](productUrl) or direct customers to the website shop."
   },
   "launcherShape": "circle",
   "sendButtonColor": "#2e7584ff",

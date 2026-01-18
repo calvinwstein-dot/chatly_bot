@@ -1,3 +1,12 @@
 {
-  "subscriptions": {}
+  "subscriptions": {
+    "ChappyBot": {
+      "plan": "yearly",
+      "status": "active",
+      "startDate": "2026-01-18",
+      "endDate": "2099-12-31",
+      "stripeSubscriptionId": "internal_chappybot",
+      "unlimited": true
+    }
+  }
 }
