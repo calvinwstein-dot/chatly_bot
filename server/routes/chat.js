@@ -1,4 +1,5 @@
 import express from "express";
+import { body, validationResult } from 'express-validator';
 import { handleChat } from "../orchestrator/index.js";
 import fs from "fs";
 import path from "path";
@@ -75,8 +76,24 @@ function checkDemoStatus(businessProfile) {
   };
 }
 
-router.post("/", async (req, res) => {
+router.post("/",
+  // Input validation middleware
+  [
+    body('sessionId').trim().isLength({ min: 1, max: 100 }).escape(),
+    body('message').trim().isLength({ min: 1, max: 5000 }).escape(),
+    body('language').optional().isIn(['en', 'es', 'fr', 'de', 'it', 'pt', 'nl', 'da']),
+    body('business').optional().trim().isLength({ max: 50 }).matches(/^[a-zA-Z0-9_-]+$/),
+    body('demoMessageCount').optional().isInt({ min: 0, max: 1000 })
+  ],
+  async (req, res) => {
   try {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.warn('⚠️  Invalid input:', errors.array());
+      return res.status(400).json({ error: 'Invalid input', details: errors.array() });
+    }
+
     const { sessionId, message, language, business, demoMessageCount } = req.body;
     if (!sessionId || !message) {
       return res.status(400).json({ error: "sessionId and message required" });

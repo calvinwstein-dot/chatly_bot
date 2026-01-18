@@ -1,4 +1,5 @@
 const API_BASE = window.CHATBOT_API_BASE || "";
+const API_KEY = window.chatbotConfig?.apiKey || ""; // Get API key from config
 const sessionId = crypto.randomUUID();
 let currentLanguage = localStorage.getItem('chatLanguage') || 'en';
 let demoStatus = null;
@@ -8,7 +9,7 @@ let widgetConfig = null; // Store config for language settings
 // Get business from URL parameter OR script tag data attribute
 const urlParams = new URLSearchParams(window.location.search);
 const scriptTag = document.currentScript || document.querySelector('script[data-business]');
-const businessName = urlParams.get('business') || scriptTag?.getAttribute('data-business') || 'Henri';
+const businessName = urlParams.get('business') || scriptTag?.getAttribute('data-business') || window.chatbotConfig?.business || 'Henri';
 const testToken = urlParams.get('testMode') || scriptTag?.getAttribute('data-testmode') || '';
 const isUrlTestMode = !!urlParams.get('testMode'); // True if testMode from URL (full access)
 
@@ -17,9 +18,12 @@ if (isUrlTestMode && window.self !== window.top) {
   // Testing URL embedded in iframe - block and log
   try {
     const parentDomain = document.referrer || 'unknown';
+    const headers = { 'Content-Type': 'application/json' };
+    if (API_KEY) headers['X-API-Key'] = API_KEY;
+    
     fetch(`${API_BASE}/api/log-iframe-attempt`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: headers,
       body: JSON.stringify({ business: businessName, domain: parentDomain })
     }).catch(() => {}); // Silent fail
   } catch (e) {}
@@ -70,7 +74,12 @@ function checkDemoLimitReached() {
 
 async function loadWidgetConfig() {
   try {
-    const res = await fetch(`${API_BASE}/api/widget-config?business=${businessName}`);
+    const headers = {};
+    if (API_KEY) headers['X-API-Key'] = API_KEY;
+    
+    const res = await fetch(`${API_BASE}/api/widget-config?business=${businessName}`, {
+      headers: headers
+    });
     const config = await res.json();
     
     // Store config globally
@@ -269,7 +278,7 @@ async function loadWidgetConfig() {
 function appendMessage(text, role) {
   const container = document.getElementById("chat-messages");
   const div = document.createElement("div");
-  div.className = `message ${role}`;
+  div.className = `message ${role} animate-fade-in`;
   
   let htmlText = text;
   
@@ -496,9 +505,12 @@ async function sendMessage(message) {
   try {
     const demoMessageCount = getDemoMessageCount();
     
+    const headers = { "Content-Type": "application/json" };
+    if (API_KEY) headers['X-API-Key'] = API_KEY;
+    
     const res = await fetch(`${API_BASE}/api/chat`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: headers,
       body: JSON.stringify({ 
         sessionId, 
         message, 
@@ -551,9 +563,12 @@ async function sendMessage(message) {
 // Voice playback function
 async function playVoiceMessage(text) {
   try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (API_KEY) headers['X-API-Key'] = API_KEY;
+    
     const response = await fetch(`${API_BASE}/api/voice/speak`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: headers,
       body: JSON.stringify({
         businessName: businessName,
         text: text
@@ -592,7 +607,14 @@ function init() {
 
   launcher.addEventListener("click", async () => {
     console.log('Launcher clicked');
+    const isFirstOpen = widget.classList.contains("hidden");
     widget.classList.toggle("hidden");
+    
+    // Show welcome message on first open
+    if (isFirstOpen && document.getElementById("chat-messages").children.length === 0) {
+      const businessDisplayName = widgetConfig?.brandName || businessName;
+      appendMessage(`Welcome to ${businessDisplayName}, how can I assist you?`, "bot");
+    }
     
     // Log click metric (only for active subscriptions)
     if (hasActiveSubscription) {

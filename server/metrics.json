@@ -1,8 +1,8 @@
 {
   "businesses": {
     "HenriDemo": {
-      "clicks": 33,
-      "messages": 13,
+      "clicks": 58,
+      "messages": 25,
       "dailyStats": {
         "2026-01-08": {
           "clicks": 3,
@@ -23,6 +23,10 @@
         "2026-01-17": {
           "clicks": 5,
           "messages": 4
+        },
+        "2026-01-18": {
+          "clicks": 25,
+          "messages": 12
         }
       }
     },

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Test - Widget</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .status {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .success { background: #d1fae5; border-left: 4px solid #10b981; }
+    .info { background: #dbeafe; border-left: 4px solid #3b82f6; }
+    .warning { background: #fef3c7; border-left: 4px solid #f59e0b; }
+  </style>
+</head>
+<body>
+  <h1>🔒 Security Test Page</h1>
+  
+  <div class="status info">
+    <strong>Test Configuration:</strong><br>
+    • Admin Password: <code>admin123</code><br>
+    • API Key: <code>dzyjmz</code><br>
+    • Business: <code>HenriDemo</code>
+  </div>
+
+  <div class="status success">
+    <strong>✅ What's been secured:</strong><br>
+    ✓ CORS enabled (only allowed domains)<br>
+    ✓ Rate limiting active (20 msgs/min)<br>
+    ✓ Password hashing enabled<br>
+    ✓ Input validation active<br>
+    ✓ API key authentication<br>
+    ✓ Request logging enabled<br>
+    ✓ Suspicious activity detection
+  </div>
+
+  <div class="status warning">
+    <strong>📝 To test:</strong><br>
+    1. Make sure server is running: <code>npm run start:dev</code><br>
+    2. Open this page in browser<br>
+    3. Chat widget should appear in bottom right<br>
+    4. Try sending a message<br>
+    5. Check console logs for security info
+  </div>
+
+  <h2>Widget Test</h2>
+  <p>The chatbot widget should appear below with full security enabled:</p>
+
+  <!-- Widget Configuration with API Key -->
+  <script>
+    window.chatbotConfig = {
+      apiKey: 'dzyjmz',  // Your API key
+      business: 'HenriDemo'
+    };
+  </script>
+  
+  <!-- Load Widget with cache buster -->
+  <script src="http://localhost:3001/widget/widget.js?v=<?php echo time(); ?>999"></script>
+
+</body>
+</html>

@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Chat Widget</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=3" />
   <script src="widget.js?v=3"></script>
 </head>
@@ -34,11 +37,13 @@
   
   <div id="chat-widget" class="hidden">
     <header id="chat-header">
-      <img id="chat-logo" class="hidden" />
-      <span id="chat-title"></span>
+      <div class="header-center">
+        <img id="chat-logo" class="hidden" />
+        <span id="chat-title"></span>
+      </div>
       <div id="language-dropdown">
         <button id="language-btn" class="language-btn" title="Change Language">
-          <svg class="globe-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="2" y1="12" x2="22" y2="12"></line>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
@@ -46,35 +51,37 @@
           <span id="current-lang">EN</span>
         </button>
       </div>
-      <svg class="header-wave" viewBox="0 0 1440 40" preserveAspectRatio="none">
-        <path d="M0,0 Q720,25 1440,0 L1440,40 L0,40 Z" fill="currentColor"/>
+      <svg class="header-wave" viewBox="0 0 360 20" fill="none" preserveAspectRatio="none">
+        <path d="M0 20V10C60 0 120 0 180 10C240 20 300 20 360 10V20H0Z" fill-opacity="0.3"/>
+        <path d="M0 20V15C60 5 120 5 180 15C240 25 300 20 360 12V20H0Z" fill-opacity="0.2"/>
       </svg>
     </header>
     <div id="chat-messages">
     </div>
     <form id="chat-form" autocomplete="off">
-      <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');" name="message" />
-      <button 
-        class="chatly-mic-btn" 
-        type="button" 
-        aria-label="Start voice input"
-        id="chatly-mic-button"
-      >
-        <svg 
-          class="chatly-mic-icon" 
-          viewBox="0 0 24 24" 
-          aria-hidden="true"
+      <div class="input-wrapper">
+        <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');" name="message" />
+        <button 
+          class="chatly-mic-btn" 
+          type="button" 
+          aria-label="Start voice input"
+          id="chatly-mic-button"
         >
-          <!-- Mic capsule -->
-          <rect x="9" y="4" width="6" height="10" rx="3" />
-          <!-- Mic stem -->
-          <rect x="11" y="14" width="2" height="4" rx="1" />
+          <svg 
+            class="chatly-mic-icon" 
+            viewBox="0 0 24 24" 
+            aria-hidden="true"
+          >
+            <!-- Mic capsule -->
+            <rect x="9" y="4" width="6" height="10" rx="3" />
+            <!-- Mic stem -->
+            <rect x="11" y="14" width="2" height="4" rx="1" />
           <!-- Base -->
           <path d="M8 18a4 4 0 0 0 8 0h-2a2 2 0 0 1-4 0H8z" />
           <!-- Outer arc -->
           <path d="M6 11a6 6 0 0 0 12 0h-2a4 4 0 0 1-8 0H6z" />
         </svg>
-      </button>
+      </div>
       <button type="submit" id="send-button">
         <span id="send-text">Send</span>
         <span id="send-icon"></span>

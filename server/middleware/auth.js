@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 // Simple authentication middleware for admin panel
 export function adminAuth(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -10,14 +12,30 @@ export function adminAuth(req, res, next) {
     
     // Check credentials (set these in your .env file)
     const validUsername = process.env.ADMIN_USERNAME || 'admin';
-    const validPassword = process.env.ADMIN_PASSWORD || 'changeme123';
+    const validPasswordHash = process.env.ADMIN_PASSWORD_HASH;
     
-    if (username === validUsername && password === validPassword) {
-      return next();
+    // If no hash is set, use legacy plaintext comparison with warning
+    if (!validPasswordHash) {
+      console.warn('⚠️  WARNING: Using plaintext password. Please set ADMIN_PASSWORD_HASH in .env');
+      const validPassword = process.env.ADMIN_PASSWORD || 'changeme123';
+      if (username === validUsername && password === validPassword) {
+        return next();
+      }
+    } else {
+      // Use bcrypt to compare password with hash
+      if (username === validUsername && bcrypt.compareSync(password, validPasswordHash)) {
+        return next();
+      }
     }
   }
   
   // Request authentication
   res.setHeader('WWW-Authenticate', 'Basic realm="Admin Panel"');
   res.status(401).send('Authentication required');
+}
+
+// Utility function to generate password hash (for setup)
+export function generatePasswordHash(password) {
+  const saltRounds = 10;
+  return bcrypt.hashSync(password, saltRounds);
 }

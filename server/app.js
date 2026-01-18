@@ -19,6 +19,8 @@ console.log('✅ Environment loaded:', {
 
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -35,6 +37,8 @@ process.on("uncaughtException", (err) => {
 
 import { config } from "./config.js";
 import { adminAuth } from "./middleware/auth.js";
+import { optionalApiKeyAuth } from "./middleware/apiKeyAuth.js";
+import { requestLogger, detectSuspiciousActivity } from "./middleware/logging.js";
 import chatRoute from "./routes/chat.js";
 import widgetConfigRoute from "./routes/widgetConfig.js";
 import debugRoute from "./routes/debug.js";
@@ -47,7 +51,54 @@ import voiceRoute from "./routes/voice.js";
 
 const app = express();
 
-app.use(cors());
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: false, // Allow inline scripts for widget
+  crossOriginEmbedderPolicy: false // Allow embedding in iframes
+}));
+
+// CORS configuration - restrict to specific domains
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:3000', 'http://localhost:3001'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+      callback(null, true);
+    } else {
+      console.warn(`⚠️  CORS blocked request from: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key']
+}));
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Apply rate limiting to all API routes
+app.use('/api/', limiter);
+
+// Stricter rate limiting for chat endpoint
+const chatLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20, // 20 messages per minute
+  message: 'Too many messages, please slow down.'
+});
+
+app.use('/api/chat', chatLimiter);
 
 // Load Stripe webhook BEFORE express.json() - needs raw body for signature verification
 try {
@@ -60,6 +111,10 @@ try {
 
 // Now apply JSON parser for all other routes
 app.use(express.json());
+
+// Request logging and security monitoring
+app.use(requestLogger);
+app.use(detectSuspiciousActivity);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -78,8 +133,8 @@ app.use("/admin", adminAuth, express.static(path.join(__dirname, "../admin")));
 app.use("/public", express.static(path.join(__dirname, "../public")));
 
 // API routes
-app.use("/api/chat", chatRoute);
-app.use("/api/widget-config", widgetConfigRoute);
+app.use("/api/chat", optionalApiKeyAuth, chatRoute);
+app.use("/api/widget-config", optionalApiKeyAuth, widgetConfigRoute);
 app.use("/api/debug", debugRoute);
 app.use("/api/business-config", businessConfigRoute);
 app.use("/api/subscriptions", subscriptionsRoute);
