@@ -220,6 +220,14 @@ async function loadWidgetConfig() {
       logoEl.classList.remove("hidden");
     }
 
+    // Populate welcome overlay
+    const welcomeLogo = document.getElementById("welcome-logo");
+    const welcomeTitle = document.getElementById("welcome-title");
+    if (config.logoUrl) {
+      welcomeLogo.src = config.logoUrl.startsWith('http') ? config.logoUrl : `${API_BASE}${config.logoUrl}`;
+    }
+    welcomeTitle.textContent = `Welcome to ${config.brandName || businessName}!`;
+
     // Check if subscription is active - if yes, bypass demo
     try {
       const subRes = await fetch(`${API_BASE}/api/subscriptions/check?business=${businessName}`);
@@ -280,6 +288,13 @@ async function loadWidgetConfig() {
 
 function appendMessage(text, role) {
   const container = document.getElementById("chat-messages");
+  
+  // Hide welcome overlay when first message appears
+  const welcomeOverlay = document.getElementById("welcome-overlay");
+  if (welcomeOverlay) {
+    welcomeOverlay.style.display = 'none';
+  }
+  
   const div = document.createElement("div");
   div.className = `message ${role} animate-fade-in`;
   
@@ -491,6 +506,13 @@ async function sendMessage(message) {
 
   // Show typing indicator
   const messagesDiv = document.getElementById("chat-messages");
+  
+  // Hide welcome overlay when typing starts
+  const welcomeOverlay = document.getElementById("welcome-overlay");
+  if (welcomeOverlay) {
+    welcomeOverlay.style.display = 'none';
+  }
+  
   let typingIndicator = document.getElementById('typing-indicator');
   
   // Create typing indicator if it doesn't exist
@@ -677,7 +699,17 @@ function createWidgetHTML() {
           <path d="M0 20V15C60 5 120 5 180 15C240 25 300 20 360 12V20H0Z" fill-opacity="0.2"/>
         </svg>
       </header>
-      <div id="chat-messages"></div>
+      <div id="chat-messages">
+        <div id="welcome-overlay" class="welcome-overlay animate-fade-in">
+          <div class="welcome-content">
+            <div class="welcome-logo-container">
+              <img id="welcome-logo" class="welcome-logo" alt="Logo" />
+            </div>
+            <h3 id="welcome-title" class="welcome-title"></h3>
+            <p id="welcome-subtitle" class="welcome-subtitle">How can I help you today?</p>
+          </div>
+        </div>
+      </div>
       <form id="chat-form" autocomplete="off">
         <div class="input-wrapper">
           <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');" name="message" />
@@ -717,14 +749,7 @@ function init() {
 
   launcher.addEventListener("click", async () => {
     console.log('Launcher clicked');
-    const isFirstOpen = widget.classList.contains("hidden");
     widget.classList.toggle("hidden");
-    
-    // Show welcome message on first open
-    if (isFirstOpen && document.getElementById("chat-messages").children.length === 0) {
-      const businessDisplayName = widgetConfig?.brandName || businessName;
-      appendMessage(`Welcome to ${businessDisplayName}, how can I assist you?`, "bot");
-    }
     
     // Log click metric (only for active subscriptions)
     if (hasActiveSubscription) {
