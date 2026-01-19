@@ -54,8 +54,16 @@ const app = express();
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: false, // Allow inline scripts for widget
-  crossOriginEmbedderPolicy: false // Allow embedding in iframes
+  crossOriginEmbedderPolicy: false, // Allow embedding in iframes
+  crossOriginResourcePolicy: false // Allow cross-origin script loading
 }));
+
+// Add headers to allow widget script to load on any domain
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 // CORS configuration - allow all origins for embeddable widget
 // This is standard for widget platforms (Intercom, Drift, etc.)
