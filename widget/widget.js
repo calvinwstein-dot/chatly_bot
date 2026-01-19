@@ -11,7 +11,6 @@ let widgetConfig = null; // Store config for language settings
 
 // Get business from URL parameter OR script tag data attribute
 const urlParams = new URLSearchParams(window.location.search);
-const scriptTag = document.currentScript || document.querySelector('script[data-business]');
 const businessName = urlParams.get('business') || scriptTag?.getAttribute('data-business') || window.chatbotConfig?.business || 'Henri';
 const testToken = urlParams.get('testMode') || scriptTag?.getAttribute('data-testmode') || '';
 const isUrlTestMode = !!urlParams.get('testMode'); // True if testMode from URL (full access)
