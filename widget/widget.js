@@ -799,4 +799,10 @@ function init() {
   loadWidgetConfig();
 }
 
-document.addEventListener("DOMContentLoaded", init);
+// Initialize immediately if DOM already loaded, otherwise wait for DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  // DOM already loaded (common in SPAs like React)
+  init();
+}
