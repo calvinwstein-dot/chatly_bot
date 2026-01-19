@@ -19,6 +19,7 @@ body {
   padding: 14px 20px;
   border-radius: 50px;
   background: var(--launcher-color, var(--primary));
+  z-index: 2147483647;
   color: #fff;
   font-size: 16px;
   font-weight: 600;
@@ -44,6 +45,7 @@ body {
   width: 360px;
   max-height: 520px;
   background: var(--widget-bg-color, var(--bg));
+  z-index: 2147483647;
   border-radius: 1.25rem;
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.3);
   display: flex;
@@ -162,7 +164,7 @@ body {
   min-width: 180px;
   max-height: 300px;
   overflow-y: auto;
-  z-index: 9999;
+  z-index: 2147483647;
 }
 
 .language-menu.hidden {
