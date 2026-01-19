@@ -600,14 +600,115 @@ async function playVoiceMessage(text) {
   }
 }
 
+function createWidgetHTML() {
+  // Check if widget already exists
+  if (document.getElementById('chat-launcher')) return;
+  
+  // Inject CSS
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = `${API_BASE}/widget/styles.css?v=3`;
+  document.head.appendChild(link);
+  
+  // Inject Google Fonts
+  const fontLink1 = document.createElement('link');
+  fontLink1.rel = 'preconnect';
+  fontLink1.href = 'https://fonts.googleapis.com';
+  document.head.appendChild(fontLink1);
+  
+  const fontLink2 = document.createElement('link');
+  fontLink2.rel = 'preconnect';
+  fontLink2.href = 'https://fonts.gstatic.com';
+  fontLink2.crossOrigin = 'anonymous';
+  document.head.appendChild(fontLink2);
+  
+  const fontLink3 = document.createElement('link');
+  fontLink3.rel = 'stylesheet';
+  fontLink3.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+  document.head.appendChild(fontLink3);
+  
+  // Create widget HTML structure
+  const widgetHTML = `
+    <div id="chat-launcher">
+      <span id="launcher-icon"></span>
+      <span id="launcher-text">Talk to us</span>
+    </div>
+    
+    <div id="language-menu" class="language-menu hidden">
+      <button class="lang-option" data-lang="en" data-label="EN">English</button>
+      <button class="lang-option" data-lang="da" data-label="DK">Dansk</button>
+      <button class="lang-option" data-lang="es" data-label="ES">Español</button>
+      <button class="lang-option" data-lang="fr" data-label="FR">Français</button>
+      <button class="lang-option" data-lang="de" data-label="DE">Deutsch</button>
+      <button class="lang-option" data-lang="it" data-label="IT">Italiano</button>
+      <button class="lang-option" data-lang="pt" data-label="PT">Português</button>
+      <button class="lang-option" data-lang="nl" data-label="NL">Nederlands</button>
+      <button class="lang-option" data-lang="pl" data-label="PL">Polski</button>
+      <button class="lang-option" data-lang="ru" data-label="RU">Русский</button>
+      <button class="lang-option" data-lang="zh" data-label="中文">中文</button>
+      <button class="lang-option" data-lang="ja" data-label="日本語">日本語</button>
+      <button class="lang-option" data-lang="ko" data-label="한국어">한국어</button>
+      <button class="lang-option" data-lang="ar" data-label="AR">العربية</button>
+      <button class="lang-option" data-lang="hi" data-label="HI">हिन्दी</button>
+      <button class="lang-option" data-lang="sv" data-label="SV">Svenska</button>
+    </div>
+    
+    <div id="chat-widget" class="hidden">
+      <header id="chat-header">
+        <div class="header-center">
+          <img id="chat-logo" class="hidden" />
+          <span id="chat-title"></span>
+        </div>
+        <div id="language-dropdown">
+          <button id="language-btn" class="language-btn" title="Change Language">
+            <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span id="current-lang">EN</span>
+          </button>
+        </div>
+        <svg class="header-wave" viewBox="0 0 360 20" fill="none" preserveAspectRatio="none">
+          <path d="M0 20V10C60 0 120 0 180 10C240 20 300 20 360 10V20H0Z" fill-opacity="0.3"/>
+          <path d="M0 20V15C60 5 120 5 180 15C240 25 300 20 360 12V20H0Z" fill-opacity="0.2"/>
+        </svg>
+      </header>
+      <div id="chat-messages"></div>
+      <form id="chat-form" autocomplete="off">
+        <div class="input-wrapper">
+          <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly');" name="message" />
+          <button class="chatly-mic-btn" type="button" aria-label="Start voice input" id="chatly-mic-button">
+            <svg class="chatly-mic-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="9" y="4" width="6" height="10" rx="3" />
+              <rect x="11" y="14" width="2" height="4" rx="1" />
+              <path d="M8 18a4 4 0 0 0 8 0h-2a2 2 0 0 1-4 0H8z" />
+              <path d="M6 11a6 6 0 0 0 12 0h-2a4 4 0 0 1-8 0H6z" />
+            </svg>
+          </button>
+        </div>
+        <button type="submit" id="send-button">
+          <span id="send-text">Send</span>
+          <span id="send-icon"></span>
+        </button>
+      </form>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', widgetHTML);
+}
+
 function init() {
+  // Create widget HTML if it doesn't exist
+  createWidgetHTML();
+  
   const launcher = document.getElementById("chat-launcher");
   const widget = document.getElementById("chat-widget");
   const form = document.getElementById("chat-form");
   const input = document.getElementById("chat-input");
 
   if (!launcher || !widget) {
-    console.error('Widget elements not found');
+    console.error('Widget elements not found after creation');
     return;
   }
 
