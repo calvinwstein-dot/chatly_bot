@@ -215,7 +215,8 @@ async function loadWidgetConfig() {
 
     const logoEl = document.getElementById("chat-logo");
     if (config.logoUrl) {
-      logoEl.src = config.logoUrl;
+      // Prepend API_BASE if logoUrl is relative
+      logoEl.src = config.logoUrl.startsWith('http') ? config.logoUrl : `${API_BASE}${config.logoUrl}`;
       logoEl.classList.remove("hidden");
     }
 
