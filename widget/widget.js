@@ -1,4 +1,7 @@
-const API_BASE = window.CHATBOT_API_BASE || "";
+// Get API base URL from the script tag's src attribute
+const scriptTag = document.currentScript || document.querySelector('script[data-business]');
+const scriptSrc = scriptTag?.src || '';
+const API_BASE = scriptSrc ? new URL(scriptSrc).origin : (window.CHATBOT_API_BASE || "");
 const API_KEY = window.chatbotConfig?.apiKey || ""; // Get API key from config
 const sessionId = crypto.randomUUID();
 let currentLanguage = localStorage.getItem('chatLanguage') || 'en';
