@@ -1,5 +1,25 @@
 # Development Environment Setup
 
+## Cloud Development Alternative: Gitpod
+
+**New!** For quick cloud-based development without local setup, use Gitpod:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/calvinwstein-dot/chatly_bot)
+
+Gitpod provides a fully configured cloud development environment with:
+- Pre-installed Node.js 20.x
+- Automatic dependency installation
+- Port forwarding for the development server
+- No local configuration needed
+
+Simply click the badge above, wait for the workspace to initialize, add your API keys to `.env`, and run `npm run start:dev`.
+
+---
+
+## Local Development Setup
+
+The following instructions are for setting up a local development environment.
+
 ## Server Stabilization Changes
 
 This document describes the changes made to stabilize the local development environment and prevent crash/restart loops.
