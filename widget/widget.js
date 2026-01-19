@@ -289,6 +289,12 @@ function appendMessage(text, role) {
   // Convert [text](url) to clickable links (but not [text](#))
   htmlText = htmlText.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
   
+  // Convert **text** to bold
+  htmlText = htmlText.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
+  
+  // Convert numbered lists (1. item)
+  htmlText = htmlText.replace(/^(\d+)\.\s+(.+)$/gm, '<div style="margin-left: 20px;">$1. $2</div>');
+  
   // Convert plain URLs to clickable links (avoid already linked URLs)
   htmlText = htmlText.replace(/(?<!["'>])(https?:\/\/[^\s<"']+)(?!["'<])/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
   
