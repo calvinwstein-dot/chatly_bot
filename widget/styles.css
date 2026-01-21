@@ -156,7 +156,7 @@ body {
 }
 
 .language-menu {
-  position: fixed;
+  position: absolute;
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -165,6 +165,9 @@ body {
   max-height: 300px;
   overflow-y: auto;
   z-index: 2147483647;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
 }
 
 .language-menu.hidden {
