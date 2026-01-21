@@ -689,10 +689,8 @@ function createWidgetHTML() {
     <div id="chat-widget" class="hidden">
       <header id="chat-header">
         <div class="header-center">
-          <div class="header-left">
-            <img id="chat-logo" class="hidden" />
-            <span id="chat-title"></span>
-          </div>
+          <img id="chat-logo" class="hidden" />
+          <span id="chat-title"></span>
           <div id="demo-limit-display" class="demo-limit-display hidden">
             <span class="demo-limit-label">Demo Message Limit</span>
             <span id="demo-limit-number" class="demo-limit-number"></span>
