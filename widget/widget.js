@@ -878,8 +878,12 @@ function init() {
       const messagesHeight = messagesDiv.scrollHeight;
       const hasMessages = messagesDiv.children.length > 0;
       
+      console.log('Positioning menu:', { btnRect, messagesHeight, hasMessages });
+      
       // Determine if should open upward or downward
       const shouldOpenUpward = !hasMessages || messagesHeight < 100;
+      
+      console.log('Should open upward:', shouldOpenUpward);
       
       if (shouldOpenUpward) {
         // Open upward - position above the button
@@ -887,12 +891,14 @@ function init() {
         languageMenu.style.top = 'auto';
         languageMenu.style.bottom = `${window.innerHeight - btnRect.top + 8}px`;
         languageMenu.style.right = `${window.innerWidth - btnRect.right}px`;
+        console.log('Menu positioned upward:', languageMenu.style.bottom, languageMenu.style.right);
       } else {
         // Open downward - position below the button
         languageMenu.classList.remove('open-upward');
         languageMenu.style.top = `${btnRect.bottom + 8}px`;
         languageMenu.style.bottom = 'auto';
         languageMenu.style.right = `${window.innerWidth - btnRect.right}px`;
+        console.log('Menu positioned downward:', languageMenu.style.top, languageMenu.style.right);
       }
     }
   });
