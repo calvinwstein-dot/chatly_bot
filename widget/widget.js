@@ -809,6 +809,18 @@ function init() {
   const currentLangDisplay = document.getElementById("current-lang");
   const langOptions = document.querySelectorAll(".lang-option");
   
+  console.log('Language selector setup:', {
+    hasBtn: !!languageBtn,
+    hasMenu: !!languageMenu,
+    hasDisplay: !!currentLangDisplay,
+    optionsCount: langOptions.length
+  });
+  
+  if (!languageBtn || !languageMenu) {
+    console.error('Language selector elements not found!');
+    return;
+  }
+  
   // Language code to recognition language mapping
   const langToRecognition = {
     'en': 'en-US',
@@ -851,10 +863,13 @@ function init() {
   
   // Toggle dropdown menu with adaptive positioning
   languageBtn.addEventListener("click", (e) => {
+    console.log('Language button clicked!');
     e.stopPropagation();
     
     const wasHidden = languageMenu.classList.contains('hidden');
+    console.log('Menu was hidden:', wasHidden);
     languageMenu.classList.toggle('hidden');
+    console.log('Menu classes after toggle:', languageMenu.className);
     
     // Position dropdown when opening
     if (wasHidden && !languageMenu.classList.contains('hidden')) {
