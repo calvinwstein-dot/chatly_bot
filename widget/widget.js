@@ -222,11 +222,31 @@ async function loadWidgetConfig() {
 
     // Populate welcome overlay
     const welcomeLogo = document.getElementById("welcome-logo");
+    const welcomeLogoContainer = document.querySelector(".welcome-logo-container");
     const welcomeTitle = document.getElementById("welcome-title");
+    const welcomeOverlay = document.getElementById("welcome-overlay");
+    
+    console.log('Setting up welcome overlay:', { 
+      hasLogo: !!config.logoUrl, 
+      logoUrl: config.logoUrl,
+      brandName: config.brandName,
+      overlayExists: !!welcomeOverlay 
+    });
+    
     if (config.logoUrl) {
-      welcomeLogo.src = config.logoUrl.startsWith('http') ? config.logoUrl : `${API_BASE}${config.logoUrl}`;
+      const logoSrc = config.logoUrl.startsWith('http') ? config.logoUrl : `${API_BASE}${config.logoUrl}`;
+      welcomeLogo.src = logoSrc;
+      welcomeLogo.style.display = 'block';
+    } else {
+      // Hide logo but show icon placeholder
+      welcomeLogo.style.display = 'none';
     }
     welcomeTitle.textContent = `Welcome to ${config.brandName || businessName}!`;
+    
+    // Ensure welcome overlay is visible initially
+    if (welcomeOverlay) {
+      welcomeOverlay.style.display = 'flex';
+    }
 
     // Check if subscription is active - if yes, bypass demo
     try {
@@ -331,20 +351,7 @@ function appendMessage(text, role) {
 }
 
 function updateDemoUI() {
-  if (!demoStatus || !demoStatus.isDemo) {
-    // Hide demo limit display if not in demo mode
-    const demoLimitDisplay = document.getElementById('demo-limit-display');
-    if (demoLimitDisplay) demoLimitDisplay.classList.add('hidden');
-    return;
-  }
-  
-  // Show demo message limit in header if in demo mode
-  const demoLimitDisplay = document.getElementById('demo-limit-display');
-  const demoLimitNumber = document.getElementById('demo-limit-number');
-  if (demoStatus.messageLimit) {
-    if (demoLimitDisplay) demoLimitDisplay.classList.remove('hidden');
-    if (demoLimitNumber) demoLimitNumber.textContent = demoStatus.messageLimit;
-  }
+  if (!demoStatus || !demoStatus.isDemo) return;
 
   let demoBar = document.getElementById("demo-bar");
   
@@ -696,10 +703,6 @@ function createWidgetHTML() {
         <div class="header-center">
           <img id="chat-logo" class="hidden" />
           <span id="chat-title"></span>
-          <div id="demo-limit-display" class="demo-limit-display hidden">
-            <span class="demo-limit-label">Demo Message Limit</span>
-            <span id="demo-limit-number" class="demo-limit-number"></span>
-          </div>
         </div>
         <div id="language-dropdown">
           <button id="language-btn" class="language-btn" title="Change Language">
