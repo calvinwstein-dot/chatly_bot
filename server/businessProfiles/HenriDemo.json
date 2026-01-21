@@ -1,0 +1,362 @@
+{
+  "businessName": "HENRI",
+  "logoUrl": "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
+  "primaryColor": "#2e7584ff",
+  "secondaryColor": "#0f4476ff",
+  "textColor": "#050604ff",
+  "launcherColor": "#2e7584ff",
+  "headerColor": "#2e7584ff",
+  "userBubbleColor": "#2e7584ff",
+  "userTextColor": "#ffffffff",
+  "botBubbleColor": "#ffffffff",
+  "botTextColor": "#2e7584ff",
+  "widgetBgColor": "#f0f8ffff",
+  "borderColor": "#ffffffff",
+  "launcherStyle": "rocket",
+  "launcherText": "Talk to us",
+  "primaryLanguage": "da",
+  "secondaryLanguage": "en",
+  "currency": "DKK",
+  "phone": "+45 35 12 22 00",
+  "phoneHours": "Monday-Friday: 09:00-15:00, Saturday: Closed",
+  "bookingUrl": "https://henri.planway.com/?new_design=1",
+  "websiteUrl": "https://www.henri.dk",
+  "email": "info@henri.dk",
+  "description": "All HENRI locations follow the same philosophy: minimalist, precise, and quiet confidence. Clean lines, soft lighting, and thoughtout materials — all designed to make you feel comfortable the moment you step in, and a little more like yourself when you step out!",
+  "isDemoMode": true,
+  "demoMessageLimit": 100,
+  "voiceEnabled": false,
+  "voiceMinutesLimit": 500,
+  "subscriptionTier": "premium",
+  "elevenLabsVoiceId": "ErXwobaYiN019PkySvjV",
+  "setupFeeLink": {
+    "test": "https://buy.stripe.com/test_bJe9AT0bE2J92UY3339oc05PASTE_YOUR_TEST_SETUP_FEE_LINK_HERE",
+    "live": "https://buy.stripe.com/6oU5kD1o7fdm0j10dLfYY0a"
+  },
+  "stripePaymentLink": {
+    "test": {
+      "monthly": "https://buy.stripe.com/test_dRm5kDf6yfvVbru4779oc06",
+      "yearly": "https://buy.stripe.com/test_dRm5kDf6yfvVbru4779oc06"
+    },
+    "live": {
+      "monthly": "https://buy.stripe.com/dRm00jc2Le9ifdV3pXfYY07",
+      "yearly": "https://buy.stripe.com/dRmcN58Qz6GQaXF3pXfYY06"
+    }
+  },
+  "subscriptionPrices": {
+    "monthly": "$199/month",
+    "yearly": "$1,990/year (2 months free • Save $398!)"
+  },
+  "locations": [
+    {
+      "name": "01 Christianshavn, Torvegade",
+      "address": "Torvegade 32B, 1400 København K",
+      "mapUrl": "https://www.google.dk/maps/dir//Torvegade+32B,+1400+K%C3%B8benhavn+K/@55.6728383,12.5077279,12z"
+    },
+    {
+      "name": "02 Frederiksberg, Gl. Kongevej",
+      "address": "Gl. Kongevej 80, 1850 Frederiksberg",
+      "mapUrl": "https://www.google.dk/maps/dir//Gl.+Kongevej+80,+1850+Frederiksberg/@55.6744775,12.4680973,12z"
+    },
+    {
+      "name": "03 Frederiksberg, H.C. Ørstedsvej",
+      "address": "H.C. Ørstedsvej 35, 1879 Frederiksberg",
+      "mapUrl": "https://www.google.com/maps/dir//H.+C.+%C3%98rsteds+Vej+35,+1879+Frederiksberg/@55.6801476,12.4657761,12z"
+    },
+    {
+      "name": "04 København K, Grønnegade",
+      "address": "Grønnegade 4, 1107 København K",
+      "mapUrl": "https://www.google.dk/maps?daddr=Gr%C3%B8nnegade%204%2C%201107%20K%C3%B8benhavn"
+    },
+    {
+      "name": "05 Magasin, Kongens Nytorv",
+      "address": "Magasin du Nord, Kongens Nytorv, København K",
+      "mapUrl": "https://www.google.dk/maps/dir//Magasin+du+Nord,+Kongens+Nytorv,+K%C3%B8benhavn+K/@55.6793132,12.5023845,12z"
+    },
+    {
+      "name": "06 Nordhavn, Århusgade",
+      "address": "Århusgade, Nordhavn",
+      "mapUrl": "https://www.google.dk/maps/dir//henri+nordhavn"
+    },
+    {
+      "name": "07 Nørrebro, Elmegade",
+      "address": "Elmegade 5, 2200 København",
+      "mapUrl": "https://www.google.dk/maps/dir//Elmegade+5,+2200+K%C3%B8benhavn/@55.6896464,12.475526,12z"
+    },
+    {
+      "name": "08 Østerbro, Nordre Frihavnsgade",
+      "address": "Nordre Frihavnsgade, Østerbro",
+      "mapUrl": "https://www.google.com/maps/dir//H.+C.+%C3%98rsteds+Vej+35,+1879+Frederiksberg/@55.6801476,12.4657761,26066m"
+    }
+  ],
+  "services": [
+    {
+      "name": "Henri's Signature Combo",
+      "price": 995
+    },
+    {
+      "name": "The Two Classics Combo",
+      "price": 750
+    },
+    {
+      "name": "Classic Haircut",
+      "price": 440
+    },
+    {
+      "name": "Zero Fade / Skin Fade",
+      "price": 550
+    },
+    {
+      "name": "Long Haircut",
+      "price": 750
+    },
+    {
+      "name": "Head Shave",
+      "price": 395
+    },
+    {
+      "name": "Signature Hot Towel Shave",
+      "price": 595
+    },
+    {
+      "name": "Classic Beard Trim",
+      "price": 395
+    },
+    {
+      "name": "Signature Beard Trim",
+      "price": 595
+    }
+  ],
+  "hours": {
+    "monday": "8am - 6pm",
+    "tuesday": "8am - 6pm",
+    "wednesday": "8am - 6pm",
+    "thursday": "8am - 6pm",
+    "friday": "8am - 6pm",
+    "saturday": "9am - 5pm",
+    "sunday": "closed"
+  },
+  "products": [
+    {
+      "name": "Texture Clay Pomade",
+      "price": 199,
+      "size": "60 ml",
+      "category": "Pomades, Creams & Clays",
+      "imageUrl": "/public/products/henri/texture-clay-pomade.webp"
+    },
+    {
+      "name": "Advanced Forming Cream",
+      "price": 199,
+      "size": "60 ml",
+      "category": "Pomades, Creams & Clays",
+      "imageUrl": "/public/products/henri/advanced-forming-cream.webp"
+    },
+    {
+      "name": "Crystal Pomade",
+      "price": 199,
+      "size": "60 ml",
+      "category": "Pomades, Creams & Clays",
+      "imageUrl": "/public/products/henri/crystal-pomade.webp"
+    },
+    {
+      "name": "Upgraded Signature Clay",
+      "price": 199,
+      "size": "60 ml",
+      "category": "Pomades, Creams & Clays",
+      "imageUrl": "/public/products/henri/upgraded-signature-clay.webp"
+    },
+    {
+      "name": "Refined Salt Water",
+      "price": 199,
+      "size": "120 ml",
+      "category": "Sprays",
+      "imageUrl": "/public/products/henri/refined-salt-water.webp"
+    },
+    {
+      "name": "Liquified Clay Spray",
+      "price": 199,
+      "size": "120 ml",
+      "category": "Sprays",
+      "imageUrl": "/public/products/henri/liquified-clay-spray.webp"
+    },
+    {
+      "name": "Signature Beard Oil",
+      "price": 199,
+      "size": "30 ml",
+      "category": "Sprays",
+      "imageUrl": "/public/products/henri/signature-beard-oil.webp"
+    }
+  ],
+  "giftCards": [
+    {
+      "name": "Gavekort - Classic Haircut",
+      "price": 440
+    },
+    {
+      "name": "Gavekort - Classic Beard Trim",
+      "price": 395
+    },
+    {
+      "name": "Gavekort - Head Shave",
+      "price": 395
+    },
+    {
+      "name": "Gavekort - Signature Haircut",
+      "price": 595
+    },
+    {
+      "name": "Gavekort - Long Haircut",
+      "price": 750
+    },
+    {
+      "name": "Gavekort - Signature Beard Trim",
+      "price": 595
+    },
+    {
+      "name": "Gavekort - Signature Hot Towel Shave",
+      "price": 595
+    },
+    {
+      "name": "Gavekort - Two Classics Combo",
+      "price": 750
+    },
+    {
+      "name": "Gavekort - Skin Fade / Zero Fade",
+      "price": 550
+    },
+    {
+      "name": "Gavekort - HENRI's Signature Combo",
+      "price": 995
+    }
+  ],
+  "loyaltyCards": [
+    {
+      "name": "5x Klippekort - Classic Haircut",
+      "price": 1950
+    },
+    {
+      "name": "5x Klippekort - Classic Beard Trim",
+      "price": 1750
+    },
+    {
+      "name": "5x Klippekort - HENRI's Signature Combo",
+      "price": 4500
+    },
+    {
+      "name": "5x Klippekort - The Two Classics Combo",
+      "price": 3500
+    },
+    {
+      "name": "5x Klippekort - Long Haircut",
+      "price": 3500
+    },
+    {
+      "name": "5x Klippekort - Zero Fade / Skin Fade",
+      "price": 2500
+    },
+    {
+      "name": "5x Klippekort - Head Shave",
+      "price": 1750
+    },
+    {
+      "name": "5x Klippekort - HENRI's Signature Haircut",
+      "price": 2750
+    },
+    {
+      "name": "5x Klippekort - Signature Beard Trim",
+      "price": 2750
+    },
+    {
+      "name": "5x Klippekort - Signature Hot Towel Shave",
+      "price": 2750
+    }
+  ],
+  "giftBoxes": [
+    {
+      "name": "Path for Wandering",
+      "price": 395,
+      "description": "For those who move without a destination. Matte and shine, hold and lightness.",
+      "includes": [
+        "Liquified Clay Spray",
+        "Crystal Pomade"
+      ],
+      "imageUrl": "/public/products/henri/path-for-wandering.webp"
+    },
+    {
+      "name": "A Bridge Between",
+      "price": 395,
+      "description": "For those who find balance in movement. Two essential elements in harmony.",
+      "includes": [
+        "Refined Salt Water",
+        "Advanced Forming Cream"
+      ],
+      "imageUrl": "/public/products/henri/a-bridge-between.webp"
+    },
+    {
+      "name": "The Chance Encounter",
+      "price": 495,
+      "description": "For those who find balance in movement. A texture lifted by salt, a form refined by structure.",
+      "includes": [
+        "Refined Salt Water",
+        "Texture Clay Pomade",
+        "Signature Beard Oil"
+      ],
+      "imageUrl": "/public/products/henri/the-chance-encounter.webp"
+    },
+    {
+      "name": "A Route Onwards",
+      "price": 595,
+      "description": "For those who shape what lies ahead. Beard tamed, texture built, form defined.",
+      "includes": [
+        "Liquified Clay Spray",
+        "Crystal Pomade",
+        "Signature Beard Oil",
+        "The Consort Comb"
+      ],
+      "imageUrl": "/public/products/henri/a-route-onwards.webp"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Do you take walk-ins?",
+      "answer": "Yes, we accept walk-ins every day if there is space available."
+    },
+    {
+      "question": "Do you accept card payments?",
+      "answer": "Yes, we accept all major debit and credit cards except american express."
+    },
+    {
+      "question": "What is your cancellation policy?",
+      "answer": "We kindly ask for at least 24 hours notice for any cancellations or rescheduling. Late cancellations or no-shows may be subject to a fee."
+    },
+    {
+      "question": "How do I cancel my booking?",
+      "answer": "You can cancel your appointment directly through your booking confirmation link, or alternatively, you may contact us at info@henri.dk and we'll be happy to assist you with the cancellation."
+    },
+    {
+      "question": "Do you offer gift cards?",
+      "answer": "Yes, we offer gift cards that can be purchased in-store or online at https://www.henri.dk/collections/gavekort."
+    },
+    {
+      "question": "What products do you sell?",
+      "answer": "We sell professional styling products including pomades, clays, creams, sprays, and beard oil - all created by our stylists."
+    },
+    {
+      "question": "Do you offer loyalty cards?",
+      "answer": "Yes, we offer 5x Klippekort (loyalty cards) for all our services which provide savings compared to individual bookings."
+    },
+    {
+      "question": "how do i book an appointment",
+      "answer": "you can make a booking at anyone of our stores through our online booking system at https://henri.planway.com/?new_design=1."
+    }
+  ],
+  "openaiConfig": {
+    "model": "gpt-4o-mini",
+    "instructions": "You are a calm, professional, and emotionally intelligent conversational partner. You communicate like a thoughtful human—not a chatbot. Your tone is warm, grounded, and respectful. You are confident without being arrogant, friendly without being casual, and professional without being stiff. You speak naturally using clear, conversational language. Avoid robotic phrasing, excessive formatting, emojis, or corporate jargon. Never mention being an AI, model, or bot unless explicitly asked. You listen carefully, respond with empathy, and adapt your tone to the user's emotional state. When the user is stressed or confused, you slow down and simplify. When the user is confident, you are concise and direct. You prioritize clarity, usefulness, and honesty. If something is uncertain, you say so calmly. If you make a mistake, you acknowledge it briefly and correct it without defensiveness. You ask thoughtful follow-up questions only when they genuinely improve understanding or help the user move forward. Your goal is to make the user feel understood, respected, and supported—like they are talking to a competent, attentive human who has their best interests in mind.\n\nWhen formatting section headings or important terms, use **bold** sparingly and only when it genuinely improves readability. Never use asterisk-based headings like :**Title**: - instead write naturally in flowing sentences. Use numbered lists (1. 2. 3.) for step-by-step guidance, but keep the overall structure conversational and easy to read.\n\nWhen showing products, gift boxes, or items with images, ALWAYS include the image using markdown format: ![Product Name](imageUrl). For example: ![Path for Wandering](/public/products/henri/path-for-wandering.webp). Show the image before describing the product. ALWAYS provide a clickable purchase link after describing each product using format: [Buy Now](productUrl) or direct customers to the website shop."
+  },
+  "launcherShape": "circle",
+  "sendButtonColor": "#2e7584ff",
+  "sendButtonText": "Send",
+  "sendButtonTextColor": "#ffffffff",
+  "sendButtonIcon": "arrow"
+}

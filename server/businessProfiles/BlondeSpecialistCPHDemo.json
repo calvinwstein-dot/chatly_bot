@@ -1,0 +1,289 @@
+{
+  "businessName": "Blonde Specialist CPH",
+  "logoUrl": "/public/logos/chappy-logo.png",
+  "primaryColor": "#fbd0edff",
+  "secondaryColor": "#e68affff",
+  "textColor": "#cf0cbfff",
+  "launcherColor": "#d6f4ffff",
+  "headerColor": "#f599dcff",
+  "userBubbleColor": "#d666f4ff",
+  "userTextColor": "#ffffffff",
+  "botBubbleColor": "#f2f3beff",
+  "botTextColor": "#cf0cbfff",
+  "widgetBgColor": "#ffffffff",
+  "borderColor": "#ffffffff",
+  "launcherStyle": "heart",
+  "launcherText": "Talk to us",
+  "primaryLanguage": "da",
+  "secondaryLanguage": "en",
+  "currency": "DKK",
+  "phone": "+45 55207861",
+  "phoneHours": "",
+  "bookingUrl": "https://blonde-specialist-cph.planway.com/",
+  "websiteUrl": "",
+  "email": "blondespecialistcph@gmail.dk.ny",
+  "description": "At Blonde Specialist CPH, we believe that beautiful blonde hair is an art form. Our expert stylists specialize in creating stunning, dimensional blondes that complement your natural beauty and lifestyle. Whether you're looking for subtle babylights, a dramatic balayage, or maintaining your perfect shade, we use premium products and techniques to ensure your hair stays healthy and radiant.",
+  "isDemoMode": true,
+  "demoMessageLimit": 40,
+  "voiceEnabled": false,
+  "voiceMinutesLimit": 500,
+  "subscriptionTier": "standard",
+  "elevenLabsVoiceId": "EXAVITQu4vr4xnSDxMaL",
+  "stripePaymentLink": {
+    "monthly": "https://buy.stripe.com/eVq9AT9UDaX6e9R3pXfYY09",
+    "yearly": "https://buy.stripe.com/5kQeVdd6Pc1afdVaSpfYY08"
+  },
+  "subscriptionPrices": {
+    "monthly": "$199/month",
+    "yearly": "$1,990/year (2 months free • Save $398!)"
+  },
+  "importantPolicies": [
+    "Haircuts are only available in conjunction with another service (such as highlights, balayage, color treatment, etc.) and are not offered as a standalone service."
+  ],
+  "locations": [
+    {
+      "name": "Blonde Specialist CPH - Copenhagen S",
+      "address": "Emma Gads Vej 30, 2300 Copenhagen S",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Emma+Gads+Vej+30,+2300+Copenhagen+S"
+    }
+  ],
+  "services": [
+    {
+      "name": "Highlights/Babylights T-zone (1-4 months)",
+      "price": 990
+    },
+    {
+      "name": "Highlights/Babylights T-zone (4-8 months)",
+      "price": 1150
+    },
+    {
+      "name": "Highlights/Babylights Half Head (1-4 months)",
+      "price": 1315
+    },
+    {
+      "name": "Highlights/Babylights Half Head (4-8 months)",
+      "price": 1500
+    },
+    {
+      "name": "Highlights/Babylights Full Head (1-4 months)",
+      "price": 1500
+    },
+    {
+      "name": "Highlights/Babylights Full Head (4-8 months)",
+      "price": 1615
+    },
+    {
+      "name": "Full Head Highlights Short",
+      "price": 1615
+    },
+    {
+      "name": "Full Head Highlights Medium",
+      "price": 2015
+    },
+    {
+      "name": "Full Head Highlights Long",
+      "price": 2400
+    },
+    {
+      "name": "Balayage Root Touch Up (1-4 months growth)",
+      "price": 1515
+    },
+    {
+      "name": "Balayage Root Touch Up (5-8 months regrowth)",
+      "price": 1600
+    },
+    {
+      "name": "Full Balayage Short Hair",
+      "price": 2390
+    },
+    {
+      "name": "Full Balayage Medium Hair",
+      "price": 2690
+    },
+    {
+      "name": "Balayage Long Hair",
+      "price": 3015
+    },
+    {
+      "name": "Brazilian Blow Dry Short Hair",
+      "price": 1700
+    },
+    {
+      "name": "Brazilian Blow Dry Medium Hair",
+      "price": 2090
+    },
+    {
+      "name": "Brazilian Blow Dry Long Hair",
+      "price": 2990
+    },
+    {
+      "name": "Brazilian on the Hairline",
+      "price": 500
+    },
+    {
+      "name": "Extra Color and Toner",
+      "price": 250
+    },
+    {
+      "name": "Full Bleach Root Touch Up",
+      "price": 1515
+    },
+    {
+      "name": "Full Bleach and Tone Short Hair",
+      "price": 3015
+    },
+    {
+      "name": "Full Bleaching and Toner Medium Hair",
+      "price": 3500
+    },
+    {
+      "name": "Full Bleach and Tone Long Hair",
+      "price": 4015
+    },
+    {
+      "name": "Root Shadow (only with highlights or balayage)",
+      "price": 275
+    },
+    {
+      "name": "Olaplex with a Color Service",
+      "price": 450
+    },
+    {
+      "name": "Olaplex",
+      "price": 450
+    },
+    {
+      "name": "Wella Fusion Treatment (Moisture)",
+      "price": 400
+    },
+    {
+      "name": "Toner/Gloss Long Hair",
+      "price": 750
+    },
+    {
+      "name": "Toner/Gloss Short Hair",
+      "price": 550
+    },
+    {
+      "name": "Toner/Gloss Medium Hair",
+      "price": 650
+    },
+    {
+      "name": "Retapping Extensions 1 Pack",
+      "price": 600
+    },
+    {
+      "name": "Retapping Extensions 2 Packs",
+      "price": 1000
+    },
+    {
+      "name": "Retapping Extensions 3 Packs",
+      "price": 1400
+    },
+    {
+      "name": "Full Head Weft Extensions",
+      "price": 1400
+    },
+    {
+      "name": "Hair Cut with Any Color Service or Brazilian Blow Dry",
+      "price": 615
+    },
+    {
+      "name": "Hair Cut and Olaplex",
+      "price": 1065
+    },
+    {
+      "name": "Hair Cut and Fusion Treatment",
+      "price": 1016
+    },
+    {
+      "name": "Hair Cut and Toner on Long Hair",
+      "price": 1365
+    },
+    {
+      "name": "Hair Cut and Tone on Medium Hair",
+      "price": 1265
+    },
+    {
+      "name": "Regrowth Color",
+      "price": 790
+    },
+    {
+      "name": "Full Color Short",
+      "price": 1100
+    },
+    {
+      "name": "Full Color Medium",
+      "price": 1390
+    },
+    {
+      "name": "Full Color Long",
+      "price": 1515
+    },
+    {
+      "name": "Consultation",
+      "price": 100
+    }
+  ],
+  "packages": [
+    {
+      "name": "Highlights, Tones, Hair Cut (1-4 months growth)",
+      "price": 2000
+    },
+    {
+      "name": "Highlights, Toner, Haircut (4-8 months growth)",
+      "price": 2100
+    },
+    {
+      "name": "Highlights, Tones, Root Shadow, Haircut (1-4 months)",
+      "price": 2200
+    },
+    {
+      "name": "Highlights, Toner, Root Shadow, Haircut (4-8 months)",
+      "price": 2500
+    },
+    {
+      "name": "Balayage, Toner, Hair Cut (1-4 months regrowth)",
+      "price": 2100
+    },
+    {
+      "name": "Balayage, Toner, Haircut (5-8 months regrowth)",
+      "price": 2275
+    }
+  ],
+  "products": [],
+  "giftCards": [],
+  "loyaltyCards": [],
+  "hours": {
+    "monday": "9:00 - 17:00",
+    "tuesday": "9:00 - 15:00",
+    "wednesday": "9:00 - 15:00",
+    "thursday": "9:00 - 15:00",
+    "friday": "9:00 - 14:00",
+    "saturday": "10:00 - 17:00",
+    "sunday": "Closed"
+  },
+  "faq": [
+    {
+      "question": "How do I book an appointment?",
+      "answer": "You can book an appointment online at https://blonde-specialist-cph.planway.com/"
+    },
+    {
+      "question": "Where are you located?",
+      "answer": "We are located at Emma Gads Vej 30, 2300 Copenhagen S"
+    },
+    {
+      "question": "What are your opening hours?",
+      "answer": "Monday 9:00-17:00, Tuesday-Thursday 9:00-15:00, Friday 9:00-14:00, Saturday 10:00-17:00, Sunday closed"
+    }
+  ],
+  "openaiConfig": {
+    "model": "gpt-4o-mini",
+    "instructions": "You are a friendly and professional customer support assistant for Blonde Specialist CPH, a premium blonde hair salon in Copenhagen. Your role is to help customers with booking appointments, answering questions about services, prices, and policies. Be warm, enthusiastic about beautiful blonde hair, and helpful. Always provide accurate information from the business profile. If you don't know something, politely suggest they contact the salon directly or book a consultation."
+  },
+  "launcherShape": "pill",
+  "sendButtonColor": "#f599dcff",
+  "sendButtonText": "Send",
+  "sendButtonTextColor": "#ffffffff",
+  "sendButtonIcon": "arrow"
+}
