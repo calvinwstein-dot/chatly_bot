@@ -23,6 +23,55 @@ router.get("/:businessName", (req, res) => {
   try {
     const { businessName } = req.params;
     const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
+    
+    // If file doesn't exist and it's ChappyBot, create default
+    if (!fs.existsSync(filePath) && businessName === 'ChappyBot') {
+      const defaultChappyBot = {
+        "businessName": "Chappy",
+        "logoUrl": "/public/logos/chappy-logo.png",
+        "primaryColor": "#3b82f6",
+        "secondaryColor": "#1e40af",
+        "textColor": "#111827",
+        "launcherColor": "#f05a35",
+        "headerColor": "#f35b35",
+        "userBubbleColor": "#48adc7",
+        "userTextColor": "#ffffff",
+        "botBubbleColor": "#fd955d",
+        "botTextColor": "#000000",
+        "widgetBgColor": "#ffffff",
+        "borderColor": "#ffffff",
+        "launcherStyle": "agent",
+        "launcherText": "Lets chat",
+        "launcherShape": "pill",
+        "sendButtonColor": "#48adc7",
+        "sendButtonTextColor": "#ffffff",
+        "sendButtonText": "Send",
+        "sendButtonIcon": "arrow",
+        "primaryLanguage": "en",
+        "secondaryLanguage": "da",
+        "currency": "USD",
+        "phone": "",
+        "phoneHours": "24/7",
+        "bookingUrl": "https://www.chappybot.com/demo",
+        "websiteUrl": "https://www.chappybot.com",
+        "email": "support@chappybot.com",
+        "description": "Chappy delivers a custom AI chatbot that knows your services, prices, hours and all other relevant information—answering customer questions and handling tasks around the clock even while you sleep.",
+        "isDemoMode": false,
+        "demoMessageLimit": 999999,
+        "voiceEnabled": false,
+        "voiceMinutesLimit": 500,
+        "subscriptionTier": "premium",
+        "elevenLabsVoiceId": "21m00Tcm4TlvDq8ikWAM",
+        "openaiConfig": {
+          "model": "gpt-4o-mini",
+          "temperature": 0.8,
+          "instructions": "You are a calm, professional, and emotionally intelligent conversational partner for Chappy, an AI chatbot company. Be informative, personable, and understanding. You help potential customers learn about Chappy's services and can assist them in scheduling demos. When formatting section headings, use **bold** sparingly and naturally. Never use asterisk-based headings like :**Title**: or ** Heading ** or **Heading:**. Only bold key terms or phrases within sentences when emphasis is needed for clarity. Keep your formatting clean and professional."
+        }
+      };
+      fs.writeFileSync(filePath, JSON.stringify(defaultChappyBot, null, 2));
+      console.log('✓ Created default ChappyBot.json');
+    }
+    
     const data = fs.readFileSync(filePath, "utf-8");
     res.json(JSON.parse(data));
   } catch (error) {
