@@ -219,14 +219,6 @@ async function loadWidgetConfig() {
       logoEl.src = config.logoUrl.startsWith('http') ? config.logoUrl : `${API_BASE}${config.logoUrl}`;
       logoEl.classList.remove("hidden");
     }
-    
-    // Show demo message limit in header if in demo mode
-    const demoLimitDisplay = document.getElementById('demo-limit-display');
-    const demoLimitNumber = document.getElementById('demo-limit-number');
-    if (demoStatus && demoStatus.isDemo && demoStatus.messageLimit) {
-      if (demoLimitDisplay) demoLimitDisplay.classList.remove('hidden');
-      if (demoLimitNumber) demoLimitNumber.textContent = demoStatus.messageLimit;
-    }
 
     // Populate welcome overlay
     const welcomeLogo = document.getElementById("welcome-logo");
@@ -339,7 +331,20 @@ function appendMessage(text, role) {
 }
 
 function updateDemoUI() {
-  if (!demoStatus || !demoStatus.isDemo) return;
+  if (!demoStatus || !demoStatus.isDemo) {
+    // Hide demo limit display if not in demo mode
+    const demoLimitDisplay = document.getElementById('demo-limit-display');
+    if (demoLimitDisplay) demoLimitDisplay.classList.add('hidden');
+    return;
+  }
+  
+  // Show demo message limit in header if in demo mode
+  const demoLimitDisplay = document.getElementById('demo-limit-display');
+  const demoLimitNumber = document.getElementById('demo-limit-number');
+  if (demoStatus.messageLimit) {
+    if (demoLimitDisplay) demoLimitDisplay.classList.remove('hidden');
+    if (demoLimitNumber) demoLimitNumber.textContent = demoStatus.messageLimit;
+  }
 
   let demoBar = document.getElementById("demo-bar");
   
