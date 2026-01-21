@@ -230,18 +230,23 @@ async function loadWidgetConfig() {
       hasLogo: !!config.logoUrl, 
       logoUrl: config.logoUrl,
       brandName: config.brandName,
-      overlayExists: !!welcomeOverlay 
+      overlayExists: !!welcomeOverlay,
+      logoExists: !!welcomeLogo,
+      titleExists: !!welcomeTitle
     });
     
-    if (config.logoUrl) {
+    if (welcomeLogo && config.logoUrl) {
       const logoSrc = config.logoUrl.startsWith('http') ? config.logoUrl : `${API_BASE}${config.logoUrl}`;
       welcomeLogo.src = logoSrc;
       welcomeLogo.style.display = 'block';
-    } else {
+    } else if (welcomeLogo) {
       // Hide logo but show icon placeholder
       welcomeLogo.style.display = 'none';
     }
-    welcomeTitle.textContent = `Welcome to ${config.brandName || businessName}!`;
+    
+    if (welcomeTitle) {
+      welcomeTitle.textContent = `Welcome to ${config.brandName || businessName}!`;
+    }
     
     // Ensure welcome overlay is visible initially
     if (welcomeOverlay) {
