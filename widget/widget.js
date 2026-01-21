@@ -860,15 +860,10 @@ function init() {
     }
   }
   
-  // Toggle dropdown menu with adaptive positioning
+  // Toggle dropdown menu
   languageBtn.addEventListener("click", (e) => {
-    console.log('Language button clicked!');
     e.stopPropagation();
-    
-    const wasHidden = languageMenu.classList.contains('hidden');
-    console.log('Menu was hidden:', wasHidden);
     languageMenu.classList.toggle('hidden');
-    console.log('Menu classes after toggle:', languageMenu.className);
   });
   
   // Close dropdown when clicking outside
