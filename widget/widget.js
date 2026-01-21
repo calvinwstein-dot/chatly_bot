@@ -723,9 +723,9 @@ function createWidgetHTML() {
         <div id="welcome-overlay" class="welcome-overlay animate-fade-in">
           <div class="welcome-content">
             <div class="welcome-logo-container">
-              <img id="welcome-logo" class="welcome-logo" alt="Logo" />
+              <img id="welcome-logo" class="welcome-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E" alt="Logo" />
             </div>
-            <h3 id="welcome-title" class="welcome-title"></h3>
+            <h3 id="welcome-title" class="welcome-title">Welcome!</h3>
             <p id="welcome-subtitle" class="welcome-subtitle">How can I help you today?</p>
           </div>
         </div>
