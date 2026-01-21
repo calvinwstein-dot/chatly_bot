@@ -219,6 +219,14 @@ async function loadWidgetConfig() {
       logoEl.src = config.logoUrl.startsWith('http') ? config.logoUrl : `${API_BASE}${config.logoUrl}`;
       logoEl.classList.remove("hidden");
     }
+    
+    // Show demo message limit in header if in demo mode
+    const demoLimitDisplay = document.getElementById('demo-limit-display');
+    const demoLimitNumber = document.getElementById('demo-limit-number');
+    if (demoStatus && demoStatus.isDemo && demoStatus.messageLimit) {
+      if (demoLimitDisplay) demoLimitDisplay.classList.remove('hidden');
+      if (demoLimitNumber) demoLimitNumber.textContent = demoStatus.messageLimit;
+    }
 
     // Populate welcome overlay
     const welcomeLogo = document.getElementById("welcome-logo");
@@ -681,8 +689,14 @@ function createWidgetHTML() {
     <div id="chat-widget" class="hidden">
       <header id="chat-header">
         <div class="header-center">
-          <img id="chat-logo" class="hidden" />
-          <span id="chat-title"></span>
+          <div class="header-left">
+            <img id="chat-logo" class="hidden" />
+            <span id="chat-title"></span>
+          </div>
+          <div id="demo-limit-display" class="demo-limit-display hidden">
+            <span class="demo-limit-label">Demo Message Limit</span>
+            <span id="demo-limit-number" class="demo-limit-number"></span>
+          </div>
         </div>
         <div id="language-dropdown">
           <button id="language-btn" class="language-btn" title="Change Language">
