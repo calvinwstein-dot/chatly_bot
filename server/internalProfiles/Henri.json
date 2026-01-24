@@ -1,0 +1,83 @@
+{
+  "businessName": "HENRI",
+  "internal": true,
+  "intranetOnly": true,
+  "requiresAuth": false,
+  "description": "HENRI customer support chatbot for intranet use only. Provides information about services, locations, booking, and general inquiries.",
+  "logoUrl": "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
+  "isDemoMode": false,
+  "voiceEnabled": false,
+  "primaryColor": "#2e7584ff",
+  "secondaryColor": "#0f4476ff",
+  "textColor": "#050604ff",
+  "launcherColor": "#2e7584ff",
+  "headerColor": "#2e7584ff",
+  "userBubbleColor": "#2e7584ff",
+  "userTextColor": "#ffffffff",
+  "botBubbleColor": "#ffffffff",
+  "botTextColor": "#2e7584ff",
+  "widgetBgColor": "#f0f8ffff",
+  "borderColor": "#ffffffff",
+  "launcherStyle": "rocket",
+  "launcherText": "Talk to us",
+  "primaryLanguage": "da",
+  "secondaryLanguage": "en",
+  "currency": "DKK",
+  "phone": "+45 35 12 22 00",
+  "phoneHours": "Monday-Friday: 09:00-15:00, Saturday: Closed",
+  "bookingUrl": "https://henri.planway.com/?new_design=1",
+  "websiteUrl": "https://www.henri.dk",
+  "email": "info@henri.dk",
+  "setupFeeLink": {
+    "test": "",
+    "live": ""
+  },
+  "stripePaymentLink": {
+    "test": {
+      "monthly": "",
+      "yearly": "https://buy.stripe.com/14A7sLgj18OY2r91hPfYY0b"
+    },
+    "live": {
+      "monthly": "",
+      "yearly": "https://buy.stripe.com/14A7sLgj18OY2r91hPfYY0b"
+    }
+  },
+  "subscriptionPrices": {
+    "monthly": "",
+    "yearly": "$2,490/year"
+  },
+  "locations": [
+    {
+      "name": "01 Christianshavn, Torvegade",
+      "address": "Torvegade 32B, 1400 København K",
+      "mapUrl": "https://www.google.dk/maps/dir//Torvegade+32B,+1400+K%C3%B8benhavn+K/@55.6728383,12.5077279,12z"
+    },
+    {
+      "name": "02 Frederiksberg, Gl. Kongevej",
+      "address": "Gl. Kongevej 80, 1850 Frederiksberg",
+      "mapUrl": "https://www.google.dk/maps/dir//Gl.+Kongevej+80,+1850+Frederiksberg/@55.6744775,12.4680973,12z"
+    }
+  ],
+  "services": [
+    {
+      "name": "Henri's Signature Combo",
+      "price": 995,
+      "description": "Haircut + Beard Trim + Hot Towel"
+    },
+    {
+      "name": "Haircut",
+      "price": 595,
+      "description": "Professional haircut"
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I book an appointment?",
+      "answer": "You can book online at henri.planway.com or call us at +45 35 12 22 00 during business hours."
+    },
+    {
+      "question": "What are your opening hours?",
+      "answer": "Monday-Friday: 09:00-15:00, Saturday: Closed"
+    }
+  ]
+}

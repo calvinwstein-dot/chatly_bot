@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Embedded Widget - HenriDemo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .info h3 {
+            margin: 0 0 8px 0;
+            color: #1976d2;
+        }
+        .info p {
+            margin: 4px 0;
+            color: #555;
+        }
+        ul {
+            margin-top: 12px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .success {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Embedded Widget Test - HenriDemo</h1>
+        
+        <div class="info">
+            <h3>What to Test:</h3>
+            <ul>
+                <li><strong>Widget should show:</strong> <span class="success">INACTIVE</span> badge (gray)</li>
+                <li><strong>Subscription dropdown:</strong> "Activate Subscription ▼" button visible</li>
+                <li><strong>Options:</strong> Monthly and Yearly subscription plans</li>
+                <li><strong>Chat input:</strong> Disabled with message "Activate subscription to chat"</li>
+                <li><strong>Stripe links:</strong> Click dropdown options to open payment links in new tab</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h3>✅ This Tests The Real Client Experience:</h3>
+            <p>This page uses the exact same embed snippet that clients will use on their websites.</p>
+            <p>If this works correctly, your client snippets will behave the same way.</p>
+        </div>
+
+        <p style="margin-top: 24px; color: #666;">
+            <strong>Note:</strong> The widget should appear in the bottom-right corner. 
+            If it shows as fully active instead of INACTIVE, check that HenriDemo is NOT in subscriptions.json.
+        </p>
+    </div>
+
+    <!-- EMBEDDED WIDGET SNIPPET - Same as clients will use -->
+    <script src="http://localhost:3001/widget/widget.js" data-business="HenriDemo"></script>
+</body>
+</html>

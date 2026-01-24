@@ -30,25 +30,16 @@ function hasActiveSubscription(businessName) {
     }
     const data = JSON.parse(fs.readFileSync(SUBSCRIPTIONS_FILE, 'utf-8'));
     
-    // Check both with and without "Demo" suffix for compatibility
-    const baseName = businessName.replace(/Demo$/, '');
-    const demoName = businessName.endsWith('Demo') ? businessName : `${businessName}Demo`;
-    
     // Handle both object and array formats
     let subscription;
     if (Array.isArray(data.subscriptions)) {
       // Old format: array
       subscription = data.subscriptions.find(
-        sub => (sub.businessName === businessName || 
-                sub.businessName === baseName || 
-                sub.businessName === demoName) && 
-               sub.status === 'active'
+        sub => sub.businessName === businessName && sub.status === 'active'
       );
     } else {
       // New format: object keyed by business name
-      subscription = data.subscriptions[businessName] || 
-                     data.subscriptions[baseName] || 
-                     data.subscriptions[demoName];
+      subscription = data.subscriptions[businessName];
       // Verify it's active
       if (subscription && subscription.status !== 'active') {
         subscription = null;

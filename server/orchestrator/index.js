@@ -3,13 +3,12 @@ import { getSession, updateSession } from "./state.js";
 import { handleSalesTurn } from "./salesFlow.js";
 import { handleSupportTurn } from "./supportFlow.js";
 import { chatCompletion } from "../openaiClient.js";
+import { loadProfile } from "../profileLoader.js";
 import fs from "fs";
 import path from "path";
 
 function loadBusinessProfile(businessName) {
-  const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
-  const data = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(data);
+  return loadProfile(businessName);
 }
 
 function buildSystemPrompt(business) {
@@ -49,11 +48,13 @@ ${business.giftBoxes.map(gb => {
   return `- ${gb.name} (${gb.price} ${business.currency}) - ${gb.description}. Includes: ${gb.includes.join(', ')}${imageInfo}`;
 }).join("\n")}
 
-` : ''}Hours:
+` : ''}${business.hours ? `Hours:
 ${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
 
-FAQs:
+` : ''}${business.faq ? `FAQs:
 ${business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n")}
+
+` : ''}
 
 Always answer using ONLY this business's information.
 
@@ -79,20 +80,20 @@ EXAMPLE 1 - Multiple Products:
 User: "What hair products do you have?"
 Assistant: "Here are our hair styling products:
 
-- [Texture Clay Pomade](#): 199 DKK (60 ml)
+- [Texture Clay Pomade](${business.websiteUrl}/products/texture-clay-pomade): 199 DKK (60 ml)
 ![Texture Clay Pomade](/public/products/henri/texture-clay-pomade.webp)
 
-- [Advanced Forming Cream](#): 199 DKK (60 ml)
+- [Advanced Forming Cream](${business.websiteUrl}/products/advanced-forming-cream): 199 DKK (60 ml)
 ![Advanced Forming Cream](/public/products/henri/advanced-forming-cream.webp)
 
-- [Crystal Pomade](#): 199 DKK (60 ml)
+- [Crystal Pomade](${business.websiteUrl}/products/crystal-pomade): 199 DKK (60 ml)
 ![Crystal Pomade](/public/products/henri/crystal-pomade.webp)
 
 All products can be purchased online at our shop!"
 
 EXAMPLE 2 - Single Product:
 User: "Tell me about the Texture Clay Pomade"
-Assistant: "The [Texture Clay Pomade](#) is one of our bestsellers:
+Assistant: "The [Texture Clay Pomade](${business.websiteUrl}/products/texture-clay-pomade) is one of our bestsellers:
 ![Texture Clay Pomade](/public/products/henri/texture-clay-pomade.webp)
 
 It costs 199 DKK for 60 ml and provides strong hold with a matte finish."
@@ -103,20 +104,28 @@ When listing services, products, locations, gift cards, or loyalty cards, you MU
 User: "What loyalty cards do you have?"
 Assistant: "Here are our loyalty cards:
 
-- [5x Klippekort - Classic Haircut](#): 1950 DKK
-- [5x Klippekort - Classic Beard Trim](#): 1750 DKK
-- [5x Klippekort - Long Haircut](#): 3500 DKK
+- [5x Klippekort - Classic Haircut](${business.websiteUrl}/products/5x-klippekort-classic-haircut): 1950 DKK
+- [5x Klippekort - Classic Beard Trim](${business.websiteUrl}/products/5x-klippekort-classic-beard-trim): 1750 DKK
+- [5x Klippekort - Long Haircut](${business.websiteUrl}/products/5x-klippekort-long-haircut): 3500 DKK
 
 These save you money when booking multiple sessions."
 
+CRITICAL PRODUCT LINK RULES:
+- EVERY product, gift card, gift box, or loyalty card mention MUST include a clickable purchase link
+- Format: [Product Name](${business.websiteUrl}/products/product-slug)
+- Create a reasonable URL slug from the product name (lowercase, hyphens for spaces)
+- NEVER use (#) as a link - always use the actual shop URL
+- If product name is "Texture Clay Pomade", link should be: ${business.websiteUrl}/products/texture-clay-pomade
+
 RULES:
 - Each item MUST be on a NEW LINE starting with "- "
-- Wrap item names in [Name](#)
+- Wrap item names in [Name](actual-url) with REAL purchase links
 - NEVER write items in a sentence or paragraph
 - ALWAYS add blank line before list
 - Include product images when available
 - WRONG: "We have [Item A](#): 100 DKK - [Item B](#): 200 DKK"
-- RIGHT: Put each on separate line with dash
+- WRONG: Using (#) as a placeholder link
+- RIGHT: Put each on separate line with dash and real purchase URL
 
 ⚠️ CRITICAL - BOOKING APPOINTMENTS (ALWAYS REQUIRED):
 When a customer asks about booking, appointments, scheduling, or making a reservation, you MUST ALWAYS include this booking link:

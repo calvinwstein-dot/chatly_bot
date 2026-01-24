@@ -1,6 +1,7 @@
 import express from "express";
 import { body, validationResult } from 'express-validator';
 import { handleChat } from "../orchestrator/index.js";
+import { loadProfile } from "../profileLoader.js";
 import fs from "fs";
 import path from "path";
 
@@ -10,6 +11,42 @@ const router = express.Router();
 const demoMessageCounts = new Map();
 
 const SUBSCRIPTIONS_FILE = path.resolve("server/subscriptions.json");
+const SESSIONS_FILE = path.resolve("server/data/hrSessions.json");
+
+// HR Session validation helper
+function validateHRSession(businessName, sessionToken) {
+  if (!businessName || !sessionToken) return null;
+  
+  try {
+    const profile = loadProfile(businessName);
+    
+    // Skip validation for non-internal profiles
+    if (!profile.internal || !profile.requiresAuth) {
+      return { valid: true };
+    }
+    
+    // Internal profile - validate session
+    if (!fs.existsSync(SESSIONS_FILE)) {
+      return { valid: false, error: "No sessions found" };
+    }
+    
+    const data = JSON.parse(fs.readFileSync(SESSIONS_FILE, "utf-8"));
+    const session = data.sessions[sessionToken];
+    
+    if (!session) {
+      return { valid: false, error: "Invalid session" };
+    }
+    
+    if (Date.now() > session.expiresAt) {
+      return { valid: false, error: "Session expired" };
+    }
+    
+    return { valid: true, email: session.email };
+  } catch (error) {
+    console.error("Session validation error:", error);
+    return { valid: false, error: "Validation error" };
+  }
+}
 
 function loadSubscriptions() {
   try {
@@ -43,9 +80,7 @@ function hasActiveSubscription(businessName) {
 }
 
 function loadBusinessProfile(businessName) {
-  const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
-  const data = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(data);
+  return loadProfile(businessName);
 }
 
 function checkDemoStatus(businessProfile) {
@@ -81,7 +116,7 @@ router.post("/",
   [
     body('sessionId').trim().isLength({ min: 1, max: 100 }).escape(),
     body('message').trim().isLength({ min: 1, max: 5000 }).escape(),
-    body('language').optional().isIn(['en', 'es', 'fr', 'de', 'it', 'pt', 'nl', 'da']),
+    body('language').optional().isIn(['en', 'da', 'es', 'fr', 'de', 'it', 'pt', 'nl', 'pl', 'ru', 'zh', 'ja', 'ko', 'ar', 'hi', 'sv']),
     body('business').optional().trim().isLength({ max: 50 }).matches(/^[a-zA-Z0-9_-]+$/),
     body('demoMessageCount').optional().isInt({ min: 0, max: 1000 })
   ],
@@ -97,6 +132,17 @@ router.post("/",
     const { sessionId, message, language, business, demoMessageCount } = req.body;
     if (!sessionId || !message) {
       return res.status(400).json({ error: "sessionId and message required" });
+    }
+
+    // Check HR session for internal profiles
+    const sessionToken = req.headers['x-hr-session'];
+    const sessionValidation = validateHRSession(business, sessionToken);
+    
+    if (sessionValidation && !sessionValidation.valid) {
+      return res.status(401).json({ 
+        error: "HR portal login required",
+        requiresAuth: true 
+      });
     }
 
     const businessProfile = loadBusinessProfile(business || 'Henri');

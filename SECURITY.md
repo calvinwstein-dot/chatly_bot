@@ -12,7 +12,7 @@ Add these security-related variables to your `.env` file:
 ALLOWED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
 
 # API Keys - For widget authentication (comma-separated)
-# Generate secure keys with: node generate-token.js
+# Generate secure keys with: node scripts/generate-token.js
 API_KEYS=your-secure-api-key-here,another-key-for-client-2
 
 # Admin Authentication
@@ -43,7 +43,7 @@ Copy the hash to your `.env` file as `ADMIN_PASSWORD_HASH`.
 Generate secure API keys for widget authentication:
 
 ```bash
-node generate-token.js
+node scripts/generate-token.js
 ```
 
 Add the generated key to your `.env` file as `API_KEYS`.

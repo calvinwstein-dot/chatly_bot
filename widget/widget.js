@@ -14,6 +14,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const businessName = urlParams.get('business') || scriptTag?.getAttribute('data-business') || window.chatbotConfig?.business || 'Henri';
 const testToken = urlParams.get('testMode') || scriptTag?.getAttribute('data-testmode') || '';
 const isUrlTestMode = !!urlParams.get('testMode'); // True if testMode from URL (full access)
+const forceInactive = urlParams.get('forceInactive') === 'true'; // Force inactive state for testing subscription flow
 
 // Detect if testing URL is embedded in iframe and block it
 if (isUrlTestMode && window.self !== window.top) {
@@ -245,12 +246,27 @@ async function loadWidgetConfig() {
     }
     
     if (welcomeTitle) {
-      welcomeTitle.textContent = `Welcome to ${config.brandName || businessName}!`;
+      console.log('🔍 DEBUG Welcome Message:', { internal: config.internal, brandName: config.brandName, businessName });
+      const displayName = config.internal ? `${config.brandName || businessName} HR` : (config.brandName || businessName);
+      welcomeTitle.textContent = `Welcome to ${displayName}!`;
+      console.log('✅ Welcome title set to:', welcomeTitle.textContent);
     }
     
     // Ensure welcome overlay is visible initially
     if (welcomeOverlay) {
       welcomeOverlay.style.display = 'flex';
+    }
+
+    // If forceInactive is true, show inactive state with subscription options (regardless of actual subscription status or demo mode)
+    if (forceInactive) {
+      demoStatus = {
+        isDemo: false,
+        inactive: true,
+        stripePaymentLink: config.stripePaymentLink,
+        subscriptionPrices: config.subscriptionPrices
+      };
+      updateDemoUI();
+      return;
     }
 
     // Check if subscription is active - if yes, bypass demo
@@ -278,7 +294,9 @@ async function loadWidgetConfig() {
       if (!testToken || testToken !== validToken) {
         demoStatus = {
           isDemo: true,
-          inactive: true
+          inactive: true,
+          stripePaymentLink: config.stripePaymentLink,
+          subscriptionPrices: config.subscriptionPrices
         };
         updateDemoUI();
         return;
@@ -356,7 +374,7 @@ function appendMessage(text, role) {
 }
 
 function updateDemoUI() {
-  if (!demoStatus || !demoStatus.isDemo) return;
+  if (!demoStatus) return;
 
   let demoBar = document.getElementById("demo-bar");
   
@@ -373,16 +391,29 @@ function updateDemoUI() {
     const monthlyPrice = widgetConfig?.subscriptionPrices?.monthly || '$99/monthly';
     const yearlyPrice = widgetConfig?.subscriptionPrices?.yearly || '$990/annual';
     
+    // Only show subscription options that have actual payment links (non-empty strings)
+    const hasMonthly = widgetConfig?.stripePaymentLink?.monthly && widgetConfig.stripePaymentLink.monthly.trim() !== '';
+    const hasYearly = widgetConfig?.stripePaymentLink?.yearly && widgetConfig.stripePaymentLink.yearly.trim() !== '';
+    
+    const subscriptionOptions = [];
+    if (hasMonthly) {
+      subscriptionOptions.push(`<a href="#" data-plan="monthly" class="subscribe-option">${monthlyPrice}</a>`);
+    }
+    if (hasYearly) {
+      subscriptionOptions.push(`<a href="#" data-plan="yearly" class="subscribe-option">${yearlyPrice}</a>`);
+    }
+    
     demoBar.innerHTML = `
       <div class="demo-content">
         <span class="demo-badge" style="background: #95a5a6;">INACTIVE</span>
+        ${subscriptionOptions.length > 0 ? `
         <div class="subscribe-dropdown">
           <button id="subscribe-btn-main" class="subscribe-btn">Activate Subscription ▼</button>
           <div id="subscribe-menu" class="subscribe-menu">
-            <a href="#" data-plan="monthly" class="subscribe-option">${monthlyPrice}</a>
-            <a href="#" data-plan="yearly" class="subscribe-option">${yearlyPrice}</a>
+            ${subscriptionOptions.join('')}
           </div>
         </div>
+        ` : ''}
       </div>
     `;
     
@@ -454,17 +485,30 @@ function updateDemoUI() {
     const monthlyPrice = demoStatus.subscriptionPrices?.monthly || '$199/month';
     const yearlyPrice = demoStatus.subscriptionPrices?.yearly || '$1,990/year';
     
+    // Only show subscription options that have actual payment links (non-empty strings)
+    const hasMonthly = demoStatus.stripePaymentLink?.monthly && demoStatus.stripePaymentLink.monthly.trim() !== '';
+    const hasYearly = demoStatus.stripePaymentLink?.yearly && demoStatus.stripePaymentLink.yearly.trim() !== '';
+    
+    const subscriptionOptions = [];
+    if (hasMonthly) {
+      subscriptionOptions.push(`<a href="#" data-plan="monthly" class="subscribe-option">${monthlyPrice}</a>`);
+    }
+    if (hasYearly) {
+      subscriptionOptions.push(`<a href="#" data-plan="yearly" class="subscribe-option">${yearlyPrice}</a>`);
+    }
+    
     demoBar.innerHTML = `
       <div class="demo-content">
         <span class="demo-badge">DEMO</span>
         <span class="demo-info">${messagesLeft} messages left${daysLeft ? ` • ${daysLeft} days remaining` : ''}</span>
+        ${subscriptionOptions.length > 0 ? `
         <div class="subscribe-dropdown">
           <button id="subscribe-btn-main" class="subscribe-btn-small">Activate Subscription ▼</button>
           <div id="subscribe-menu" class="subscribe-menu">
-            <a href="#" data-plan="monthly" class="subscribe-option">${monthlyPrice}</a>
-            <a href="#" data-plan="yearly" class="subscribe-option">${yearlyPrice}</a>
+            ${subscriptionOptions.join('')}
           </div>
         </div>
+        ` : ''}
       </div>
     `;
   }
@@ -563,6 +607,11 @@ async function sendMessage(message) {
     
     const headers = { "Content-Type": "application/json" };
     if (API_KEY) headers['X-API-Key'] = API_KEY;
+    
+    // Add HR session token if available (for internal profiles)
+    if (window.hrSessionToken) {
+      headers['X-HR-Session'] = window.hrSessionToken;
+    }
     
     const res = await fetch(`${API_BASE}/api/chat`, {
       method: "POST",

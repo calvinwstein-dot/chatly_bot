@@ -3,7 +3,7 @@ node_modules/
 .git/
 *.log
 .env
-test-voice.html
+tests/test-voice.html
 widget/*.html
 widget/*.css
 admin/*.html

@@ -7,6 +7,32 @@
       "endDate": "2099-12-31",
       "stripeSubscriptionId": "internal_chappybot",
       "unlimited": true
+    },
+    "HenriHR": {
+      "plan": "internal",
+      "status": "active",
+      "startDate": "2026-01-22",
+      "endDate": "2099-12-31",
+      "stripeSubscriptionId": "internal_hr",
+      "unlimited": true
+    },
+    "Henri": {
+      "plan": "internal",
+      "status": "active",
+      "startDate": "2026-01-23",
+      "endDate": "2099-12-31",
+      "stripeSubscriptionId": "internal_henri_intranet",
+      "unlimited": true,
+      "intranetOnly": true
+    },
+    "TestWidget": {
+      "plan": "internal",
+      "status": "active",
+      "startDate": "2026-01-23",
+      "endDate": "2099-12-31",
+      "stripeSubscriptionId": "internal_test_widget",
+      "unlimited": true,
+      "intranetOnly": true
     }
   }
 }

@@ -1,2 +1,8 @@
 node_modules/
 .env
+
+# Employee data (persists across deployments - don't reset!)
+server/data/employees.json
+server/data/hrSessions.json
+server/data/ptoRequests.json
+server/data/contracts/

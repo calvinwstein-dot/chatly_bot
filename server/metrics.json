@@ -1,7 +1,7 @@
 {
   "businesses": {
     "HenriDemo": {
-      "clicks": 62,
+      "clicks": 81,
       "messages": 32,
       "dailyStats": {
         "2026-01-08": {
@@ -27,26 +27,76 @@
         "2026-01-18": {
           "clicks": 29,
           "messages": 19
+        },
+        "2026-01-23": {
+          "clicks": 17,
+          "messages": 0
+        },
+        "2026-01-24": {
+          "clicks": 2,
+          "messages": 0
         }
       }
     },
     "BlondeSpecialistCPHDemo": {
-      "clicks": 13,
+      "clicks": 15,
       "messages": 0,
       "dailyStats": {
         "2026-01-09": {
           "clicks": 13,
           "messages": 0
+        },
+        "2026-01-24": {
+          "clicks": 2,
+          "messages": 0
         }
       }
     },
     "ChappyBot": {
-      "clicks": 3,
+      "clicks": 5,
       "messages": 1,
       "dailyStats": {
         "2026-01-18": {
           "clicks": 3,
           "messages": 1
+        },
+        "2026-01-23": {
+          "clicks": 2,
+          "messages": 0
+        }
+      }
+    },
+    "CompanyHR": {
+      "clicks": 13,
+      "messages": 2,
+      "dailyStats": {
+        "2026-01-22": {
+          "clicks": 13,
+          "messages": 2
+        }
+      }
+    },
+    "HenriHR": {
+      "clicks": 34,
+      "messages": 9,
+      "dailyStats": {
+        "2026-01-22": {
+          "clicks": 21,
+          "messages": 5
+        },
+        "2026-01-23": {
+          "clicks": 13,
+          "messages": 4
+        }
+      }
+    },
+    "Henri": {
+      "clicks": 26,
+      "messages": 3,
+      "dailyStats": {
+        "2026-01-24": {
+          "clicks": 26,
+          "messages": 3
         }
       }
     }

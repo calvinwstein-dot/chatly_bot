@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Chatbot Test</title>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      color: #1e3a8a;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #64748b;
+      margin-bottom: 30px;
+    }
+    .info-box {
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    .info-box h3 {
+      margin-top: 0;
+      color: #1e40af;
+    }
+    .test-questions {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .test-questions h3 {
+      margin-top: 0;
+      color: #334155;
+    }
+    .test-questions ul {
+      list-style: none;
+      padding: 0;
+    }
+    .test-questions li {
+      padding: 8px 0;
+      color: #475569;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .test-questions li:last-child {
+      border-bottom: none;
+    }
+    .test-questions li:before {
+      content: "💬 ";
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏢 Company HR Assistant</h1>
+    <p class="subtitle">Your internal HR chatbot for policies, benefits, and support</p>
+    
+    <div class="info-box">
+      <h3>✅ HR Chatbot Ready</h3>
+      <p>The HR chatbot is now active! Click the blue chat button in the bottom-right corner to start.</p>
+      <p><strong>Profile:</strong> CompanyHR<br>
+      <strong>Features:</strong> HR policies, benefits info, PTO requests, onboarding help</p>
+    </div>
+
+    <div class="test-questions">
+      <h3>📋 Try These Questions:</h3>
+      <ul>
+        <li>How do I request time off?</li>
+        <li>What are my health insurance options?</li>
+        <li>How much PTO do I get?</li>
+        <li>What is the 401k match policy?</li>
+        <li>What holidays does the company observe?</li>
+        <li>How do I access my pay stubs?</li>
+        <li>What is the remote work policy?</li>
+        <li>What professional development is available?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HR Chatbot Widget -->
+  <script>
+    window.chatbotConfig = {
+      business: 'CompanyHR'
+    };
+  </script>
+  <script src="widget.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</body>
+</html>

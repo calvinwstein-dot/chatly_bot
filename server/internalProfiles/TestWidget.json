@@ -1,0 +1,78 @@
+{
+  "businessName": "Test Widget",
+  "internal": true,
+  "intranetOnly": true,
+  "requiresAuth": false,
+  "description": "Test widget for intranet embedding - demonstration and testing purposes.",
+  "logoUrl": "/public/logos/test-logo.png",
+  "isDemoMode": false,
+  "voiceEnabled": false,
+  "primaryColor": "#3b82f6",
+  "secondaryColor": "#1e40af",
+  "textColor": "#111827",
+  "launcherColor": "#3b82f6",
+  "headerColor": "#3b82f6",
+  "userBubbleColor": "#3b82f6",
+  "userTextColor": "#ffffff",
+  "botBubbleColor": "#f3f4f6",
+  "botTextColor": "#111827",
+  "widgetBgColor": "#ffffff",
+  "borderColor": "#e5e7eb",
+  "launcherStyle": "agent",
+  "launcherText": "Chat with us",
+  "primaryLanguage": "en",
+  "secondaryLanguage": "da",
+  "currency": "USD",
+  "phone": "+1 555-0100",
+  "phoneHours": "Monday-Friday: 9am-5pm EST",
+  "bookingUrl": "https://example.com/booking",
+  "websiteUrl": "https://example.com",
+  "email": "test@example.com",
+  "setupFeeLink": {
+    "test": "",
+    "live": ""
+  },
+  "stripePaymentLink": {
+    "test": {
+      "monthly": "",
+      "yearly": ""
+    },
+    "live": {
+      "monthly": "",
+      "yearly": ""
+    }
+  },
+  "subscriptionPrices": {
+    "monthly": "$199/month",
+    "yearly": "$1,990/year (2 months free • Save $398!)"
+  },
+  "locations": [
+    {
+      "name": "Main Office",
+      "address": "123 Test Street, Test City, TC 12345",
+      "mapUrl": "https://maps.google.com"
+    }
+  ],
+  "services": [
+    {
+      "name": "Test Service A",
+      "price": 100,
+      "description": "Sample service for testing"
+    },
+    {
+      "name": "Test Service B",
+      "price": 200,
+      "description": "Another sample service"
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I use this widget?",
+      "answer": "This is a test widget for intranet embedding. It demonstrates the chatbot functionality."
+    },
+    {
+      "question": "Is this for production?",
+      "answer": "No, this is a test widget for demonstration purposes only."
+    }
+  ]
+}

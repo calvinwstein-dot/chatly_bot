@@ -1,0 +1,130 @@
+{
+  "employees": {
+    "john.doe@henri.dk": {
+      "name": "Calvin Stein",
+      "username": "calvinstein",
+      "employeeId": "EMP001",
+      "department": "torvegade",
+      "position": "manager",
+      "hireDate": "2023-06-15",
+      "ptoBalance": 15,
+      "ptoUsed": 5,
+      "ptoTotal": 20,
+      "childSickDays": 10,
+      "personalSickDays": 12,
+      "contractType": "Full-time",
+      "benefits": [
+        "Health Insurance",
+        "Dental",
+        "401k"
+      ],
+      "manager": "Calvin",
+      "email": "john.doe@henri.dk",
+      "phone": "+45 12 34 56 78",
+      "password": "$2b$10$JLUKUGpWjnLnZ6TLgKKzquAQSf6QyQfKGMhZ/qgbkK/wGI39g05By",
+      "plainPassword": "Henri2026Cal!"
+    },
+    "sarah.jensen@henri.dk": {
+      "name": "Sarah Jensen",
+      "username": "sarahjensen",
+      "employeeId": "EMP002",
+      "department": "Marketing",
+      "position": "Marketing Specialist",
+      "hireDate": "2024-01-10",
+      "ptoBalance": 18,
+      "ptoUsed": 2,
+      "ptoTotal": 20,
+      "childSickDays": 8,
+      "personalSickDays": 15,
+      "contractType": "Full-time",
+      "benefits": [
+        "Health Insurance",
+        "Dental",
+        "401k",
+        "Gym Membership"
+      ],
+      "manager": "Michael Brown",
+      "email": "sarah.jensen@henri.dk",
+      "phone": "+45 98 76 54 32",
+      "password": "$2b$10$NDzRUDXF82L2TcyWmN75oe0xEaV.lzQmjaLBFkbVVeW75IsClU3re",
+      "plainPassword": "Sarah#Secure24"
+    },
+    "lars.nielsen@henri.dk": {
+      "name": "Lars Nielsen",
+      "username": "larsnielsen",
+      "employeeId": "EMP003",
+      "department": "Product",
+      "position": "Product Designer",
+      "hireDate": "2022-03-20",
+      "ptoBalance": 22,
+      "ptoUsed": 3,
+      "ptoTotal": 25,
+      "childSickDays": 12,
+      "personalSickDays": 10,
+      "contractType": "Full-time",
+      "benefits": [
+        "Health Insurance",
+        "Dental",
+        "Vision",
+        "401k",
+        "Life Insurance"
+      ],
+      "manager": "Anna Petersen",
+      "email": "lars.nielsen@henri.dk",
+      "phone": "+45 23 45 67 89",
+      "password": "$2b$10$/ANOXbxfxSSk6Nrz3pWzfOa3D7H26slpgML3u77lzOsMsMeoM.bi.",
+      "plainPassword": "LarsPass!99"
+    },
+    "emma.christensen@henri.dk": {
+      "name": "Emma Christensen",
+      "username": "emmachristensen",
+      "employeeId": "EMP004",
+      "department": "Customer Success",
+      "position": "Support Lead",
+      "hireDate": "2023-09-01",
+      "ptoBalance": 16,
+      "ptoUsed": 4,
+      "ptoTotal": 20,
+      "childSickDays": 5,
+      "personalSickDays": 14,
+      "contractType": "Full-time",
+      "benefits": [
+        "Health Insurance",
+        "Dental",
+        "401k"
+      ],
+      "manager": "John Doe",
+      "email": "emma.christensen@henri.dk",
+      "phone": "+45 34 56 78 90",
+      "password": "$2b$10$Dt44TegLIxuiQllQOHEfZ.L9dDr2K7AoN3Un3A25RvHy9wPR35qd.",
+      "plainPassword": "EmmaHR@2026"
+    },
+    "mikkel.hansen@henri.dk": {
+      "name": "Mikkel Hansen",
+      "username": "mikkelhansen",
+      "employeeId": "EMP005",
+      "department": "Engineering",
+      "position": "Senior Developer",
+      "hireDate": "2021-11-15",
+      "ptoBalance": 20,
+      "ptoUsed": 5,
+      "ptoTotal": 25,
+      "childSickDays": 15,
+      "personalSickDays": 18,
+      "contractType": "Full-time",
+      "benefits": [
+        "Health Insurance",
+        "Dental",
+        "Vision",
+        "401k",
+        "Life Insurance",
+        "Remote Work Allowance"
+      ],
+      "manager": "Tech Lead",
+      "email": "mikkel.hansen@henri.dk",
+      "phone": "+45 45 67 89 01",
+      "password": "$2b$10$TovK7Wch7gcPVNmW7EiFjeQZI3V9jNQ8zoinhUF2cuHv1PWOHJSp6",
+      "plainPassword": "Mikkel$Dev88"
+    }
+  }
+}

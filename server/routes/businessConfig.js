@@ -1,4 +1,5 @@
 import express from "express";
+import { loadProfile, getProfilePath, saveProfile } from "../profileLoader.js";
 import fs from "fs";
 import path from "path";
 
@@ -7,11 +8,17 @@ const router = express.Router();
 // List all business profiles - MUST be before /:businessName route
 router.get("/list", (req, res) => {
   try {
-    const profilesDir = path.resolve("server/businessProfiles");
-    const files = fs.readdirSync(profilesDir);
-    const businesses = files
-      .filter(file => file.endsWith('.json'))
-      .map(file => file.replace('.json', ''));
+    const businessDir = path.resolve("server/businessProfiles");
+    const internalDir = path.resolve("server/internalProfiles");
+    
+    const businessFiles = fs.existsSync(businessDir) ? fs.readdirSync(businessDir) : [];
+    const internalFiles = fs.existsSync(internalDir) ? fs.readdirSync(internalDir) : [];
+    
+    const businesses = [
+      ...businessFiles.filter(file => file.endsWith('.json')).map(file => file.replace('.json', '')),
+      ...internalFiles.filter(file => file.endsWith('.json')).map(file => ({ name: file.replace('.json', ''), internal: true }))
+    ];
+    
     res.json({ businesses });
   } catch (error) {
     res.status(500).json({ error: "Failed to list business profiles" });
@@ -22,7 +29,7 @@ router.get("/list", (req, res) => {
 router.get("/:businessName", (req, res) => {
   try {
     const { businessName } = req.params;
-    const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
+    const filePath = getProfilePath(businessName);
     
     // If file doesn't exist and it's ChappyBot, create default
     if (!fs.existsSync(filePath) && businessName === 'ChappyBot') {
@@ -83,11 +90,10 @@ router.get("/:businessName", (req, res) => {
 router.patch("/:businessName", (req, res) => {
   try {
     const { businessName } = req.params;
-    const filePath = path.resolve(`server/businessProfiles/${businessName}.json`);
+    const filePath = getProfilePath(businessName);
     
     // Read existing profile
-    const data = fs.readFileSync(filePath, "utf-8");
-    const profile = JSON.parse(data);
+    const profile = loadProfile(businessName);
     
     // Update all provided fields
     const { 

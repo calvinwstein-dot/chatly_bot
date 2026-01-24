@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+// Initialize data files from templates (for first deploy)
+import './initializeData.js';
+
 // Validate environment variables before proceeding
 const requiredEnvVars = ['OPENAI_API_KEY'];
 const missingVars = requiredEnvVars.filter(v => !process.env[v]);
@@ -48,6 +51,9 @@ import metricsRoute from "./routes/metrics.js";
 import setupFeesRoute from "./routes/setupFees.js";
 import voiceUsageRoute from "./routes/voiceUsage.js";
 import voiceRoute from "./routes/voice.js";
+import employeesRoute from "./routes/employees.js";
+import hrAuthRoute from "./routes/hrAuth.js";
+import ptoRequestsRoute from "./routes/ptoRequests.js";
 
 const app = express();
 
@@ -137,6 +143,9 @@ app.use("/api/metrics", metricsRoute);
 app.use("/api/setup-fees", setupFeesRoute);
 app.use("/api/voice-usage", voiceUsageRoute);
 app.use("/api/voice", voiceRoute);
+app.use("/api/employees", employeesRoute);
+app.use("/api/hr-auth", hrAuthRoute);
+app.use("/api/pto-request", ptoRequestsRoute);
 
 // Log iframe embedding attempts
 app.post("/api/log-iframe-attempt", (req, res) => {

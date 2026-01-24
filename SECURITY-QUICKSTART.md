@@ -48,7 +48,7 @@ ADMIN_PASSWORD_HASH=your-bcrypt-hash-here
 ### Step 2: Generate API Key
 
 ```bash
-node generate-token.js
+node scripts/generate-token.js
 ```
 
 Add to `.env`:

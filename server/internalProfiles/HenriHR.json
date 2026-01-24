@@ -1,0 +1,126 @@
+{
+  "businessName": "HENRI HR",
+  "internal": true,
+  "requiresAuth": true,
+  "description": "Internal HR Assistant for HENRI employees. Provides information about policies, benefits, time off, onboarding, and general HR questions.",
+  "logoUrl": "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
+  "isDemoMode": false,
+  "voiceEnabled": false,
+  "primaryColor": "#2e7584ff",
+  "secondaryColor": "#0f4476ff",
+  "headerColor": "#2e7584ff",
+  "launcherColor": "#2e7584ff",
+  "userBubbleColor": "#2e7584ff",
+  "userTextColor": "#ffffffff",
+  "botBubbleColor": "#1b4750ff",
+  "botTextColor": "#ffffffff",
+  "widgetBgColor": "#fbfaffff",
+  "currency": "DKK",
+  "importantPolicies": [
+    "All information shared with HR bot is confidential",
+    "For urgent matters, contact HR directly at hr@company.com or ext. 5000",
+    "PTO requests must be submitted through the HR portal",
+    "Benefits enrollment period: November 1-15 annually"
+  ],
+  "phone": "ext. 5000",
+  "phoneHours": "Monday-Friday, 9am-5pm",
+  "email": "hr@company.com",
+  "websiteUrl": "https://company.com/hr-portal",
+  "setupFeeLink": {
+    "test": "",
+    "live": ""
+  },
+  "stripePaymentLink": {
+    "test": {
+      "monthly": "",
+      "yearly": ""
+    },
+    "live": {
+      "monthly": "",
+      "yearly": ""
+    }
+  },
+  "subscriptionPrices": {
+    "monthly": "$299/month",
+    "yearly": "$2,990/year (2 months free • Save $598!)"
+  },
+  "bookingUrl": "",
+  "locations": [
+    {
+      "name": "HR Office",
+      "address": "Main Building, 3rd Floor, Room 305",
+      "mapUrl": ""
+    }
+  ],
+  "hours": {
+    "Monday": "9:00 AM - 5:00 PM",
+    "Tuesday": "9:00 AM - 5:00 PM",
+    "Wednesday": "9:00 AM - 5:00 PM",
+    "Thursday": "9:00 AM - 5:00 PM",
+    "Friday": "9:00 AM - 5:00 PM",
+    "Saturday": "Closed",
+    "Sunday": "Closed"
+  },
+  "services": [],
+  "products": [],
+  "giftCards": [],
+  "loyaltyCards": [],
+  "giftBoxes": [],
+  "faq": [
+    {
+      "question": "How do I request time off?",
+      "answer": "Submit PTO requests through the HR portal at company.com/hr-portal. Requests require 2 weeks advance notice for approval. Emergency leave can be requested by contacting HR directly."
+    },
+    {
+      "question": "What are my health insurance options?",
+      "answer": "We offer three health insurance plans: Bronze (employee-only coverage), Silver (employee + spouse), and Gold (full family coverage). All plans include medical, dental, and vision. Enrollment details are available during open enrollment November 1-15."
+    },
+    {
+      "question": "How much PTO do I get?",
+      "answer": "PTO accrual depends on tenure: 0-2 years: 15 days/year, 3-5 years: 20 days/year, 6+ years: 25 days/year. PTO accrues monthly and carries over up to 40 hours annually."
+    },
+    {
+      "question": "What is the 401k match policy?",
+      "answer": "Company matches 100% of the first 3% you contribute, and 50% of the next 2%, for a maximum match of 4% of your salary. You're eligible after 90 days of employment."
+    },
+    {
+      "question": "How do I access my pay stubs?",
+      "answer": "Pay stubs are available through the HR portal at company.com/hr-portal under 'Payroll & Compensation'. You can view and download all pay stubs from your employment start date."
+    },
+    {
+      "question": "What is the remote work policy?",
+      "answer": "Hybrid employees can work remotely up to 3 days per week with manager approval. Fully remote positions are available for certain roles. Contact your manager or HR to discuss your eligibility."
+    },
+    {
+      "question": "How do I report harassment or discrimination?",
+      "answer": "Report any harassment or discrimination immediately to HR at hr@company.com or call our confidential hotline at 1-800-XXX-XXXX. All reports are taken seriously and investigated promptly."
+    },
+    {
+      "question": "What holidays does the company observe?",
+      "answer": "We observe 10 paid holidays: New Year's Day, MLK Day, Memorial Day, Independence Day, Labor Day, Thanksgiving (2 days), Christmas Eve, Christmas Day, and one floating holiday of your choice."
+    },
+    {
+      "question": "How do I update my emergency contact information?",
+      "answer": "Update emergency contacts through the HR portal under 'Personal Information' or submit a change form to HR at hr@company.com."
+    },
+    {
+      "question": "What professional development opportunities are available?",
+      "answer": "We offer tuition reimbursement up to $5,000/year, access to LinkedIn Learning, quarterly training workshops, and conference attendance budget. Contact your manager and HR to create a development plan."
+    }
+  ],
+  "openaiConfig": {
+    "instructions": "You are a helpful and professional HR assistant. Be warm, supportive, and confidential. For sensitive issues (harassment, discrimination, termination), always direct employees to speak with HR directly. Never make promises about policy exceptions - only provide information. If you don't know an answer, direct the employee to contact HR directly at hr@company.com or ext. 5000. Keep responses professional but friendly.",
+    "model": "gpt-4o-mini"
+  },
+  "borderColor": "#ffffffff",
+  "launcherStyle": "headphones",
+  "launcherShape": "pill",
+  "launcherText": "lets chat",
+  "sendButtonColor": "#58befeff",
+  "sendButtonText": "Send",
+  "sendButtonTextColor": "#ffffffff",
+  "sendButtonIcon": "star",
+  "demoMessageLimit": 40,
+  "elevenLabsVoiceId": "21m00Tcm4TlvDq8ikWAM",
+  "voiceMinutesLimit": 500
+}
