@@ -42,11 +42,13 @@ ${business.giftBoxes.map(gb => {
   return `- ${gb.name} (${gb.price} ${business.currency}) - ${gb.description}. Includes: ${gb.includes.join(', ')}${imageInfo}`;
 }).join("\n")}
 
-` : ''}Hours:
+` : ''}${business.hours ? `Hours:
 ${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
 
-FAQs:
+` : ''}${business.faq ? `FAQs:
 ${business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n")}
+
+` : ''}
 
 Always answer using ONLY this business's information.
 

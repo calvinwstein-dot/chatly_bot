@@ -18,13 +18,17 @@
   "currency": "DKK",
   "importantPolicies": [
     "All information shared with HR bot is confidential",
-    "For urgent matters, contact HR directly at hr@company.com or ext. 5000",
+    "For urgent matters, contact HR directly at hr@henri.internal",
     "PTO requests must be submitted through the HR portal",
-    "Benefits enrollment period: November 1-15 annually"
+    "Standard working hours: 37 hours/week, Monday-Friday",
+    "Core working hours: 09:00 to 15:00",
+    "Annual leave: 25 days paid per year",
+    "Three-month probation period for new employees",
+    "Remote work: Up to 3 days per week with manager approval"
   ],
   "phone": "ext. 5000",
-  "phoneHours": "Monday-Friday, 9am-5pm",
-  "email": "hr@company.com",
+  "phoneHours": "Monday-Friday: 09:00-15:00",
+  "email": "hr@henri.internal",
   "websiteUrl": "https://company.com/hr-portal",
   "setupFeeLink": {
     "test": "",
@@ -69,57 +73,65 @@
   "faq": [
     {
       "question": "How do I request time off?",
-      "answer": "Submit PTO requests through the HR portal at company.com/hr-portal. Requests require 2 weeks advance notice for approval. Emergency leave can be requested by contacting HR directly."
+      "answer": "Submit PTO requests through the HR portal. Employees are entitled to 25 days of paid annual leave per year in accordance with Danish holiday legislation. Requests should be submitted in advance and approved by your manager."
     },
     {
-      "question": "What are my health insurance options?",
-      "answer": "We offer three health insurance plans: Bronze (employee-only coverage), Silver (employee + spouse), and Gold (full family coverage). All plans include medical, dental, and vision. Enrollment details are available during open enrollment November 1-15."
+      "question": "What are Danish public holidays?",
+      "answer": "Danish Public Holidays observed: New Year's Day (1 January), Maundy Thursday (Thursday before Easter), Good Friday (Friday before Easter), Easter Monday (Monday after Easter), Great Prayer Day (4th Friday after Easter), Ascension Day (40 days after Easter), Whit Monday (50 days after Easter), Constitution Day (5 June, half day), Christmas Day (25 December), and Second Day of Christmas (26 December). Note: Most holidays are movable and depend on Easter dates."
     },
     {
-      "question": "How much PTO do I get?",
-      "answer": "PTO accrual depends on tenure: 0-2 years: 15 days/year, 3-5 years: 20 days/year, 6+ years: 25 days/year. PTO accrues monthly and carries over up to 40 hours annually."
-    },
-    {
-      "question": "What is the 401k match policy?",
-      "answer": "Company matches 100% of the first 3% you contribute, and 50% of the next 2%, for a maximum match of 4% of your salary. You're eligible after 90 days of employment."
-    },
-    {
-      "question": "How do I access my pay stubs?",
-      "answer": "Pay stubs are available through the HR portal at company.com/hr-portal under 'Payroll & Compensation'. You can view and download all pay stubs from your employment start date."
+      "question": "What are the standard working hours?",
+      "answer": "Standard working hours are 37 hours per week, Monday to Friday. Core working hours are from 09:00 to 15:00. Flexible scheduling may be agreed upon with a manager based on role requirements."
     },
     {
       "question": "What is the remote work policy?",
-      "answer": "Hybrid employees can work remotely up to 3 days per week with manager approval. Fully remote positions are available for certain roles. Contact your manager or HR to discuss your eligibility."
+      "answer": "Employees may work remotely up to three days per week, subject to manager approval and business needs. Employees working remotely must remain reachable during core hours, maintain productivity standards, and protect company data and systems."
+    },
+    {
+      "question": "What is the probation period?",
+      "answer": "All new employees are subject to a three-month probation period. During this time, either party may terminate employment with shorter notice."
+    },
+    {
+      "question": "How do I report sick leave?",
+      "answer": "Employees must notify their manager before the start of the workday. Medical documentation may be required for extended absences."
+    },
+    {
+      "question": "How are salaries paid?",
+      "answer": "Salaries are paid monthly in arrears and deposited directly into the employee's designated Danish bank account. Salary reviews are conducted annually based on performance and company results."
+    },
+    {
+      "question": "What is covered in onboarding?",
+      "answer": "New employees participate in a structured onboarding program that includes: system access setup, review of company policies, role-specific training, and introduction to team members."
+    },
+    {
+      "question": "What happens during offboarding?",
+      "answer": "Upon termination of employment, employees must: return all company equipment, transfer knowledge where applicable, and complete an exit process coordinated by HR."
+    },
+    {
+      "question": "What are the data protection requirements?",
+      "answer": "Employees must protect login credentials, comply with GDPR requirements, report any suspected data breaches immediately, and avoid using unauthorized software or devices. Company IT systems are provided for business use only."
     },
     {
       "question": "How do I report harassment or discrimination?",
-      "answer": "Report any harassment or discrimination immediately to HR at hr@company.com or call our confidential hotline at 1-800-XXX-XXXX. All reports are taken seriously and investigated promptly."
+      "answer": "Harassment, discrimination, bullying, or inappropriate behavior of any kind will not be tolerated. Employees should contact HR directly at hr@henri.internal to report concerns. All reports are handled confidentially and seriously."
     },
     {
-      "question": "What holidays does the company observe?",
-      "answer": "We observe 10 paid holidays: New Year's Day, MLK Day, Memorial Day, Independence Day, Labor Day, Thanksgiving (2 days), Christmas Eve, Christmas Day, and one floating holiday of your choice."
-    },
-    {
-      "question": "How do I update my emergency contact information?",
-      "answer": "Update emergency contacts through the HR portal under 'Personal Information' or submit a change form to HR at hr@company.com."
-    },
-    {
-      "question": "What professional development opportunities are available?",
-      "answer": "We offer tuition reimbursement up to $5,000/year, access to LinkedIn Learning, quarterly training workshops, and conference attendance budget. Contact your manager and HR to create a development plan."
+      "question": "What is the code of conduct?",
+      "answer": "All employees must behave professionally and respectfully. Employees are expected to: treat colleagues with respect, act ethically and responsibly, and follow company policies and procedures."
     }
   ],
   "openaiConfig": {
-    "instructions": "You are a helpful and professional HR assistant. Be warm, supportive, and confidential. For sensitive issues (harassment, discrimination, termination), always direct employees to speak with HR directly. Never make promises about policy exceptions - only provide information. If you don't know an answer, direct the employee to contact HR directly at hr@company.com or ext. 5000. Keep responses professional but friendly.",
+    "instructions": "You are the HENRI HR Assistant, helping employees with HR-related questions based on the HENRI Employee Handbook. Be warm, professional, and confidential. \n\nKey Company Information:\n- HENRI is a Denmark-based technology and professional services company with ~75 employees\n- Standard work week: 37 hours, Monday-Friday, core hours 09:00-15:00\n- Annual leave: 25 days paid per year\n- Remote work: Up to 3 days/week with manager approval\n- Probation period: 3 months for new employees\n- All employment follows Danish employment law\n\nFor sensitive issues (harassment, discrimination, termination, legal matters), always direct employees to contact HR directly at hr@henri.internal. Never make promises about policy exceptions - only provide information based on the handbook. If you don't know an answer or need clarification, direct the employee to contact HR directly. Keep responses helpful, accurate, and based on company policy.",
     "model": "gpt-4o-mini"
   },
   "borderColor": "#ffffffff",
   "launcherStyle": "headphones",
   "launcherShape": "pill",
   "launcherText": "lets chat",
-  "sendButtonColor": "#58befeff",
+  "sendButtonColor": "#2d7281ff",
   "sendButtonText": "Send",
   "sendButtonTextColor": "#ffffffff",
-  "sendButtonIcon": "star",
+  "sendButtonIcon": "scissors",
   "demoMessageLimit": 40,
   "elevenLabsVoiceId": "21m00Tcm4TlvDq8ikWAM",
   "voiceMinutesLimit": 500

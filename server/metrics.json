@@ -77,8 +77,8 @@
       }
     },
     "HenriHR": {
-      "clicks": 34,
-      "messages": 9,
+      "clicks": 40,
+      "messages": 10,
       "dailyStats": {
         "2026-01-22": {
           "clicks": 21,
@@ -87,16 +87,20 @@
         "2026-01-23": {
           "clicks": 13,
           "messages": 4
+        },
+        "2026-01-25": {
+          "clicks": 6,
+          "messages": 1
         }
       }
     },
     "Henri": {
-      "clicks": 26,
-      "messages": 3,
+      "clicks": 30,
+      "messages": 12,
       "dailyStats": {
         "2026-01-24": {
-          "clicks": 26,
-          "messages": 3
+          "clicks": 30,
+          "messages": 12
         }
       }
     }

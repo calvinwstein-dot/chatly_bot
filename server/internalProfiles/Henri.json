@@ -3,7 +3,7 @@
   "internal": true,
   "intranetOnly": true,
   "requiresAuth": false,
-  "description": "HENRI customer support chatbot for intranet use only. Provides information about services, locations, booking, and general inquiries.",
+  "description": "HENRI internal assistant for employees. Provides information about company policies, HR procedures, employee benefits, working hours, leave policies, and general workplace inquiries based on the HENRI Employee Handbook.",
   "logoUrl": "https://www.henri.dk/cdn/shop/t/5/assets/logo.svg?v=152501660369249877631756208384",
   "isDemoMode": false,
   "voiceEnabled": false,
@@ -23,11 +23,11 @@
   "primaryLanguage": "da",
   "secondaryLanguage": "en",
   "currency": "DKK",
-  "phone": "+45 35 12 22 00",
-  "phoneHours": "Monday-Friday: 09:00-15:00, Saturday: Closed",
-  "bookingUrl": "https://henri.planway.com/?new_design=1",
+  "phone": "ext. 5000 (HR)",
+  "phoneHours": "Monday-Friday: 09:00-15:00 (Core Hours)",
+  "bookingUrl": "",
   "websiteUrl": "https://www.henri.dk",
-  "email": "info@henri.dk",
+  "email": "hr@henri.internal",
   "setupFeeLink": {
     "test": "",
     "live": ""
@@ -35,7 +35,7 @@
   "stripePaymentLink": {
     "test": {
       "monthly": "",
-      "yearly": "https://buy.stripe.com/14A7sLgj18OY2r91hPfYY0b"
+      "yearly": "https://buy.stripe.com/test_7sY3cv3nQbfF3Z2bzz9oc07"
     },
     "live": {
       "monthly": "",
@@ -48,36 +48,64 @@
   },
   "locations": [
     {
-      "name": "01 Christianshavn, Torvegade",
-      "address": "Torvegade 32B, 1400 København K",
-      "mapUrl": "https://www.google.dk/maps/dir//Torvegade+32B,+1400+K%C3%B8benhavn+K/@55.6728383,12.5077279,12z"
-    },
-    {
-      "name": "02 Frederiksberg, Gl. Kongevej",
-      "address": "Gl. Kongevej 80, 1850 Frederiksberg",
-      "mapUrl": "https://www.google.dk/maps/dir//Gl.+Kongevej+80,+1850+Frederiksberg/@55.6744775,12.4680973,12z"
+      "name": "HR Office",
+      "address": "Main Building, 3rd Floor, Room 305",
+      "mapUrl": ""
     }
   ],
-  "services": [
-    {
-      "name": "Henri's Signature Combo",
-      "price": 995,
-      "description": "Haircut + Beard Trim + Hot Towel"
-    },
-    {
-      "name": "Haircut",
-      "price": 595,
-      "description": "Professional haircut"
-    }
-  ],
+  "services": [],
   "faq": [
     {
-      "question": "How do I book an appointment?",
-      "answer": "You can book online at henri.planway.com or call us at +45 35 12 22 00 during business hours."
+      "question": "How do I request time off?",
+      "answer": "Submit PTO requests through the HR portal. Employees are entitled to 25 days of paid annual leave per year in accordance with Danish holiday legislation. Requests should be submitted in advance and approved by your manager."
     },
     {
-      "question": "What are your opening hours?",
-      "answer": "Monday-Friday: 09:00-15:00, Saturday: Closed"
+      "question": "What are Danish public holidays?",
+      "answer": "Danish Public Holidays observed: New Year's Day (1 January), Maundy Thursday (Thursday before Easter), Good Friday (Friday before Easter), Easter Monday (Monday after Easter), Great Prayer Day (4th Friday after Easter), Ascension Day (40 days after Easter), Whit Monday (50 days after Easter), Constitution Day (5 June, half day), Christmas Day (25 December), and Second Day of Christmas (26 December). Note: Most holidays are movable and depend on Easter dates."
+    },
+    {
+      "question": "What are the standard working hours?",
+      "answer": "Standard working hours are 37 hours per week, Monday to Friday. Core working hours are from 09:00 to 15:00. Flexible scheduling may be agreed upon with a manager based on role requirements."
+    },
+    {
+      "question": "What is the remote work policy?",
+      "answer": "Employees may work remotely up to three days per week, subject to manager approval and business needs. Employees working remotely must remain reachable during core hours, maintain productivity standards, and protect company data and systems."
+    },
+    {
+      "question": "What is the probation period?",
+      "answer": "All new employees are subject to a three-month probation period. During this time, either party may terminate employment with shorter notice."
+    },
+    {
+      "question": "How do I report sick leave?",
+      "answer": "Employees must notify their manager before the start of the workday. Medical documentation may be required for extended absences."
+    },
+    {
+      "question": "How are salaries paid?",
+      "answer": "Salaries are paid monthly in arrears and deposited directly into the employee's designated Danish bank account. Salary reviews are conducted annually based on performance and company results."
+    },
+    {
+      "question": "What happens during onboarding?",
+      "answer": "New employees participate in a structured onboarding program that includes: system access setup, review of company policies, role-specific training, and introduction to team members."
+    },
+    {
+      "question": "What are the data protection requirements?",
+      "answer": "Employees must protect login credentials, comply with GDPR requirements, report any suspected data breaches immediately, and avoid using unauthorized software or devices. Company IT systems are provided for business use only."
+    },
+    {
+      "question": "How do I report harassment or discrimination?",
+      "answer": "Harassment, discrimination, bullying, or inappropriate behavior of any kind will not be tolerated. Employees should contact HR directly at hr@henri.internal to report concerns. All reports are handled confidentially and seriously."
+    },
+    {
+      "question": "What is the code of conduct?",
+      "answer": "All employees must behave professionally and respectfully. Employees are expected to: treat colleagues with respect, act ethically and responsibly, and follow company policies and procedures."
+    },
+    {
+      "question": "What is HENRI's mission?",
+      "answer": "HENRI is a Denmark-based technology and professional services company with approximately 75 employees. The company operates with a hybrid workforce and emphasizes transparency, autonomy, and accountability. HENRI's mission is to deliver high-quality digital solutions while maintaining a healthy, respectful, and inclusive workplace for all employees."
     }
-  ]
+  ],
+  "openaiConfig": {
+    "instructions": "You are the HENRI Employee Assistant, helping employees with workplace questions based on the HENRI Employee Handbook. Be warm, professional, and helpful.\n\nKey Company Information:\n- HENRI is a Denmark-based technology and professional services company with ~75 employees\n- Standard work week: 37 hours, Monday-Friday, core hours 09:00-15:00\n- Annual leave: 25 days paid per year\n- Remote work: Up to 3 days/week with manager approval\n- Probation period: 3 months for new employees\n- All employment follows Danish employment law\n\nFor HR matters (benefits, payroll, leave requests, sensitive issues), direct employees to contact HR at hr@henri.internal or ext. 5000. Keep responses helpful, accurate, and based on company policy from the handbook.",
+    "model": "gpt-4o-mini"
+  }
 }
