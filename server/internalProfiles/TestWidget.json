@@ -38,12 +38,12 @@
       "yearly": ""
     },
     "live": {
-      "monthly": "https://buy.stripe.com/bJedR98Qz7KU0j15y5fYY0c",
+      "monthly": "",
       "yearly": ""
     }
   },
   "subscriptionPrices": {
-    "monthly": "$1/month",
+    "monthly": "$199/month",
     "yearly": "$1,990/year (2 months free • Save $398!)"
   },
   "locations": [
