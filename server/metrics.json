@@ -1,8 +1,8 @@
 {
   "businesses": {
     "HenriDemo": {
-      "clicks": 81,
-      "messages": 32,
+      "clicks": 82,
+      "messages": 33,
       "dailyStats": {
         "2026-01-08": {
           "clicks": 3,
@@ -35,6 +35,10 @@
         "2026-01-24": {
           "clicks": 2,
           "messages": 0
+        },
+        "2026-01-25": {
+          "clicks": 1,
+          "messages": 1
         }
       }
     },
@@ -77,8 +81,8 @@
       }
     },
     "HenriHR": {
-      "clicks": 40,
-      "messages": 10,
+      "clicks": 47,
+      "messages": 18,
       "dailyStats": {
         "2026-01-22": {
           "clicks": 21,
@@ -89,8 +93,8 @@
           "messages": 4
         },
         "2026-01-25": {
-          "clicks": 6,
-          "messages": 1
+          "clicks": 13,
+          "messages": 9
         }
       }
     },

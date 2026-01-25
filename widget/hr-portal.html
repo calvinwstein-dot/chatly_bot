@@ -1059,6 +1059,21 @@
     </div>
   </div>
 
+  <!-- Authentication & Portal Logic -->
+  <script>
+    // Session storage key
+    const SESSION_KEY = 'hr_portal_auth';
+
+    // Check if already authenticated BEFORE loading widget
+    const savedAuth = sessionStorage.getItem(SESSION_KEY);
+    if (savedAuth) {
+      const auth = JSON.parse(savedAuth);
+      if (auth.sessionToken) {
+        window.hrSessionToken = auth.sessionToken;
+      }
+    }
+  </script>
+
   <!-- HR Chatbot Widget -->
   <script>
     window.chatbotConfig = {
@@ -1068,19 +1083,12 @@
   <script src="widget.js"></script>
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Authentication & Portal Logic -->
+  <!-- Continue Authentication Logic -->
   <script>
-    // Session storage key
-    const SESSION_KEY = 'hr_portal_auth';
-
-    // Check if already authenticated
-    const savedAuth = sessionStorage.getItem(SESSION_KEY);
-    if (savedAuth) {
-      const auth = JSON.parse(savedAuth);
-      if (auth.sessionToken) {
-        window.hrSessionToken = auth.sessionToken;
-        showPortal(auth.email);
-      }
+    // Show portal if already authenticated
+    if (window.hrSessionToken) {
+      const savedAuth = JSON.parse(sessionStorage.getItem(SESSION_KEY));
+      showPortal(savedAuth.email);
     }
 
     // Handle form submission

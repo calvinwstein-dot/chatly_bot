@@ -12,8 +12,8 @@
   "launcherColor": "#2e7584ff",
   "userBubbleColor": "#2e7584ff",
   "userTextColor": "#ffffffff",
-  "botBubbleColor": "#1b4750ff",
-  "botTextColor": "#ffffffff",
+  "botBubbleColor": "#ffffffff",
+  "botTextColor": "#2e7584ff",
   "widgetBgColor": "#fbfaffff",
   "currency": "DKK",
   "importantPolicies": [
@@ -125,9 +125,9 @@
     "model": "gpt-4o-mini"
   },
   "borderColor": "#ffffffff",
-  "launcherStyle": "headphones",
+  "launcherStyle": "message",
   "launcherShape": "pill",
-  "launcherText": "lets chat",
+  "launcherText": "Talk to me",
   "sendButtonColor": "#2d7281ff",
   "sendButtonText": "Send",
   "sendButtonTextColor": "#ffffffff",
