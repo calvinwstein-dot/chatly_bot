@@ -57,7 +57,7 @@
       }
     },
     "ChappyBot": {
-      "clicks": 5,
+      "clicks": 22,
       "messages": 1,
       "dailyStats": {
         "2026-01-18": {
@@ -66,6 +66,10 @@
         },
         "2026-01-23": {
           "clicks": 2,
+          "messages": 0
+        },
+        "2026-01-25": {
+          "clicks": 17,
           "messages": 0
         }
       }

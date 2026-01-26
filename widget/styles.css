@@ -326,7 +326,6 @@ body {
 
 #chat-form {
   display: flex;
-  border-top: none;
   background: linear-gradient(180deg, color-mix(in srgb, var(--widget-bg-color, #f0f8ff) 95%, var(--primary)) 0%, color-mix(in srgb, var(--widget-bg-color, #f0f8ff) 90%, var(--primary)) 100%);
   padding: 12px;
   gap: 8px;
