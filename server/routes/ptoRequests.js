@@ -2,6 +2,7 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { logAuditEvent, getClientIP } from "../auditLogger.js";
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
@@ -52,6 +53,14 @@ router.post("/", async (req, res) => {
 
     // Save to file
     fs.writeFileSync(PTO_REQUESTS_FILE, JSON.stringify(data, null, 2));
+
+    // Audit log
+    logAuditEvent('PTO_REQUEST_SUBMITTED', employeeEmail, { 
+      days, 
+      startDate, 
+      endDate, 
+      requestId: request.id 
+    }, getClientIP(req));
 
     // TODO: Send email notification to HR
     // This would typically use nodemailer or similar

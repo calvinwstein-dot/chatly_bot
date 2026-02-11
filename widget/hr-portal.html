@@ -3,10 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>HENRI HR Assistant</title>
+  <link rel="icon" id="favicon" href="">
+  <script>
+    // Set different favicon for local vs production
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const emoji = isLocal ? '💻' : '🌐'; // 💻 for local, 🌐 for production
+    document.getElementById('favicon').href = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>${emoji}</text></svg>`;
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -72,8 +83,8 @@
       top: 0;
       width: 260px;
       height: 100vh;
-      background: var(--henri-light);
-      border-right: 1px solid var(--gray-200);
+      background: #004456;
+      border-right: 1px solid #00596d;
       padding: 24px 0;
       overflow-y: auto;
       z-index: 100;
@@ -81,19 +92,19 @@
 
     .sidebar-header {
       padding: 0 24px 24px;
-      border-bottom: 1px solid var(--gray-200);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .sidebar-header h1 {
       font-size: 20px;
       font-weight: 700;
-      color: var(--henri-primary);
+      color: white;
       margin-bottom: 4px;
     }
 
     .sidebar-header p {
       font-size: 13px;
-      color: var(--gray-600);
+      color: rgba(255, 255, 255, 0.8);
     }
 
     .sidebar-nav {
@@ -110,13 +121,13 @@
       transition: all 0.2s;
       font-size: 14px;
       font-weight: 500;
-      color: var(--gray-700);
+      color: white;
       margin-bottom: 4px;
     }
 
     .nav-item:hover {
-      background: white;
-      color: var(--henri-primary);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
     }
 
     .nav-icon {
@@ -573,7 +584,7 @@
     }
 
     .nav-item.active {
-      background: var(--henri-primary);
+      background: rgba(255, 255, 255, 0.2);
       color: white;
     }
 
@@ -583,6 +594,23 @@
 
     .content-section.active {
       display: block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .pdf-page-container {
+      margin-bottom: 2px;
+      background: #525659;
+      display: flex;
+      justify-content: center;
+    }
+
+    .pdf-page-container canvas {
+      display: block;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -695,6 +723,21 @@
           <span class="nav-icon">•</span>
           Resources
         </div>
+        <div class="nav-item" onclick="showSection('products')">
+          <span class="nav-icon">•</span>
+          Product Information
+        </div>
+        
+        <!-- Management Section (Visible only to HR Managers/Admins) -->
+        <div id="hrManagementSection" style="display: none;">
+          <div style="margin: 24px 0 12px 0; padding: 0 24px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); letter-spacing: 0.5px;">
+            HR Management
+          </div>
+          <div class="nav-item" onclick="showSection('employees')">
+            <span class="nav-icon">•</span>
+            Employee Management
+          </div>
+        </div>
       </nav>
     </aside>
 
@@ -729,53 +772,42 @@
         </div>
       </div>
 
-      <!-- Quick Actions -->
-      <div class="quick-links-section">
-        <h2 class="section-title">Quick Actions</h2>
-        <div class="quick-links-grid">
-<a href="#" class="quick-link" onclick="openPTOModal(); return false;">
-            <span class="quick-link-icon">•</span>
-            <div class="quick-link-text">
-              <h3>Request Time Off</h3>
-              <p>Leave requests</p>
+      <!-- Business Metrics Section -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; margin-top: 32px;">
+        
+        <!-- Services This Month -->
+        <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">Services This Month</h3>
+            <span style="background: var(--henri-light); color: var(--henri-primary); padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 14px;" id="servicesCount">--</span>
+          </div>
+          <div style="border-top: 1px solid var(--gray-200); padding-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; color: var(--gray-600); font-size: 14px;">
+              <span>Total Services</span>
+              <span id="servicesTotal" style="font-weight: 600; color: var(--gray-900);">Loading...</span>
             </div>
-          </a>
-          
-          <a href="#" class="quick-link" onclick="return askBot('What are my health insurance options?')">
-            <span class="quick-link-icon">•</span>
-            <div class="quick-link-text">
-              <h3>Health Benefits</h3>
-              <p>Insurance and coverage</p>
-            </div>
-          </a>
-          
-          <a href="#" class="quick-link" onclick="return askBot('What is the 401k match policy?')">
-            <span class="quick-link-icon">•</span>
-            <div class="quick-link-text">
-              <h3>Retirement (401k)</h3>
-              <p>Savings and matching</p>
-            </div>
-          </a>
-          
-          <a href="#" class="quick-link" onclick="return askBot('How do I access my pay stubs?')">
-            <span class="quick-link-icon">•</span>
-            <div class="quick-link-text">
-              <h3>Payroll & Pay Stubs</h3>
-              <p>Compensation information</p>
-            </div>
-          </a>
+            <p style="margin-top: 12px; color: var(--gray-500); font-size: 13px; font-style: italic;">
+              API integration pending
+            </p>
+          </div>
         </div>
-      </div>
 
-      <!-- Common Questions -->
-      <div class="quick-links-section">
-        <h2 class="section-title">Common Questions</h2>
-        <div class="faq-list">
-          <div class="faq-item" onclick="askBot('What holidays does the company observe?')">What holidays does the company observe?</div>
-          <div class="faq-item" onclick="askBot('What is the remote work policy?')">What is the remote work policy?</div>
-          <div class="faq-item" onclick="askBot('How do I update my emergency contact information?')">How do I update my emergency contact information?</div>
-          <div class="faq-item" onclick="askBot('What professional development opportunities are available?')">What professional development opportunities are available?</div>
+        <!-- Products Sold -->
+        <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">Products Sold</h3>
+            <span style="background: var(--henri-light); color: var(--henri-primary); padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 14px;" id="productsSoldCount">--</span>
+          </div>
+          <div id="productsList" style="border-top: 1px solid var(--gray-200); padding-top: 16px; max-height: 200px; overflow-y: auto;">
+            <div style="color: var(--gray-500); font-size: 14px; text-align: center; padding: 20px;">
+              Loading product data...
+            </div>
+          </div>
+          <p style="margin-top: 12px; color: var(--gray-500); font-size: 13px; font-style: italic;">
+            API integration pending
+          </p>
         </div>
+
       </div>
       </div>
 
@@ -1056,6 +1088,299 @@
           </div>
         </div>
       </div>
+
+      <!-- Product Information Section -->
+      <div id="productsSection" class="content-section" style="display: none;">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Product Information</h1>
+            <p class="page-subtitle">HENRI Product Book - Complete product catalog and information</p>
+          </div>
+          <a href="/public/HENRI_Product_Book.pdf" download style="background: var(--henri-primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;">Download PDF</a>
+        </div>
+
+        <div id="pdfLoadingMessage" style="background: white; border-radius: 12px; padding: 48px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center;">
+          <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid var(--gray-200); border-top: 4px solid var(--henri-primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          <p style="margin-top: 16px; color: var(--gray-600);">Loading product book...</p>
+        </div>
+
+        <div id="pdfContainer" style="background: white; border-radius: 12px; padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: none;">
+          <div id="pdfPages" style="max-width: 1200px; margin: 0 auto;"></div>
+        </div>
+      </div>
+
+      <!-- Employee Management Section (HR Managers Only) -->
+      <div id="employeesSection" class="content-section" style="display: none;">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Employee Management</h1>
+            <p class="page-subtitle">Manage employee records and information</p>
+          </div>
+        </div>
+
+        <!-- Sub-navigation tabs -->
+        <div style="background: white; border-radius: 12px 12px 0 0; padding: 16px 24px 0; margin-bottom: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; gap: 8px; border-bottom: 2px solid var(--gray-200);">
+          <button id="employeesTab" class="management-tab active" onclick="showManagementTab('employees')" style="background: none; border: none; padding: 12px 24px; font-weight: 600; cursor: pointer; color: var(--henri-primary); border-bottom: 3px solid var(--henri-primary); margin-bottom: -2px;">
+            Employees
+          </button>
+          <button id="auditTab" class="management-tab" onclick="showManagementTab('audit')" style="background: none; border: none; padding: 12px 24px; font-weight: 600; cursor: pointer; color: var(--gray-500); border-bottom: 3px solid transparent; margin-bottom: -2px; display: none;">
+            Audit Logs
+          </button>
+        </div>
+
+        <!-- Employees Sub-section -->
+        <div id="employeesSubSection" class="management-subsection">
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+            <button onclick="showAddEmployeeModal()" style="background: var(--henri-primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">+ Add Employee</button>
+          </div>
+          <div id="employeesList" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <p style="color: var(--gray-500);">Loading employees...</p>
+          </div>
+        </div>
+
+        <!-- Audit Logs Sub-section -->
+        <div id="auditSubSection" class="management-subsection" style="display: none;">
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+            <button onclick="refreshAuditLogs()" style="background: var(--henri-primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">Refresh</button>
+          </div>
+          <div id="auditLogsList" style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <p style="color: var(--gray-500);">Loading audit logs...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Employee Edit Modal -->
+  <div id="editEmployeeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 12px; padding: 32px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto;">
+      <h2 id="editModalTitle" style="margin: 0 0 8px 0; color: var(--gray-900);">Edit Employee</h2>
+      <p id="editModalSubtitle" style="margin: 0 0 24px 0; color: var(--gray-600); font-size: 14px;"></p>
+      <form id="editEmployeeForm">
+        <input type="hidden" id="editEmail" name="originalEmail">
+        <input type="hidden" id="editIsMasterControl" value="false">
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Name</label>
+          <input type="text" id="editName" required style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Username</label>
+          <input type="text" id="editUsername" required style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div id="passwordSection" style="margin-bottom: 16px; display: none;">
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 500;">Current Password</label>
+            <div style="position: relative;">
+              <input type="password" id="editCurrentPassword" readonly style="width: 100%; padding: 10px 40px 10px 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box; background: #f9fafb;">
+              <button type="button" onclick="togglePasswordVisibility('editCurrentPassword')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px; padding: 5px;">👁️</button>
+            </div>
+            <small style="color: var(--gray-500); font-size: 12px;">Click the eye to reveal password</small>
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #dc2626;">New Password (leave blank to keep current)</label>
+            <input type="password" id="editPassword" placeholder="Enter new password" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+            <small style="color: var(--gray-500); font-size: 12px;">Password will be displayed after save</small>
+          </div>
+        </div>
+        
+        <div id="editRoleSection" style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Management Access</label>
+          <select id="editRole" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+            <option value="employee">Employee (No Management Access)</option>
+            <option value="shop_manager">Shop Manager (Can Manage Employees)</option>
+            <option value="hr_admin">HR Admin (Full Access)</option>
+          </select>
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Department</label>
+          <input type="text" id="editDepartment" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Position</label>
+          <input type="text" id="editPosition" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Email</label>
+          <input type="email" id="editEmployeeEmail" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Phone Number</label>
+          <input type="tel" id="editPhone" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">PTO Balance (days)</label>
+          <input type="number" id="editPtoBalance" min="0" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Employee Contract</label>
+          <input type="file" id="editContract" accept=".pdf,.doc,.docx" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+          <small id="currentContract" style="color: var(--gray-500); font-size: 12px;"></small>
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button type="submit" style="flex: 1; background: var(--henri-primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Save Changes</button>
+          <button type="button" onclick="closeEditModal()" style="flex: 1; background: var(--gray-200); color: var(--gray-700); border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Employee Modal -->
+  <div id="addEmployeeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 12px; padding: 32px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto;">
+      <h2 style="margin: 0 0 8px 0; color: var(--gray-900);">Add New Employee</h2>
+      <p style="margin: 0 0 24px 0; color: var(--gray-600); font-size: 14px;">Create a new employee account with login credentials</p>
+      <form id="addEmployeeForm">
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Full Name *</label>
+          <input type="text" id="addName" required style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Email *</label>
+          <input type="email" id="addEmail" required style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+          <small style="color: var(--gray-500); font-size: 12px;">Will be used as login email</small>
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Management Access</label>
+          <select id="addRole" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+            <option value="employee">Employee (No Management Access)</option>
+            <option value="shop_manager">Shop Manager (Can Manage Employees)</option>
+            <option value="hr_admin">HR Admin (Full Access)</option>
+          </select>
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Department</label>
+          <input type="text" id="addDepartment" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Position</label>
+          <input type="text" id="addPosition" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">PTO Balance (days)</label>
+          <input type="number" id="addPtoBalance" min="0" value="25" style="width: 100%; padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px; box-sizing: border-box;">
+        </div>
+        
+        <div style="padding: 12px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; margin-bottom: 16px;">
+          <p style="margin: 0; font-size: 13px; color: #92400e;"><strong>📝 Note:</strong> Username and password will be automatically generated and displayed after creation.</p>
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button type="submit" style="flex: 1; background: var(--henri-primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Create Employee</button>
+          <button type="button" onclick="closeAddModal()" style="flex: 1; background: var(--gray-200); color: var(--gray-700); border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Employee Dashboard View Modal (HR Admin Only) -->
+  <div id="employeeDashboardModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center; overflow-y: auto; padding: 20px;">
+    <div style="background: white; border-radius: 12px; padding: 0; max-width: 1000px; width: 95%; max-height: 90vh; overflow-y: auto; position: relative;">
+      <div style="position: sticky; top: 0; background: var(--henri-primary); color: white; padding: 24px 32px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; z-index: 1;">
+        <div>
+          <h2 style="margin: 0 0 4px 0; font-size: 24px;">Employee Dashboard View</h2>
+          <p id="viewEmployeeName" style="margin: 0; opacity: 0.9; font-size: 16px;"></p>
+        </div>
+        <button onclick="closeEmployeeDashboard()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">Close</button>
+      </div>
+      
+      <div style="padding: 32px;">
+        <!-- Employee Stats -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 32px;">
+          <div style="background: var(--henri-light); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 4px; font-weight: 500;">Leave Days Remaining</div>
+            <div id="viewPtoBalance" style="font-size: 28px; font-weight: 700; color: var(--henri-primary);">--</div>
+          </div>
+          <div style="background: var(--henri-light); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 4px; font-weight: 500;">Child Sick Days (YTD)</div>
+            <div id="viewChildSickDays" style="font-size: 28px; font-weight: 700; color: var(--henri-primary);">--</div>
+          </div>
+          <div style="background: var(--henri-light); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 4px; font-weight: 500;">Personal Sick Days (YTD)</div>
+            <div id="viewPersonalSickDays" style="font-size: 28px; font-weight: 700; color: var(--henri-primary);">--</div>
+          </div>
+        </div>
+
+        <!-- Employee Details -->
+        <div style="background: var(--gray-50); border-radius: 8px; padding: 24px; margin-bottom: 24px;">
+          <h3 style="margin: 0 0 16px 0; color: var(--gray-900); font-size: 18px; font-weight: 600;">Employee Information</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+            <div>
+              <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Email</div>
+              <div id="viewEmail" style="font-size: 14px; color: var(--gray-900); font-weight: 500;">--</div>
+            </div>
+            <div>
+              <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Username</div>
+              <div id="viewUsername" style="font-size: 14px; color: var(--gray-900); font-weight: 500;">--</div>
+            </div>
+            <div>
+              <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Department</div>
+              <div id="viewDepartment" style="font-size: 14px; color: var(--gray-900); font-weight: 500;">--</div>
+            </div>
+            <div>
+              <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Position</div>
+              <div id="viewPosition" style="font-size: 14px; color: var(--gray-900); font-weight: 500;">--</div>
+            </div>
+            <div>
+              <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Role</div>
+              <div id="viewRole" style="font-size: 14px; color: var(--gray-900); font-weight: 500;">--</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Metrics Section -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+          
+          <!-- Services This Month -->
+          <div style="background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 600; color: var(--gray-900); margin: 0;">Services This Month</h3>
+              <span style="background: var(--henri-light); color: var(--henri-primary); padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 13px;" id="viewServicesCount">--</span>
+            </div>
+            <div style="border-top: 1px solid var(--gray-200); padding-top: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; color: var(--gray-600); font-size: 13px;">
+                <span>Total Services</span>
+                <span id="viewServicesTotal" style="font-weight: 600; color: var(--gray-900);">--</span>
+              </div>
+              <p style="margin-top: 8px; color: var(--gray-500); font-size: 12px; font-style: italic;">
+                API integration pending
+              </p>
+            </div>
+          </div>
+
+          <!-- Products Sold -->
+          <div style="background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 600; color: var(--gray-900); margin: 0;">Products Sold</h3>
+              <span style="background: var(--henri-light); color: var(--henri-primary); padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 13px;" id="viewProductsSoldCount">--</span>
+            </div>
+            <div id="viewProductsList" style="border-top: 1px solid var(--gray-200); padding-top: 12px; max-height: 150px; overflow-y: auto;">
+              <div style="color: var(--gray-500); font-size: 13px; text-align: center; padding: 16px;">
+                --
+              </div>
+            </div>
+            <p style="margin-top: 8px; color: var(--gray-500); font-size: 12px; font-style: italic;">
+              API integration pending
+            </p>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1085,11 +1410,24 @@
 
   <!-- Continue Authentication Logic -->
   <script>
-    // Show portal if already authenticated
-    if (window.hrSessionToken) {
-      const savedAuth = JSON.parse(sessionStorage.getItem(SESSION_KEY));
-      showPortal(savedAuth.email);
-    }
+    // Wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', () => {
+      const submitBtn = document.getElementById('submitBtn');
+      
+      // Always reset button state on page load
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Access HR Portal';
+      }
+      
+      // Show portal if already authenticated
+      if (window.hrSessionToken) {
+        const savedAuth = JSON.parse(sessionStorage.getItem(SESSION_KEY));
+        if (savedAuth && savedAuth.email) {
+          showPortal(savedAuth.email, savedAuth.name || 'User', savedAuth.role || 'employee');
+        }
+      }
+    });
 
     // Handle form submission
     document.getElementById('authForm').addEventListener('submit', async (e) => {
@@ -1123,15 +1461,19 @@
 
         // Save session token
         sessionStorage.setItem(SESSION_KEY, JSON.stringify({ 
-          email: data.email, 
+          email: data.email,
+          name: data.name,
+          role: data.role,
           sessionToken: data.sessionToken,
           timestamp: Date.now() 
         }));
         
         // Store token globally for widget
         window.hrSessionToken = data.sessionToken;
+        window.currentUserRole = data.role;
+        window.userRole = data.role; // For consistency
         
-        showPortal(data.email);
+        showPortal(data.email, data.name, data.role);
       } catch (error) {
         errorMsg.textContent = 'Connection error. Please try again.';
         errorMsg.classList.add('show');
@@ -1144,15 +1486,35 @@
     document.getElementById('logoutBtn').addEventListener('click', () => {
       sessionStorage.removeItem(SESSION_KEY);
       window.hrSessionToken = null;
+      
+      // Close chatbot widget if it's open
+      if (window.HenriChatWidget && typeof window.HenriChatWidget.close === 'function') {
+        window.HenriChatWidget.close();
+      }
+      
       document.getElementById('authScreen').classList.remove('hidden');
       document.getElementById('portalScreen').classList.remove('active');
       document.getElementById('authForm').reset();
     });
 
-    function showPortal(email) {
+    function showPortal(email, name, role) {
       document.getElementById('authScreen').classList.add('hidden');
       document.getElementById('portalScreen').classList.add('active');
       document.getElementById('userEmail').textContent = email;
+      
+      // Store role globally for access in other functions
+      window.userRole = role;
+      window.currentUserRole = role;
+      
+      // Show management section if user is shop manager or admin
+      if (role === 'shop_manager' || role === 'hr_admin') {
+        document.getElementById('hrManagementSection').style.display = 'block';
+        
+        // Show audit logs tab only for HR admin
+        if (role === 'hr_admin') {
+          document.getElementById('auditTab').style.display = 'block';
+        }
+      }
       
       // Fetch and display employee data
       loadEmployeeData(email);
@@ -1160,7 +1522,9 @@
 
     async function loadEmployeeData(email) {
       try {
-        const response = await fetch(`/api/employees/${encodeURIComponent(email)}`);
+        const response = await fetch(`/api/employees/${encodeURIComponent(email)}`, {
+          headers: { 'X-HR-Session': window.hrSessionToken }
+        });
         
         if (!response.ok) {
           console.error('Employee not found');
@@ -1192,10 +1556,83 @@
           document.getElementById('downloadContractBtn').style.display = 'none';
         }
         
+        // Load business metrics
+        loadBusinessMetrics();
+        
       } catch (error) {
         console.error('Error loading employee data:', error);
       }
     }
+
+    // ========== BUSINESS METRICS ==========
+    
+    async function loadBusinessMetrics() {
+      // TODO: Replace with actual API calls when available
+      
+      // Services This Month
+      try {
+        // Example API call structure:
+        // const response = await fetch('/api/services/monthly', {
+        //   headers: { 'X-HR-Session': window.hrSessionToken }
+        // });
+        // const data = await response.json();
+        
+        // For now, show placeholder
+        document.getElementById('servicesCount').textContent = '--';
+        document.getElementById('servicesTotal').textContent = 'API not connected';
+      } catch (error) {
+        console.error('Error loading services:', error);
+      }
+      
+      // Products Sold
+      try {
+        // Example API call structure:
+        // const response = await fetch('/api/products/sold', {
+        //   headers: { 'X-HR-Session': window.hrSessionToken }
+        // });
+        // const data = await response.json();
+        
+        // For now, show placeholder
+        document.getElementById('productsSoldCount').textContent = '--';
+        document.getElementById('productsList').innerHTML = `
+          <div style="color: var(--gray-500); font-size: 14px; text-align: center; padding: 20px;">
+            API not connected yet
+          </div>
+        `;
+      } catch (error) {
+        console.error('Error loading products:', error);
+      }
+    }
+    
+    // Example function for when API is ready:
+    // async function loadBusinessMetrics() {
+    //   try {
+    //     // Services
+    //     const servicesRes = await fetch('/api/services/monthly', {
+    //       headers: { 'X-HR-Session': window.hrSessionToken }
+    //     });
+    //     const servicesData = await servicesRes.json();
+    //     document.getElementById('servicesCount').textContent = servicesData.count;
+    //     document.getElementById('servicesTotal').textContent = `$${servicesData.total.toLocaleString()}`;
+    //     
+    //     // Products
+    //     const productsRes = await fetch('/api/products/sold', {
+    //       headers: { 'X-HR-Session': window.hrSessionToken }
+    //     });
+    //     const productsData = await productsRes.json();
+    //     document.getElementById('productsSoldCount').textContent = productsData.totalSold;
+    //     
+    //     const productsList = document.getElementById('productsList');
+    //     productsList.innerHTML = productsData.products.map(p => `
+    //       <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-100);">
+    //         <span style="color: var(--gray-700); font-size: 14px;">${p.name}</span>
+    //         <span style="color: var(--henri-primary); font-weight: 600; font-size: 14px;">${p.quantity}</span>
+    //       </div>
+    //     `).join('');
+    //   } catch (error) {
+    //     console.error('Error loading metrics:', error);
+    //   }
+    // }
 
     function downloadEmployeeContract() {
       const auth = sessionStorage.getItem(SESSION_KEY);
@@ -1313,6 +1750,14 @@
 
     // Section navigation
     function showSection(section) {
+      // Role-based access control
+      if (section === 'employees') {
+        if (window.userRole !== 'shop_manager' && window.userRole !== 'hr_admin') {
+          alert('Access Denied: Employee Management requires Shop Manager or HR Admin role.');
+          return;
+        }
+      }
+      
       // Hide all sections
       document.querySelectorAll('.content-section').forEach(s => {
         s.style.display = 'none';
@@ -1329,16 +1774,59 @@
         'contract': 'contractSection',
         'holidays': 'holidaysSection',
         'newsletter': 'newsletterSection',
-        'resources': 'resourcesSection'
+        'resources': 'resourcesSection',
+        'products': 'productsSection',
+        'employees': 'employeesSection'
       };
       
       const sectionId = sectionMap[section];
       if (sectionId) {
         document.getElementById(sectionId).style.display = 'block';
+        
+        // Load data when switching to employee management
+        if (section === 'employees') {
+          // Show employees sub-tab by default
+          showManagementTab('employees');
+        }
       }
       
       // Add active class to clicked nav item
       event.currentTarget.classList.add('active');
+    }
+
+    // Function to switch between tabs inside Employee Management
+    function showManagementTab(tab) {
+      // Check role for audit logs
+      if (tab === 'audit' && window.userRole !== 'hr_admin') {
+        alert('Access Denied: Audit Logs require HR Admin role.');
+        return;
+      }
+      
+      // Hide all subsections
+      document.getElementById('employeesSubSection').style.display = 'none';
+      document.getElementById('auditSubSection').style.display = 'none';
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('.management-tab').forEach(t => {
+        t.style.color = 'var(--gray-500)';
+        t.style.borderBottom = '3px solid transparent';
+        t.classList.remove('active');
+      });
+      
+      // Show selected subsection and activate tab
+      if (tab === 'employees') {
+        document.getElementById('employeesSubSection').style.display = 'block';
+        document.getElementById('employeesTab').style.color = 'var(--henri-primary)';
+        document.getElementById('employeesTab').style.borderBottom = '3px solid var(--henri-primary)';
+        document.getElementById('employeesTab').classList.add('active');
+        loadEmployeesList();
+      } else if (tab === 'audit') {
+        document.getElementById('auditSubSection').style.display = 'block';
+        document.getElementById('auditTab').style.color = 'var(--henri-primary)';
+        document.getElementById('auditTab').style.borderBottom = '3px solid var(--henri-primary)';
+        document.getElementById('auditTab').classList.add('active');
+        loadAuditLogs();
+      }
     }
 
     // Set dashboard as active on load
@@ -1346,6 +1834,624 @@
       document.querySelector('.nav-item').classList.add('active');
       document.getElementById('dashboardSection').style.display = 'block';
     });
+
+    // ========== HR MANAGEMENT FUNCTIONS ==========
+
+    async function loadEmployeesList() {
+      const listEl = document.getElementById('employeesList');
+      listEl.innerHTML = '<p style="color: var(--gray-500);">Loading employees...</p>';
+      
+      try {
+        const response = await fetch('/api/employees/', {
+          headers: { 'X-HR-Session': window.hrSessionToken }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to load employees');
+        }
+        
+        const employees = await response.json();
+        console.log('Raw employees response:', employees);
+        console.log('Type of employees:', typeof employees);
+        console.log('employees.employees type:', typeof employees.employees);
+        console.log('Is array?', Array.isArray(employees.employees));
+        
+        const employeeArray = Object.entries(employees.employees || employees);
+        console.log('Employee array after Object.entries:', employeeArray);
+        
+        if (employeeArray.length === 0) {
+          listEl.innerHTML = '<p style="color: var(--gray-500);">No employees found</p>';
+          return;
+        }
+        
+        let html = `
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--gray-200); text-align: left;">
+                <th style="padding: 12px; font-weight: 600; color: var(--gray-700);">Name</th>
+                <th style="padding: 12px; font-weight: 600; color: var(--gray-700);">Email</th>
+                <th style="padding: 12px; font-weight: 600; color: var(--gray-700);">Department</th>
+                <th style="padding: 12px; font-weight: 600; color: var(--gray-700);">Position</th>
+                <th style="padding: 12px; font-weight: 600; color: var(--gray-700);">Role</th>
+                <th style="padding: 12px; font-weight: 600; color: var(--gray-700);">PTO Balance</th>
+                <th style="padding: 12px; font-weight: 600; color: var(--gray-700);">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+        
+        employeeArray.forEach(([email, emp]) => {
+          const currentRole = emp.role || 'employee';
+          const isMasterControl = email.toLowerCase() === 'calvin@henri.dk' && currentRole === 'hr_admin';
+          
+          // Check if current logged-in user is master control
+          const currentUserEmail = sessionStorage.getItem(SESSION_KEY) ? JSON.parse(sessionStorage.getItem(SESSION_KEY)).email : '';
+          const isCurrentUserMasterControl = currentUserEmail.toLowerCase() === 'calvin@henri.dk' && window.userRole === 'hr_admin';
+          
+          // Only Master Control can change roles (not regular HR Admins)
+          const roleDropdown = isCurrentUserMasterControl && !isMasterControl ? `
+            <select onchange="updateEmployeeRole('${email}', this.value)" style="padding: 6px 10px; border: 1px solid var(--gray-300); border-radius: 6px; background: white; cursor: pointer; font-size: 13px;">
+              <option value="employee" ${currentRole === 'employee' ? 'selected' : ''}>Employee</option>
+              <option value="shop_manager" ${currentRole === 'shop_manager' ? 'selected' : ''}>Shop Manager</option>
+              <option value="hr_admin" ${currentRole === 'hr_admin' ? 'selected' : ''}>HR Admin</option>
+            </select>
+          ` : `<span style="background: ${isMasterControl ? '#ef4444' : 'var(--henri-light)'}; color: ${isMasterControl ? 'white' : 'var(--henri-primary)'}; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">${isMasterControl ? '🔒 Master Control' : currentRole === 'hr_admin' ? 'HR Admin' : currentRole === 'shop_manager' ? 'Shop Manager' : 'Employee'}</span>`;
+          
+          // Action buttons based on role:
+          // - Shop Manager: Only View Dashboard
+          // - Master Control: View Dashboard, Edit, Delete
+          let actionButtons = '';
+          
+          if (window.userRole === 'shop_manager') {
+            // Shop Managers can only view dashboards
+            actionButtons = `
+              <button onclick="viewEmployeeDashboard('${email}')" style="background: var(--henri-primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">View Dashboard</button>
+            `;
+          } else if (isCurrentUserMasterControl) {
+            // Master Control has full access
+            actionButtons = `
+              <button onclick="viewEmployeeDashboard('${email}')" style="background: var(--henri-primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; margin-right: 4px;">View Dashboard</button>
+              <button onclick="editEmployee('${email}')" style="background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; margin-right: 4px;">Edit</button>
+              <button onclick="deleteEmployee('${email}')" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">Delete</button>
+            `;
+          } else if (window.userRole === 'hr_admin') {
+            // Regular HR Admins (non-master) can only view dashboards
+            actionButtons = `
+              <button onclick="viewEmployeeDashboard('${email}')" style="background: var(--henri-primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">View Dashboard</button>
+            `;
+          }
+          
+          html += `
+            <tr style="border-bottom: 1px solid var(--gray-100);">
+              <td style="padding: 12px;">${emp.name}</td>
+              <td style="padding: 12px; color: var(--gray-600); font-size: 14px;">${email}</td>
+              <td style="padding: 12px;">${emp.department || 'N/A'}</td>
+              <td style="padding: 12px;">${emp.position || 'N/A'}</td>
+              <td style="padding: 12px;">${roleDropdown}</td>
+              <td style="padding: 12px;">${emp.ptoBalance || 0} days</td>
+              <td style="padding: 12px;">${actionButtons}</td>
+            </tr>
+          `;
+        });
+        
+        html += `
+            </tbody>
+          </table>
+        `;
+        
+        listEl.innerHTML = html;
+      } catch (error) {
+        console.error('Error loading employees:', error);
+        listEl.innerHTML = '<p style="color: red;">Failed to load employees. You may not have permission.</p>';
+      }
+    }
+
+    async function loadAuditLogs() {
+      const listEl = document.getElementById('auditLogsList');
+      listEl.innerHTML = '<p style="color: var(--gray-500);">Loading audit logs...</p>';
+      
+      try {
+        const response = await fetch('/api/audit-logs?limit=50', {
+          headers: { 'X-HR-Session': window.hrSessionToken }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to load audit logs');
+        }
+        
+        const data = await response.json();
+        const logs = data.logs || [];
+        
+        if (logs.length === 0) {
+          listEl.innerHTML = '<p style="color: var(--gray-500);">No audit logs found</p>';
+          return;
+        }
+        
+        let html = `
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--gray-200); text-align: left;">
+                <th style="padding: 10px; font-weight: 600; color: var(--gray-700);">Timestamp</th>
+                <th style="padding: 10px; font-weight: 600; color: var(--gray-700);">Action</th>
+                <th style="padding: 10px; font-weight: 600; color: var(--gray-700);">User</th>
+                <th style="padding: 10px; font-weight: 600; color: var(--gray-700);">IP Address</th>
+                <th style="padding: 10px; font-weight: 600; color: var(--gray-700);">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+        
+        logs.forEach(log => {
+          const date = new Date(log.timestamp);
+          const actionColors = {
+            'HR_LOGIN': '#10b981',
+            'HR_CHAT_ACCESS': '#3b82f6',
+            'PTO_REQUEST_SUBMITTED': '#f59e0b',
+            'EMPLOYEE_CREATED': '#8b5cf6',
+            'EMPLOYEE_UPDATED': '#06b6d4',
+            'EMPLOYEE_DELETED': '#ef4444'
+          };
+          const color = actionColors[log.action] || '#6b7280';
+          
+          html += `
+            <tr style="border-bottom: 1px solid var(--gray-100);">
+              <td style="padding: 10px; white-space: nowrap;">${date.toLocaleString()}</td>
+              <td style="padding: 10px;"><span style="background: ${color}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">${log.action}</span></td>
+              <td style="padding: 10px;">${log.userEmail}</td>
+              <td style="padding: 10px; font-family: monospace; font-size: 12px;">${log.ipAddress}</td>
+              <td style="padding: 10px; color: var(--gray-600); font-size: 13px;">${JSON.stringify(log.details)}</td>
+            </tr>
+          `;
+        });
+        
+        html += `
+            </tbody>
+          </table>
+        `;
+        
+        listEl.innerHTML = html;
+      } catch (error) {
+        console.error('Error loading audit logs:', error);
+        listEl.innerHTML = '<p style="color: red;">Failed to load audit logs. You may not have permission.</p>';
+      }
+    }
+
+    function refreshAuditLogs() {
+      loadAuditLogs();
+    }
+
+    async function updateEmployeeRole(email, newRole) {
+      // Check if user has permission to change roles
+      const currentUserEmail = JSON.parse(sessionStorage.getItem(SESSION_KEY))?.email;
+      const isCurrentUserMasterControl = currentUserEmail?.toLowerCase() === 'calvin@henri.dk';
+      
+      if (!isCurrentUserMasterControl) {
+        alert('Only Master Control can change employee roles');
+        loadEmployeesList(); // Reload to reset dropdown
+        return;
+      }
+      
+      if (!confirm(`Change role for ${email} to ${newRole}?`)) {
+        loadEmployeesList(); // Reload to reset dropdown
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/api/employees/${email}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-HR-Session': window.hrSessionToken
+          },
+          body: JSON.stringify({ role: newRole })
+        });
+        
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to update role');
+        }
+        
+        alert(`Role updated successfully to ${newRole}`);
+        loadEmployeesList(); // Reload list
+      } catch (error) {
+        console.error('Error updating role:', error);
+        alert('Failed to update role: ' + error.message);
+        loadEmployeesList(); // Reload to reset dropdown
+      }
+    }
+
+    async function editEmployee(email) {
+      console.log('Edit employee called with:', email);
+      console.log('Session token:', window.hrSessionToken);
+      
+      // Check if user has permission to edit
+      const currentUserEmail = JSON.parse(sessionStorage.getItem(SESSION_KEY))?.email;
+      const isCurrentUserMasterControl = currentUserEmail?.toLowerCase() === 'calvin@henri.dk';
+      
+      if (!isCurrentUserMasterControl) {
+        alert('Only Master Control can edit employees');
+        return;
+      }
+      
+      try {
+        // Fetch current employee data
+        const response = await fetch(`/api/employees/${email}`, {
+          headers: { 'X-HR-Session': window.hrSessionToken }
+        });
+        
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error response:', errorData);
+          throw new Error(errorData.error || 'Failed to load employee data');
+        }
+        
+        const employee = await response.json();
+        console.log('Employee data loaded:', employee);
+        
+        // Check if this is the master control account (first hr_admin with email calvin@henri.dk)
+        const isMasterControl = email.toLowerCase() === 'calvin@henri.dk' && employee.role === 'hr_admin';
+        
+        // Populate form
+        document.getElementById('editEmail').value = email;
+        document.getElementById('editIsMasterControl').value = isMasterControl;
+        document.getElementById('editName').value = employee.name || '';
+        document.getElementById('editUsername').value = employee.username || '';
+        document.getElementById('editCurrentPassword').value = employee.plainPassword || '(password not stored)';
+        document.getElementById('editPassword').value = '';
+        document.getElementById('editDepartment').value = employee.department || '';
+        document.getElementById('editPosition').value = employee.position || '';
+        document.getElementById('editEmployeeEmail').value = employee.email || '';
+        document.getElementById('editPhone').value = employee.phone || '';
+        document.getElementById('editPtoBalance').value = employee.ptoBalance || 0;
+        document.getElementById('editRole').value = employee.role || 'employee';
+        
+        // Debug logging
+        console.log('User role:', window.userRole);
+        console.log('Should show passwords:', window.userRole === 'hr_admin');
+        
+        // Only show password fields to HR Admins
+        const passwordSection = document.getElementById('passwordSection');
+        if (window.userRole === 'hr_admin') {
+          passwordSection.style.display = 'block';
+          console.log('Password section shown');
+        } else {
+          passwordSection.style.display = 'none';
+          console.log('Password section hidden');
+        }
+        
+        // Update modal title and lock role if master control
+        if (isMasterControl) {
+          document.getElementById('editModalTitle').textContent = 'Edit Employee (Master Control)';
+          document.getElementById('editModalSubtitle').textContent = '🔒 Master Control account - Management access cannot be changed';
+          document.getElementById('editModalSubtitle').style.color = '#ef4444';
+          document.getElementById('editRole').disabled = true;
+          document.getElementById('editRoleSection').style.opacity = '0.6';
+        } else {
+          document.getElementById('editModalTitle').textContent = 'Edit Employee';
+          document.getElementById('editModalSubtitle').textContent = '';
+          document.getElementById('editRole').disabled = false;
+          document.getElementById('editRoleSection').style.opacity = '1';
+        }
+        
+        // Show current contract if exists
+        if (employee.contractName) {
+          document.getElementById('currentContract').textContent = `Current: ${employee.contractName}`;
+        } else {
+          document.getElementById('currentContract').textContent = 'No contract uploaded';
+        }
+        
+        // Show modal
+        document.getElementById('editEmployeeModal').style.display = 'flex';
+      } catch (error) {
+        console.error('Error loading employee:', error);
+        alert('Failed to load employee data: ' + error.message);
+      }
+    }
+
+    function togglePasswordVisibility(fieldId) {
+      const field = document.getElementById(fieldId);
+      if (field.type === 'password') {
+        field.type = 'text';
+      } else {
+        field.type = 'password';
+      }
+    }
+
+    function closeEditModal() {
+      document.getElementById('editEmployeeModal').style.display = 'none';
+      document.getElementById('editEmployeeForm').reset();
+    }
+
+    // ========== EMPLOYEE DASHBOARD VIEW (SHOP MANAGER & HR ADMIN) ==========
+    
+    async function viewEmployeeDashboard(email) {
+      // Shop Managers and HR Admins can view employee dashboards
+      if (window.userRole !== 'hr_admin' && window.userRole !== 'shop_manager') {
+        alert('Only Shop Managers and HR Admins can view employee dashboards');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/api/employees/${encodeURIComponent(email)}`, {
+          headers: { 'X-HR-Session': window.hrSessionToken }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to load employee data');
+        }
+        
+        const employee = await response.json();
+        
+        // Populate modal
+        document.getElementById('viewEmployeeName').textContent = `${employee.name} (${email})`;
+        document.getElementById('viewPtoBalance').textContent = `${employee.ptoBalance || 0} days`;
+        document.getElementById('viewChildSickDays').textContent = `${employee.childSickDays || 0} days`;
+        document.getElementById('viewPersonalSickDays').textContent = `${employee.personalSickDays || 0} days`;
+        document.getElementById('viewEmail').textContent = email;
+        document.getElementById('viewUsername').textContent = employee.username || 'N/A';
+        document.getElementById('viewDepartment').textContent = employee.department || 'Not set';
+        document.getElementById('viewPosition').textContent = employee.position || 'Not set';
+        
+        const roleDisplay = employee.role === 'hr_admin' ? 'HR Admin' : 
+                           employee.role === 'shop_manager' ? 'Shop Manager' : 'Employee';
+        document.getElementById('viewRole').textContent = roleDisplay;
+        
+        // Set placeholder values for services and products (API pending)
+        document.getElementById('viewServicesCount').textContent = '--';
+        document.getElementById('viewServicesTotal').textContent = 'API not connected';
+        document.getElementById('viewProductsSoldCount').textContent = '--';
+        document.getElementById('viewProductsList').innerHTML = '<div style="color: var(--gray-500); font-size: 13px; text-align: center; padding: 16px;">API not connected yet</div>';
+        
+        // Show modal
+        document.getElementById('employeeDashboardModal').style.display = 'flex';
+        
+      } catch (error) {
+        console.error('Error viewing employee dashboard:', error);
+        alert('Failed to load employee dashboard: ' + error.message);
+      }
+    }
+    
+    function closeEmployeeDashboard() {
+      document.getElementById('employeeDashboardModal').style.display = 'none';
+    }
+
+    document.getElementById('editEmployeeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('editEmail').value;
+      const isMasterControl = document.getElementById('editIsMasterControl').value === 'true';
+      const password = document.getElementById('editPassword').value;
+      
+      const updates = {
+        name: document.getElementById('editName').value,
+        username: document.getElementById('editUsername').value,
+        department: document.getElementById('editDepartment').value,
+        position: document.getElementById('editPosition').value,
+        email: document.getElementById('editEmployeeEmail').value,
+        phone: document.getElementById('editPhone').value,
+        ptoBalance: parseInt(document.getElementById('editPtoBalance').value)
+      };
+      
+      // Add password if provided
+      if (password) {
+        updates.plainPassword = password;
+      }
+      
+      // Add role if not master control
+      if (!isMasterControl) {
+        updates.role = document.getElementById('editRole').value;
+      }
+      
+      try {
+        // First update employee data
+        const response = await fetch(`/api/employees/${email}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-HR-Session': window.hrSessionToken
+          },
+          body: JSON.stringify(updates)
+        });
+        
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to update employee');
+        }
+        
+        const result = await response.json();
+        
+        // Upload contract if provided
+        const contractFile = document.getElementById('editContract').files[0];
+        if (contractFile) {
+          const formData = new FormData();
+          formData.append('contract', contractFile);
+          
+          const uploadResponse = await fetch(`/api/employees/${email}/contract`, {
+            method: 'POST',
+            headers: {
+              'X-HR-Session': window.hrSessionToken
+            },
+            body: formData
+          });
+          
+          if (!uploadResponse.ok) {
+            throw new Error('Employee updated but contract upload failed');
+          }
+        }
+        
+        let message = 'Employee updated successfully!';
+        if (password) {
+          message += `\n\nNew credentials:\nUsername: ${updates.username}\nPassword: ${password}`;
+        }
+        alert(message);
+        
+        closeEditModal();
+        loadEmployeesList();
+      } catch (error) {
+        console.error('Error updating employee:', error);
+        alert('Failed to update employee: ' + error.message);
+      }
+    });
+
+    async function deleteEmployee(email) {
+      // Check if user has permission to delete
+      const currentUserEmail = JSON.parse(sessionStorage.getItem(SESSION_KEY))?.email;
+      const isCurrentUserMasterControl = currentUserEmail?.toLowerCase() === 'calvin@henri.dk';
+      
+      if (!isCurrentUserMasterControl) {
+        alert('Only Master Control can delete employees');
+        return;
+      }
+      
+      if (!confirm(`Are you sure you want to delete employee ${email}? This action cannot be undone.`)) {
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/api/employees/${email}`, {
+          method: 'DELETE',
+          headers: { 'X-HR-Session': window.hrSessionToken }
+        });
+        
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to delete employee');
+        }
+        
+        alert('Employee deleted successfully');
+        loadEmployeesList();
+      } catch (error) {
+        console.error('Error deleting employee:', error);
+        alert('Failed to delete employee: ' + error.message);
+      }
+    }
+
+    function showAddEmployeeModal() {
+      // Reset form
+      document.getElementById('addEmployeeForm').reset();
+      document.getElementById('addPtoBalance').value = 25; // Default PTO
+      
+      // Show modal
+      document.getElementById('addEmployeeModal').style.display = 'flex';
+    }
+
+    function closeAddModal() {
+      document.getElementById('addEmployeeModal').style.display = 'none';
+      document.getElementById('addEmployeeForm').reset();
+    }
+
+    document.getElementById('addEmployeeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const employeeData = {
+        name: document.getElementById('addName').value,
+        email: document.getElementById('addEmail').value,
+        department: document.getElementById('addDepartment').value,
+        position: document.getElementById('addPosition').value,
+        ptoBalance: parseInt(document.getElementById('addPtoBalance').value),
+        role: document.getElementById('addRole').value
+      };
+      
+      try {
+        const response = await fetch('/api/employees/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-HR-Session': window.hrSessionToken
+          },
+          body: JSON.stringify(employeeData)
+        });
+        
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to create employee');
+        }
+        
+        const result = await response.json();
+        
+        // Show credentials
+        alert(`Employee created successfully!\\n\\nLogin Credentials:\\nUsername: ${result.credentials.username}\\nPassword: ${result.credentials.password}\\n\\nPlease save these credentials and share them with the employee.`);
+        
+        closeAddModal();
+        loadEmployeesList();
+      } catch (error) {
+        console.error('Error creating employee:', error);
+        alert('Failed to create employee: ' + error.message);
+      }
+    });
+
+    // ========== PDF.JS RENDERING ==========
+    
+    async function loadProductPDF() {
+      const container = document.getElementById('pdfPages');
+      const loadingMsg = document.getElementById('pdfLoadingMessage');
+      const pdfContainer = document.getElementById('pdfContainer');
+      
+      try {
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        // Load the PDF
+        const loadingTask = pdfjsLib.getDocument('/public/HENRI_Product_Book.pdf');
+        const pdf = await loadingTask.promise;
+        
+        // Clear container
+        container.innerHTML = '';
+        
+        // Render all pages
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          const page = await pdf.getPage(pageNum);
+          
+          // Calculate scale to fit width (max 1200px)
+          const viewport = page.getViewport({ scale: 1 });
+          const scale = Math.min(1200 / viewport.width, 2);
+          const scaledViewport = page.getViewport({ scale });
+          
+          // Create canvas
+          const pageContainer = document.createElement('div');
+          pageContainer.className = 'pdf-page-container';
+          
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.height = scaledViewport.height;
+          canvas.width = scaledViewport.width;
+          
+          pageContainer.appendChild(canvas);
+          container.appendChild(pageContainer);
+          
+          // Render page
+          const renderContext = {
+            canvasContext: context,
+            viewport: scaledViewport
+          };
+          await page.render(renderContext).promise;
+        }
+        
+        // Show PDF, hide loading
+        loadingMsg.style.display = 'none';
+        pdfContainer.style.display = 'block';
+        
+      } catch (error) {
+        console.error('Error loading PDF:', error);
+        loadingMsg.innerHTML = `
+          <p style="color: var(--gray-700); margin-bottom: 16px;">Unable to load PDF viewer.</p>
+          <a href="/public/HENRI_Product_Book.pdf" download style="background: var(--henri-primary); color: white; border: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-block;">Download Product Book</a>
+        `;
+      }
+    }
+
+    // Load PDF when products section is shown
+    let pdfLoaded = false;
+    const originalShowSection = showSection;
+    showSection = function(section) {
+      originalShowSection.call(this, section);
+      if (section === 'products' && !pdfLoaded) {
+        pdfLoaded = true;
+        loadProductPDF();
+      }
+    };
   </script>
 </body>
 </html>

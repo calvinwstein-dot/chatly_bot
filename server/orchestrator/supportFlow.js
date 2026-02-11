@@ -112,9 +112,20 @@ Example responses:
 - "Let's get you booked! Visit ${business.bookingUrl} to choose your time slot."
 
 NEVER skip the booking link when customers want to make an appointment.
-${business.websiteUrl ? '\n\nSHOPPING: All products, gift cards, gift boxes, and loyalty cards can be purchased online:\n- Shop all products: ' + business.websiteUrl + '/collections/all\n- Gift cards: ' + business.websiteUrl + '/collections/gavekort\n- Gift boxes: ' + business.websiteUrl + '/collections/gaveaesker\n- Loyalty cards: ' + business.websiteUrl + '/collections/loyalty-vouchers-1\nWhen customers ask about buying products or gift items, guide them to the online shop.' : ''}
 
-${business.openaiConfig?.instructions ? 'BEHAVIOR & TONE INSTRUCTIONS:\n' + business.openaiConfig.instructions + '\n\n' : ''}LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
+${business.openaiConfig?.instructions ? 'BEHAVIOR & TONE INSTRUCTIONS:\n' + business.openaiConfig.instructions + '\n\n' : ''}
+⚠️ CRITICAL - PRODUCT PURCHASE LINKS (ALWAYS REQUIRED):
+When mentioning products, gift cards, gift boxes, or loyalty cards, you MUST ALWAYS include purchase links.
+Available purchase links:
+${business.websiteUrl ? '- Shop all products: ' + business.websiteUrl + '/collections/all\n- Gift cards: ' + business.websiteUrl + '/collections/gavekort\n- Gift boxes: ' + business.websiteUrl + '/collections/gaveaesker\n- Loyalty cards: ' + business.websiteUrl + '/collections/loyalty-vouchers-1' : '- Products available in-store'}
+
+Example format:
+"We have **Advanced Forming Cream** - 199 DKK. [Shop all products](${business.websiteUrl}/collections/all)"
+"Check out our gift boxes: [View gift boxes](${business.websiteUrl}/collections/gaveaesker)"
+
+MANDATORY RULE: Every time you mention products, gift cards, gift boxes, or loyalty cards, you MUST include the relevant purchase link in your response. No exceptions.
+
+LANGUAGE: Respond in {{LANGUAGE}}. If {{LANGUAGE}} is 'da', respond in Danish. If {{LANGUAGE}} is 'en', respond in English.
 `;
 }
 

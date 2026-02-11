@@ -1,8 +1,8 @@
 {
   "businesses": {
     "HenriDemo": {
-      "clicks": 82,
-      "messages": 33,
+      "clicks": 110,
+      "messages": 47,
       "dailyStats": {
         "2026-01-08": {
           "clicks": 3,
@@ -39,11 +39,31 @@
         "2026-01-25": {
           "clicks": 1,
           "messages": 1
+        },
+        "2026-01-26": {
+          "clicks": 10,
+          "messages": 9
+        },
+        "2026-01-27": {
+          "clicks": 3,
+          "messages": 1
+        },
+        "2026-02-09": {
+          "clicks": 6,
+          "messages": 0
+        },
+        "2026-02-10": {
+          "clicks": 3,
+          "messages": 1
+        },
+        "2026-02-11": {
+          "clicks": 6,
+          "messages": 3
         }
       }
     },
     "BlondeSpecialistCPHDemo": {
-      "clicks": 15,
+      "clicks": 17,
       "messages": 0,
       "dailyStats": {
         "2026-01-09": {
@@ -53,11 +73,15 @@
         "2026-01-24": {
           "clicks": 2,
           "messages": 0
+        },
+        "2026-01-26": {
+          "clicks": 2,
+          "messages": 0
         }
       }
     },
     "ChappyBot": {
-      "clicks": 22,
+      "clicks": 25,
       "messages": 1,
       "dailyStats": {
         "2026-01-18": {
@@ -70,6 +94,14 @@
         },
         "2026-01-25": {
           "clicks": 17,
+          "messages": 0
+        },
+        "2026-01-29": {
+          "clicks": 2,
+          "messages": 0
+        },
+        "2026-02-10": {
+          "clicks": 1,
           "messages": 0
         }
       }
@@ -85,8 +117,8 @@
       }
     },
     "HenriHR": {
-      "clicks": 47,
-      "messages": 18,
+      "clicks": 94,
+      "messages": 43,
       "dailyStats": {
         "2026-01-22": {
           "clicks": 21,
@@ -99,6 +131,30 @@
         "2026-01-25": {
           "clicks": 13,
           "messages": 9
+        },
+        "2026-01-27": {
+          "clicks": 11,
+          "messages": 7
+        },
+        "2026-01-29": {
+          "clicks": 9,
+          "messages": 2
+        },
+        "2026-01-31": {
+          "clicks": 8,
+          "messages": 0
+        },
+        "2026-02-07": {
+          "clicks": 2,
+          "messages": 0
+        },
+        "2026-02-10": {
+          "clicks": 7,
+          "messages": 0
+        },
+        "2026-02-11": {
+          "clicks": 10,
+          "messages": 16
         }
       }
     },

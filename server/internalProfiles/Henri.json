@@ -53,7 +53,233 @@
       "mapUrl": ""
     }
   ],
-  "services": [],
+  "services": [
+    {
+      "name": "Henri's Signature Combo",
+      "price": 995,
+      "image": "/public/products/henri/signature-combo.jpg"
+    },
+    {
+      "name": "The Two Classics Combo",
+      "price": 750,
+      "image": "/public/products/henri/two-classics-combo.jpg"
+    },
+    {
+      "name": "Classic Haircut",
+      "price": 440,
+      "image": "/public/products/henri/classic-haircut.jpg"
+    },
+    {
+      "name": "Zero Fade / Skin Fade",
+      "price": 550,
+      "image": "/public/products/henri/zero-skin-fade.jpg"
+    },
+    {
+      "name": "Long Haircut",
+      "price": 750,
+      "image": "/public/products/henri/long-haircut.jpg"
+    },
+    {
+      "name": "Head Shave",
+      "price": 395,
+      "image": "/public/products/henri/head-shave.jpg"
+    },
+    {
+      "name": "Signature Hot Towel Shave",
+      "price": 595,
+      "image": "/public/products/henri/signature-hot-towel-shave.jpg"
+    },
+    {
+      "name": "Classic Beard Trim",
+      "price": 395,
+      "image": "/public/products/henri/classic-beard-trim.jpg"
+    },
+    {
+      "name": "Signature Beard Trim",
+      "price": 595,
+      "image": "/public/products/henri/signature-beard-trim.jpg"
+    }
+  ],
+  "products": [
+    {
+      "name": "Texture Clay Pomade",
+      "price": 199,
+      "size": "60 ml",
+      "category": "Pomades, Creams & Clays",
+      "imageUrl": "/public/products/henri/texture-clay-pomade.webp"
+    },
+    {
+      "name": "Advanced Forming Cream",
+      "price": 199,
+      "size": "60 ml",
+      "category": "Pomades, Creams & Clays",
+      "imageUrl": "/public/products/henri/advanced-forming-cream.webp"
+    },
+    {
+      "name": "Crystal Pomade",
+      "price": 199,
+      "size": "60 ml",
+      "category": "Pomades, Creams & Clays",
+      "imageUrl": "/public/products/henri/crystal-pomade.webp"
+    },
+    {
+      "name": "Upgraded Signature Clay",
+      "price": 199,
+      "size": "60 ml",
+      "category": "Pomades, Creams & Clays",
+      "imageUrl": "/public/products/henri/upgraded-signature-clay.webp"
+    },
+    {
+      "name": "Refined Salt Water",
+      "price": 199,
+      "size": "120 ml",
+      "category": "Sprays",
+      "imageUrl": "/public/products/henri/refined-salt-water.webp"
+    },
+    {
+      "name": "Liquified Clay Spray",
+      "price": 199,
+      "size": "120 ml",
+      "category": "Sprays",
+      "imageUrl": "/public/products/henri/liquified-clay-spray.webp"
+    },
+    {
+      "name": "Signature Beard Oil",
+      "price": 199,
+      "size": "30 ml",
+      "category": "Sprays",
+      "imageUrl": "/public/products/henri/signature-beard-oil.webp"
+    }
+  ],
+  "giftCards": [
+    {
+      "name": "Gavekort - Classic Haircut",
+      "price": 440
+    },
+    {
+      "name": "Gavekort - Classic Beard Trim",
+      "price": 395
+    },
+    {
+      "name": "Gavekort - Head Shave",
+      "price": 395
+    },
+    {
+      "name": "Gavekort - Signature Haircut",
+      "price": 595
+    },
+    {
+      "name": "Gavekort - Long Haircut",
+      "price": 750
+    },
+    {
+      "name": "Gavekort - Signature Beard Trim",
+      "price": 595
+    },
+    {
+      "name": "Gavekort - Signature Hot Towel Shave",
+      "price": 595
+    },
+    {
+      "name": "Gavekort - Two Classics Combo",
+      "price": 750
+    },
+    {
+      "name": "Gavekort - Skin Fade / Zero Fade",
+      "price": 550
+    },
+    {
+      "name": "Gavekort - HENRI's Signature Combo",
+      "price": 995
+    }
+  ],
+  "loyaltyCards": [
+    {
+      "name": "5x Klippekort - Classic Haircut",
+      "price": 1950
+    },
+    {
+      "name": "5x Klippekort - Classic Beard Trim",
+      "price": 1750
+    },
+    {
+      "name": "5x Klippekort - HENRI's Signature Combo",
+      "price": 4500
+    },
+    {
+      "name": "5x Klippekort - The Two Classics Combo",
+      "price": 3500
+    },
+    {
+      "name": "5x Klippekort - Long Haircut",
+      "price": 3500
+    },
+    {
+      "name": "5x Klippekort - Zero Fade / Skin Fade",
+      "price": 2500
+    },
+    {
+      "name": "5x Klippekort - Head Shave",
+      "price": 1750
+    },
+    {
+      "name": "5x Klippekort - HENRI's Signature Haircut",
+      "price": 2750
+    },
+    {
+      "name": "5x Klippekort - Signature Beard Trim",
+      "price": 2750
+    },
+    {
+      "name": "5x Klippekort - Signature Hot Towel Shave",
+      "price": 2750
+    }
+  ],
+  "giftBoxes": [
+    {
+      "name": "Path for Wandering",
+      "price": 395,
+      "description": "For those who move without a destination. Matte and shine, hold and lightness.",
+      "includes": [
+        "Liquified Clay Spray",
+        "Crystal Pomade"
+      ],
+      "imageUrl": "/public/products/henri/path-for-wandering.webp"
+    },
+    {
+      "name": "A Bridge Between",
+      "price": 395,
+      "description": "For those who find balance in movement. Two essential elements in harmony.",
+      "includes": [
+        "Refined Salt Water",
+        "Advanced Forming Cream"
+      ],
+      "imageUrl": "/public/products/henri/a-bridge-between.webp"
+    },
+    {
+      "name": "The Chance Encounter",
+      "price": 495,
+      "description": "For those who find balance in movement. A texture lifted by salt, a form refined by structure.",
+      "includes": [
+        "Refined Salt Water",
+        "Texture Clay Pomade",
+        "Signature Beard Oil"
+      ],
+      "imageUrl": "/public/products/henri/the-chance-encounter.webp"
+    },
+    {
+      "name": "A Route Onwards",
+      "price": 595,
+      "description": "For those who shape what lies ahead. Beard tamed, texture built, form defined.",
+      "includes": [
+        "Liquified Clay Spray",
+        "Crystal Pomade",
+        "Signature Beard Oil",
+        "The Consort Comb"
+      ],
+      "imageUrl": "/public/products/henri/a-route-onwards.webp"
+    }
+  ],
   "faq": [
     {
       "question": "How do I request time off?",
@@ -105,7 +331,7 @@
     }
   ],
   "openaiConfig": {
-    "instructions": "You are the HENRI Employee Assistant, helping employees with workplace questions based on the HENRI Employee Handbook. Be warm, professional, and helpful.\n\nKey Company Information:\n- HENRI is a Denmark-based technology and professional services company with ~75 employees\n- Standard work week: 37 hours, Monday-Friday, core hours 09:00-15:00\n- Annual leave: 25 days paid per year\n- Remote work: Up to 3 days/week with manager approval\n- Probation period: 3 months for new employees\n- All employment follows Danish employment law\n\nFor HR matters (benefits, payroll, leave requests, sensitive issues), direct employees to contact HR at hr@henri.internal or ext. 5000. Keep responses helpful, accurate, and based on company policy from the handbook.",
+    "instructions": "You are the HENRI Employee Assistant, helping employees with workplace questions based on the HENRI Employee Handbook. Be warm, professional, and helpful.\n\nKey Company Information:\n- HENRI is a Denmark-based technology and professional services company with ~75 employees\n- Standard work week: 37 hours, Monday-Friday, core hours 09:00-15:00\n- Annual leave: 25 days paid per year\n- Remote work: Up to 3 days/week with manager approval\n- Probation period: 3 months for new employees\n- All employment follows Danish employment law\n\nFor HR matters (benefits, payroll, leave requests, sensitive issues), direct employees to contact HR at hr@henri.internal or ext. 5000. Keep responses helpful, accurate, and based on company policy from the handbook.\n\nWhen employees ask about services, show images: Henri's Signature Combo ![Henri's Signature Combo](/public/products/henri/signature-combo.jpg), The Two Classics Combo ![The Two Classics Combo](/public/products/henri/two-classics-combo.jpg), Classic Haircut ![Classic Haircut](/public/products/henri/classic-haircut.jpg), Zero Fade/Skin Fade ![Zero Fade/Skin Fade](/public/products/henri/zero-skin-fade.jpg), Long Haircut ![Long Haircut](/public/products/henri/long-haircut.jpg), Head Shave ![Head Shave](/public/products/henri/head-shave.jpg), Signature Hot Towel Shave ![Signature Hot Towel Shave](/public/products/henri/signature-hot-towel-shave.jpg), Classic Beard Trim ![Classic Beard Trim](/public/products/henri/classic-beard-trim.jpg), Signature Beard Trim ![Signature Beard Trim](/public/products/henri/signature-beard-trim.jpg)",
     "model": "gpt-4o-mini"
   }
 }

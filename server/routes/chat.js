@@ -2,6 +2,7 @@ import express from "express";
 import { body, validationResult } from 'express-validator';
 import { handleChat } from "../orchestrator/index.js";
 import { loadProfile } from "../profileLoader.js";
+import { logAuditEvent, getClientIP } from "../auditLogger.js";
 import fs from "fs";
 import path from "path";
 
@@ -15,7 +16,7 @@ const SESSIONS_FILE = path.resolve("server/data/hrSessions.json");
 
 // HR Session validation helper
 function validateHRSession(businessName, sessionToken) {
-  if (!businessName || !sessionToken) return null;
+  if (!businessName) return { valid: true }; // No business specified, skip validation
   
   try {
     const profile = loadProfile(businessName);
@@ -25,7 +26,12 @@ function validateHRSession(businessName, sessionToken) {
       return { valid: true };
     }
     
-    // Internal profile - validate session
+    // Internal profile requires authentication
+    if (!sessionToken) {
+      return { valid: false, error: "Session token required" };
+    }
+    
+    // Validate session
     if (!fs.existsSync(SESSIONS_FILE)) {
       return { valid: false, error: "No sessions found" };
     }
@@ -147,6 +153,14 @@ router.post("/",
 
     const businessProfile = loadBusinessProfile(business || 'Henri');
     const businessNameForCheck = business || 'Henri';
+    
+    // Audit log for HR portal access
+    if (businessProfile.internal && businessProfile.requiresAuth && sessionValidation.email) {
+      logAuditEvent('HR_CHAT_ACCESS', sessionValidation.email, { 
+        message: message.substring(0, 50) + '...', 
+        business: businessNameForCheck 
+      }, getClientIP(req));
+    }
     
     // Check if business has active subscription FIRST - bypass all demo restrictions
     const hasSubscription = hasActiveSubscription(businessNameForCheck);

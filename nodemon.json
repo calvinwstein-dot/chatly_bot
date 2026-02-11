@@ -1,0 +1,18 @@
+{
+  "watch": ["server/**/*.js", "server/**/*.json"],
+  "ignore": [
+    "server/data/**",
+    "server/logs/**",
+    "server/businessProfiles/**",
+    "server/internalProfiles/**",
+    "node_modules/**",
+    "*.log",
+    "*.md",
+    "public/**",
+    "widget/**",
+    "admin/**",
+    "tests/**"
+  ],
+  "ext": "js,json",
+  "delay": "1500"
+}

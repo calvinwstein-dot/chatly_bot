@@ -3,6 +3,7 @@ import crypto from "crypto";
 import bcrypt from "bcrypt";
 import fs from "fs";
 import path from "path";
+import { logAuditEvent, getClientIP } from "../auditLogger.js";
 
 const router = express.Router();
 const SESSIONS_FILE = path.resolve("server/data/hrSessions.json");
@@ -59,16 +60,22 @@ router.post("/login", async (req, res) => {
     // Store session (expires in 8 hours)
     sessions[sessionToken] = {
       email: employeeEmail,
+      role: employee.role || 'employee',
       createdAt: Date.now(),
       expiresAt: Date.now() + (8 * 60 * 60 * 1000)
     };
     
     saveSessions(sessions);
     
+    // Audit log
+    logAuditEvent('HR_LOGIN', employeeEmail, { username }, getClientIP(req));
+    
     res.json({ 
       success: true, 
       sessionToken,
-      email: employeeEmail
+      email: employeeEmail,
+      name: employee.name,
+      role: employee.role || 'employee'
     });
   } catch (error) {
     console.error("Error creating session:", error);
@@ -99,9 +106,13 @@ router.post("/validate", (req, res) => {
       return res.status(401).json({ valid: false, error: "Session expired" });
     }
     
+    // Log session validation (only for actual validation checks, not every request)
+    logAuditEvent('HR_SESSION_VALIDATED', session.email, { sessionToken: sessionToken.substring(0, 10) + '...' }, getClientIP(req));
+    
     res.json({ 
       valid: true, 
-      email: session.email 
+      email: session.email,
+      role: session.role || 'employee'
     });
   } catch (error) {
     console.error("Error validating session:", error);

@@ -4,10 +4,15 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import fs from "fs";
 import path from "path";
+import { requireHRManager, requireHRAdmin, requireRole } from "../middleware/roleAuth.js";
+import { logAuditEvent, getClientIP } from "../auditLogger.js";
 
 const router = express.Router();
 const EMPLOYEES_FILE = path.resolve("server/data/employees.json");
 const CONTRACTS_DIR = path.resolve("server/data/contracts");
+
+// Middleware to validate session and attach to request (but not enforce role)
+const validateSession = requireRole('employee', 'shop_manager', 'hr_admin');
 
 // Helper function to generate username from name
 function generateUsername(name) {
@@ -54,10 +59,17 @@ const upload = multer({
   }
 });
 
-// Get employee data by email
-router.get("/:email", (req, res) => {
+// Get employee data by email - allow users to view their own data
+router.get("/:email", validateSession, (req, res) => {
   try {
     const email = req.params.email.toLowerCase();
+    const sessionEmail = req.hrSession?.email?.toLowerCase();
+    const sessionRole = req.hrSession?.role;
+    
+    // Users can view their own data, or shop managers can view any employee
+    if (sessionEmail !== email && !['shop_manager', 'hr_admin'].includes(sessionRole)) {
+      return res.status(403).json({ error: "Access denied: You can only view your own employee data" });
+    }
     
     if (!fs.existsSync(EMPLOYEES_FILE)) {
       return res.status(404).json({ error: "Employee database not found" });
@@ -71,8 +83,9 @@ router.get("/:email", (req, res) => {
     }
     
     // Return employee data without sensitive info like salary
-    res.json({
+    const responseData = {
       name: employee.name,
+      username: employee.username,
       employeeId: employee.employeeId,
       department: employee.department,
       position: employee.position,
@@ -85,9 +98,17 @@ router.get("/:email", (req, res) => {
       manager: employee.manager,
       email: employee.email,
       phone: employee.phone,
+      role: employee.role,
       contractName: employee.contractName,
       hasContract: !!employee.contractPath
-    });
+    };
+    
+    // Only include plainPassword for HR Admins
+    if (sessionRole === 'hr_admin') {
+      responseData.plainPassword = employee.plainPassword;
+    }
+    
+    res.json(responseData);
   } catch (error) {
     console.error("Error fetching employee data:", error);
     res.status(500).json({ error: "Failed to load employee data" });
@@ -95,31 +116,16 @@ router.get("/:email", (req, res) => {
 });
 
 // Get all employees (for admin purposes)
-router.get("/", (req, res) => {
+router.get("/", requireHRManager, (req, res) => {
   try {
     if (!fs.existsSync(EMPLOYEES_FILE)) {
       return res.status(404).json({ error: "Employee database not found" });
     }
     
     const data = JSON.parse(fs.readFileSync(EMPLOYEES_FILE, "utf-8"));
-    const employeeList = Object.values(data.employees).map(emp => ({
-      name: emp.name,
-      username: emp.username,
-      employeeId: emp.employeeId,
-      department: emp.department,
-      position: emp.position,
-      email: emp.email,
-      ptoBalance: emp.ptoBalance,
-      ptoUsed: emp.ptoUsed,
-      ptoTotal: emp.ptoTotal,
-      hireDate: emp.hireDate,
-      phone: emp.phone,
-      manager: emp.manager,
-      contractType: emp.contractType,
-      plainPassword: emp.plainPassword
-    }));
     
-    res.json({ employees: employeeList });
+    // Return employees object with email as key for easy lookup
+    res.json({ employees: data.employees });
   } catch (error) {
     console.error("Error fetching employees:", error);
     res.status(500).json({ error: "Failed to load employees" });
@@ -127,7 +133,7 @@ router.get("/", (req, res) => {
 });
 
 // Create new employee
-router.post("/", async (req, res) => {
+router.post("/", requireHRManager, async (req, res) => {
   try {
     const { name, email, department, position, ptoBalance, hireDate } = req.body;
     
@@ -179,6 +185,14 @@ router.post("/", async (req, res) => {
     // Save to file
     fs.writeFileSync(EMPLOYEES_FILE, JSON.stringify(data, null, 2));
     
+    // Audit log
+    logAuditEvent('EMPLOYEE_CREATED', req.hrSession.email, { 
+      newEmployeeEmail: email.toLowerCase(),
+      name,
+      department,
+      position 
+    }, getClientIP(req));
+    
     res.json({ 
       success: true, 
       employee: newEmployee,
@@ -194,7 +208,7 @@ router.post("/", async (req, res) => {
 });
 
 // Update employee data
-router.put("/:email", async (req, res) => {
+router.put("/:email", requireHRManager, async (req, res) => {
   try {
     const originalEmail = req.params.email.toLowerCase();
     const updates = req.body;
@@ -219,10 +233,17 @@ router.put("/:email", async (req, res) => {
     const allowedFields = [
       'name', 'username', 'email', 'employeeId', 'department', 'position', 'hireDate',
       'ptoBalance', 'ptoUsed', 'ptoTotal', 'contractType',
-      'manager', 'phone', 'benefits', 'childSickDays', 'personalSickDays'
+      'manager', 'phone', 'benefits', 'childSickDays', 'personalSickDays', 'role'
     ];
+        // Check if role is being updated - only hr_admin can change roles
+    if (updates.role !== undefined && updates.role !== data.employees[originalEmail].role) {
+      if (req.hrSession.role !== 'hr_admin') {
+        return res.status(403).json({ error: "Only HR Admins can change employee roles" });
+      }
+    }
     
-    allowedFields.forEach(field => {
+    const oldRole = data.employees[originalEmail].role;
+        allowedFields.forEach(field => {
       if (updates[field] !== undefined) {
         data.employees[originalEmail][field] = updates[field];
       }
@@ -258,6 +279,16 @@ router.put("/:email", async (req, res) => {
     // Save to file
     fs.writeFileSync(EMPLOYEES_FILE, JSON.stringify(data, null, 2));
     
+    // Audit log with role change details if applicable
+    const auditDetails = { 
+      employeeEmail: newEmail,
+      updatedFields: Object.keys(req.body)
+    };
+    if (updates.role !== undefined && oldRole !== updates.role) {
+      auditDetails.roleChange = { from: oldRole, to: updates.role };
+    }
+    logAuditEvent('EMPLOYEE_UPDATED', req.hrSession.email, auditDetails, getClientIP(req));
+    
     res.json({ 
       success: true, 
       message: "Employee updated successfully",
@@ -270,7 +301,7 @@ router.put("/:email", async (req, res) => {
 });
 
 // Delete employee
-router.delete("/:email", (req, res) => {
+router.delete("/:email", requireHRAdmin, (req, res) => {
   try {
     const email = req.params.email.toLowerCase();
     
@@ -297,6 +328,11 @@ router.delete("/:email", (req, res) => {
     // Save to file
     fs.writeFileSync(EMPLOYEES_FILE, JSON.stringify(data, null, 2));
     
+    // Audit log
+    logAuditEvent('EMPLOYEE_DELETED', req.hrSession.email, { 
+      deletedEmployeeEmail: email
+    }, getClientIP(req));
+    
     res.json({ 
       success: true, 
       message: "Employee deleted successfully"
@@ -308,7 +344,7 @@ router.delete("/:email", (req, res) => {
 });
 
 // Upload contract for employee
-router.post("/:email/contract", upload.single("contract"), (req, res) => {
+router.post("/:email/contract", requireHRManager, upload.single("contract"), (req, res) => {
   try {
     const email = req.params.email.toLowerCase();
     
@@ -354,7 +390,7 @@ router.post("/:email/contract", upload.single("contract"), (req, res) => {
 });
 
 // Download/view contract
-router.get("/:email/contract", (req, res) => {
+router.get("/:email/contract", requireHRManager, (req, res) => {
   try {
     const email = req.params.email.toLowerCase();
     const data = JSON.parse(fs.readFileSync(EMPLOYEES_FILE, "utf-8"));

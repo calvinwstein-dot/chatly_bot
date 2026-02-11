@@ -54,6 +54,7 @@ import voiceRoute from "./routes/voice.js";
 import employeesRoute from "./routes/employees.js";
 import hrAuthRoute from "./routes/hrAuth.js";
 import ptoRequestsRoute from "./routes/ptoRequests.js";
+import auditLogsRoute from "./routes/auditLogs.js";
 
 const app = express();
 
@@ -146,6 +147,7 @@ app.use("/api/voice", voiceRoute);
 app.use("/api/employees", employeesRoute);
 app.use("/api/hr-auth", hrAuthRoute);
 app.use("/api/pto-request", ptoRequestsRoute);
+app.use("/api/audit-logs", auditLogsRoute);
 
 // Log iframe embedding attempts
 app.post("/api/log-iframe-attempt", (req, res) => {

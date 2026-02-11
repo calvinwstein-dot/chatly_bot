@@ -1,0 +1,56 @@
+{"timestamp":"2026-01-29T11:33:59.210Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-01-29T11:43:54.063Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-01-29T11:47:56.301Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-01-29T11:57:42.650Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-01-29T20:56:54.317Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-01-29T21:22:09.539Z","action":"EMPLOYEE_UPDATED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"employeeEmail":"emma.christensen@henri.dk","updatedFields":["name","username","department","position","ptoBalance","plainPassword","role"],"roleChange":{"from":"hr_manager","to":"employee"}}}
+{"timestamp":"2026-01-29T21:47:50.385Z","action":"EMPLOYEE_UPDATED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"employeeEmail":"calvin@henri.dk","updatedFields":["name","username","department","position","ptoBalance"]}}
+{"timestamp":"2026-01-29T21:55:03.107Z","action":"EMPLOYEE_CREATED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"newEmployeeEmail":"danielhijazi@henri.dk","name":"Daniel Hijazi","department":"Head Office ","position":"Owner"}}
+{"timestamp":"2026-01-29T22:05:19.358Z","action":"EMPLOYEE_UPDATED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"employeeEmail":"danielhijazi@henri.dk","updatedFields":["name","username","department","position","ptoBalance","plainPassword","role"],"roleChange":{"to":"employee"}}}
+{"timestamp":"2026-01-29T22:10:45.995Z","action":"EMPLOYEE_UPDATED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"employeeEmail":"danielhijazi@henri.dk","updatedFields":["role"],"roleChange":{"from":"employee","to":"hr_manager"}}}
+{"timestamp":"2026-01-29T22:38:15.365Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"texture clay...","business":"HenriHR"}}
+{"timestamp":"2026-01-29T22:38:16.727Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"texture clay...","business":"HenriHR"}}
+{"timestamp":"2026-01-29T22:38:34.311Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"what is texture clay...","business":"HenriHR"}}
+{"timestamp":"2026-01-29T22:38:35.996Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"what is texture clay...","business":"HenriHR"}}
+{"timestamp":"2026-01-31T11:07:28.541Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-01-31T16:03:25.009Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-01-31T16:06:08.820Z","action":"HR_LOGIN","userEmail":"danielhijazi@henri.dk","ipAddress":"::1","details":{"username":"danielhijazi"}}
+{"timestamp":"2026-01-31T16:11:42.414Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-01-31T16:12:11.521Z","action":"EMPLOYEE_UPDATED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"employeeEmail":"danielhijazi@henri.dk","updatedFields":["name","username","department","position","ptoBalance","role"]}}
+{"timestamp":"2026-02-07T09:53:54.950Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-02-08T13:29:39.554Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-02-08T13:30:05.472Z","action":"EMPLOYEE_DELETED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"deletedEmployeeEmail":"mikkel.hansen@henri.dk"}}
+{"timestamp":"2026-02-08T13:30:15.765Z","action":"EMPLOYEE_DELETED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"deletedEmployeeEmail":"sarah.jensen@henri.dk"}}
+{"timestamp":"2026-02-08T13:30:20.418Z","action":"EMPLOYEE_DELETED","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"deletedEmployeeEmail":"lars.nielsen@henri.dk"}}
+{"timestamp":"2026-02-09T16:45:20.420Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-02-10T12:16:17.080Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-02-11T08:53:48.955Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-02-11T08:53:56.464Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me texture clay pomade...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T08:53:59.324Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me texture clay pomade...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:14:52.134Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:14:54.977Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:19:25.113Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"what is a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:19:28.083Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"what is a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:19:41.287Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:20:10.727Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-02-11T09:23:11.530Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:23:14.392Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:25:58.487Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:26:24.614Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-02-11T09:26:30.583Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:26:33.272Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T09:28:13.091Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:14:20.730Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:14:23.332Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"show me a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:14:31.784Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"show me a classic haircut...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:14:34.394Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a classic haircut...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:14:44.451Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"show me a signature hot tile shave...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:14:47.034Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me a signature hot tile shave...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:15:05.481Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"show me saltwater spray and explain to me how to u...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:15:08.259Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me saltwater spray and explain to me how to u...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:18:12.979Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me saltwater spray and explain to me how to u...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:18:15.773Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me saltwater spray and explain to me how to u...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:20:50.440Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me saltwater spray and explain to me how to u...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:20:53.028Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me saltwater spray and explain to me how to u...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:21:12.415Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"show me what a hotel shave is...","business":"HenriHR"}}
+{"timestamp":"2026-02-11T12:21:14.983Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me what a hotel shave is...","business":"HenriHR"}}
