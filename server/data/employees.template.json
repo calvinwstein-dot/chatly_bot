@@ -1,11 +1,12 @@
 {
   "employees": {
-    "john.doe@henri.dk": {
+    "calvin@henri.dk": {
       "name": "Calvin Stein",
       "username": "calvinstein",
       "employeeId": "EMP001",
       "department": "torvegade",
       "position": "manager",
+      "role": "hr_admin",
       "hireDate": "2023-06-15",
       "ptoBalance": 15,
       "ptoUsed": 5,
@@ -19,7 +20,7 @@
         "401k"
       ],
       "manager": "Calvin",
-      "email": "john.doe@henri.dk",
+      "email": "calvin@henri.dk",
       "phone": "+45 12 34 56 78",
       "password": "$2b$10$JLUKUGpWjnLnZ6TLgKKzquAQSf6QyQfKGMhZ/qgbkK/wGI39g05By",
       "plainPassword": "Henri2026Cal!"
