@@ -612,9 +612,208 @@
       display: block;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
+    /* Mobile Hamburger Menu */
+    .mobile-menu-toggle {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 150;
+      background: var(--henri-primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .mobile-menu-toggle svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 200;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+      }
+
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+
+      .mobile-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 150;
+      }
+
+      .mobile-overlay.active {
+        display: block;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 80px 16px 16px;
+      }
+
+      .auth-card {
+        padding: 32px 24px;
+        max-width: 100%;
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .page-header h2 {
+        font-size: 24px;
+      }
+
+      .logout-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Make stat cards stack on mobile */
+      .stat-grid, .info-grid, .benefits-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Adjust employee grid for mobile */
+      .employee-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Make tables scrollable on mobile */
+      .pto-requests-list, .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      table {
+        min-width: 600px;
+      }
+
+      /* Adjust form inputs for mobile */
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        font-size: 16px; /* Prevents iOS zoom */
+      }
+
+      /* Modal adjustments */
+      .modal-content,
+      .pto-modal-content {
+        width: 95%;
+        max-width: 95%;
+        padding: 20px;
+        margin: 16px;
+      }
+
+      /* Employee dashboard adjustments */
+      .employee-dashboard-modal {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+
+      /* Chatbot widget adjustments */
+      #chat-widget {
+        width: 100% !important;
+        height: 100vh !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+      }
+
+      #chat-launcher {
+        bottom: 16px !important;
+        right: 16px !important;
+      }
+
+      /* Touch-friendly buttons */
+      button, .nav-item {
+        min-height: 44px; /* Apple's recommended touch target */
+      }
+
+      /* Adjust sidebar header for mobile */
+      .sidebar-header h1 {
+        font-size: 18px;
+      }
+
+      /* Holiday cards */
+      .holiday-card {
+        padding: 16px;
+      }
+
+      /* PDF viewer */
+      .pdf-controls {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pdf-controls button {
+        flex: 1;
+        min-width: 100px;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 24px 16px;
+      }
+
+      .page-header h2 {
+        font-size: 20px;
+      }
+
+      .stat-card,
+      .info-card {
+        padding: 16px;
+      }
+
+      button {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+
+      .nav-item {
+        padding: 12px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-menu-toggle" id="mobileMenuToggle">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+    </svg>
+  </button>
   <!-- PTO Request Modal -->
   <div class="pto-modal" id="ptoModal">
     <div class="pto-modal-content">
@@ -1496,6 +1695,33 @@
       document.getElementById('portalScreen').classList.remove('active');
       document.getElementById('authForm').reset();
     });
+
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (mobileMenuToggle && mobileOverlay && sidebar) {
+      mobileMenuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('mobile-open');
+        mobileOverlay.classList.toggle('active');
+      });
+
+      mobileOverlay.addEventListener('click', () => {
+        sidebar.classList.remove('mobile-open');
+        mobileOverlay.classList.remove('active');
+      });
+
+      // Close mobile menu when clicking nav items
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+          }
+        });
+      });
+    }
 
     function showPortal(email, name, role) {
       document.getElementById('authScreen').classList.add('hidden');
