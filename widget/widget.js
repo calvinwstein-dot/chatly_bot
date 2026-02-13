@@ -984,6 +984,16 @@ function init() {
   }
 
   loadWidgetConfig();
+  
+  // Expose close method globally for HR portal logout
+  window.HenriChatWidget = {
+    close: () => {
+      const widget = document.getElementById("chat-widget");
+      if (widget && !widget.classList.contains('hidden')) {
+        widget.classList.add('hidden');
+      }
+    }
+  };
 }
 
 // Initialize immediately if DOM already loaded, otherwise wait for DOMContentLoaded

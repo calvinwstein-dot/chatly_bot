@@ -54,3 +54,6 @@
 {"timestamp":"2026-02-11T12:20:53.028Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me saltwater spray and explain to me how to u...","business":"HenriHR"}}
 {"timestamp":"2026-02-11T12:21:12.415Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::ffff:127.0.0.1","details":{"message":"show me what a hotel shave is...","business":"HenriHR"}}
 {"timestamp":"2026-02-11T12:21:14.983Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"show me what a hotel shave is...","business":"HenriHR"}}
+{"timestamp":"2026-02-13T11:32:21.231Z","action":"HR_LOGIN","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"username":"calvinstein"}}
+{"timestamp":"2026-02-13T11:33:15.620Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"what is a classic beard trim...","business":"HenriHR"}}
+{"timestamp":"2026-02-13T11:33:17.800Z","action":"HR_CHAT_ACCESS","userEmail":"calvin@henri.dk","ipAddress":"::1","details":{"message":"what is a classic beard trim...","business":"HenriHR"}}
