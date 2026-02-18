@@ -1,8 +1,8 @@
 {
   "businesses": {
     "HenriDemo": {
-      "clicks": 110,
-      "messages": 47,
+      "clicks": 127,
+      "messages": 48,
       "dailyStats": {
         "2026-01-08": {
           "clicks": 3,
@@ -59,6 +59,10 @@
         "2026-02-11": {
           "clicks": 6,
           "messages": 3
+        },
+        "2026-02-17": {
+          "clicks": 17,
+          "messages": 1
         }
       }
     },
@@ -81,7 +85,7 @@
       }
     },
     "ChappyBot": {
-      "clicks": 25,
+      "clicks": 27,
       "messages": 1,
       "dailyStats": {
         "2026-01-18": {
@@ -102,6 +106,10 @@
         },
         "2026-02-10": {
           "clicks": 1,
+          "messages": 0
+        },
+        "2026-02-17": {
+          "clicks": 2,
           "messages": 0
         }
       }

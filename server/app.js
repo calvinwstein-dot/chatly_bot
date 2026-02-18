@@ -25,6 +25,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 // Error handlers MUST be first - before any imports that might throw
@@ -153,7 +154,56 @@ app.use("/api/audit-logs", auditLogsRoute);
 app.post("/api/log-iframe-attempt", (req, res) => {
   const { business, domain } = req.body;
   console.log(`⚠️  IFRAME ATTEMPT: Business "${business}" testing URL embedded on: ${domain}`);
+  
+  // Save to file for admin dashboard
+  try {
+    const attemptsFile = path.join(__dirname, 'data/iframeAttempts.json');
+    const dir = path.dirname(attemptsFile);
+    
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    let attempts = { attempts: [] };
+    if (fs.existsSync(attemptsFile)) {
+      attempts = JSON.parse(fs.readFileSync(attemptsFile, 'utf8'));
+    }
+    
+    attempts.attempts.push({
+      business,
+      domain,
+      timestamp: new Date().toISOString(),
+      ip: req.ip || req.connection.remoteAddress
+    });
+    
+    // Keep only last 100 attempts
+    if (attempts.attempts.length > 100) {
+      attempts.attempts = attempts.attempts.slice(-100);
+    }
+    
+    fs.writeFileSync(attemptsFile, JSON.stringify(attempts, null, 2));
+  } catch (error) {
+    console.error('Error saving iframe attempt:', error);
+  }
+  
   res.json({ logged: true });
+});
+
+// Get iframe embedding attempts for admin dashboard
+app.get("/api/iframe-attempts", adminAuth, (req, res) => {
+  try {
+    const attemptsFile = path.join(__dirname, 'data/iframeAttempts.json');
+    
+    if (!fs.existsSync(attemptsFile)) {
+      return res.json({ attempts: [] });
+    }
+    
+    const data = JSON.parse(fs.readFileSync(attemptsFile, 'utf8'));
+    res.json(data);
+  } catch (error) {
+    console.error('Error reading iframe attempts:', error);
+    res.status(500).json({ error: 'Failed to load iframe attempts' });
+  }
 });
 
 app.get("/api/health", (req, res) => {
