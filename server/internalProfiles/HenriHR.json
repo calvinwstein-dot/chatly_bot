@@ -28,6 +28,7 @@
   ],
   "phone": "ext. 5000",
   "phoneHours": "Monday-Friday: 09:00-15:00",
+  "allowedDomains": ["henri.dk", "www.henri.dk", "intranet.henri.dk"],
   "email": "hr@henri.internal",
   "websiteUrl": "https://company.com/hr-portal",
   "setupFeeLink": {

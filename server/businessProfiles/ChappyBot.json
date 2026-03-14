@@ -22,6 +22,7 @@
   "bookingUrl": "https://www.chappybot.com/demo",
   "websiteUrl": "https://www.chappybot.com",
   "email": "support@chappybot.com",
+  "allowedDomains": ["chappybot.com", "www.chappybot.com"],
   "description": "Chappy delivers a custom AI chatbot that knows your services, prices, hours and all other relevant information—answering customer questions and handling tasks around the clock even while you sleep.",
   "isDemoMode": false,
   "demoMessageLimit": 999999,

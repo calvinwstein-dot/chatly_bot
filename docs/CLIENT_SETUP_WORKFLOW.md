@@ -13,6 +13,10 @@
   - `secondaryColor`: Brand color 2 (8-digit hex with `ff` at end)
   - `textColor`: Text color (8-digit hex with `ff` at end)
   - `phone`: Client's phone number
+  - `allowedDomains`: Array of authorized domains (e.g., `["clientwebsite.com", "www.clientwebsite.com"]`)
+    - Widget will ONLY work on these domains (localhost/test mode excluded)
+    - Prevents unauthorized multi-site usage
+    - Violations are logged in admin dashboard
   - `openaiConfig.instructions`: Customize bot personality/instructions
   - Leave `stripePaymentLink` empty for now
   - Keep `isDemoMode: true`

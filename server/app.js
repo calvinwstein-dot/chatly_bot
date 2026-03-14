@@ -206,6 +206,64 @@ app.get("/api/iframe-attempts", adminAuth, (req, res) => {
   }
 });
 
+// Log unauthorized domain attempts
+app.post("/api/log-domain-violation", (req, res) => {
+  const { business, domain, allowedDomains } = req.body;
+  console.log(`🚫 DOMAIN VIOLATION: Business "${business}" used on unauthorized domain: ${domain}`);
+  console.log(`   Allowed domains: ${allowedDomains?.join(', ') || 'none'}`);
+  
+  // Save to file for admin dashboard
+  try {
+    const violationsFile = path.join(__dirname, 'data/domainViolations.json');
+    const dir = path.dirname(violationsFile);
+    
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    let violations = { violations: [] };
+    if (fs.existsSync(violationsFile)) {
+      violations = JSON.parse(fs.readFileSync(violationsFile, 'utf8'));
+    }
+    
+    violations.violations.push({
+      business,
+      domain,
+      allowedDomains,
+      timestamp: new Date().toISOString(),
+      ip: req.ip || req.connection.remoteAddress
+    });
+    
+    // Keep only last 100 violations
+    if (violations.violations.length > 100) {
+      violations.violations = violations.violations.slice(-100);
+    }
+    
+    fs.writeFileSync(violationsFile, JSON.stringify(violations, null, 2));
+  } catch (error) {
+    console.error('Error saving domain violation:', error);
+  }
+  
+  res.json({ logged: true });
+});
+
+// Get domain violations for admin dashboard
+app.get("/api/domain-violations", adminAuth, (req, res) => {
+  try {
+    const violationsFile = path.join(__dirname, 'data/domainViolations.json');
+    
+    if (!fs.existsSync(violationsFile)) {
+      return res.json({ violations: [] });
+    }
+    
+    const data = JSON.parse(fs.readFileSync(violationsFile, 'utf8'));
+    res.json(data);
+  } catch (error) {
+    console.error('Error reading domain violations:', error);
+    res.status(500).json({ error: 'Failed to load domain violations' });
+  }
+});
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });

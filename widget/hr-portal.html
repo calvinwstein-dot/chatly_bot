@@ -1696,6 +1696,67 @@
       document.getElementById('authForm').reset();
     });
 
+    // Auto-logout on page refresh/reload
+    window.addEventListener('beforeunload', (e) => {
+      // Only clear session if user is logged in
+      if (sessionStorage.getItem(SESSION_KEY)) {
+        sessionStorage.removeItem(SESSION_KEY);
+        window.hrSessionToken = null;
+      }
+    });
+
+    // Idle timeout (10 minutes = 600,000 milliseconds)
+    let idleTimer;
+    const IDLE_TIMEOUT = 10 * 60 * 1000; // 10 minutes
+
+    function resetIdleTimer() {
+      // Clear existing timer
+      clearTimeout(idleTimer);
+      
+      // Set new timer
+      idleTimer = setTimeout(() => {
+        // Auto-logout after 10 minutes of inactivity
+        if (sessionStorage.getItem(SESSION_KEY)) {
+          sessionStorage.removeItem(SESSION_KEY);
+          window.hrSessionToken = null;
+          
+          // Close chatbot widget
+          if (window.HenriChatWidget && typeof window.HenriChatWidget.close === 'function') {
+            window.HenriChatWidget.close();
+          }
+          
+          // Show auth screen
+          document.getElementById('authScreen').classList.remove('hidden');
+          document.getElementById('portalScreen').classList.remove('active');
+          document.getElementById('authForm').reset();
+          
+          // Show timeout message
+          const errorMsg = document.getElementById('errorMessage');
+          if (errorMsg) {
+            errorMsg.textContent = 'Session expired due to inactivity. Please log in again.';
+            errorMsg.style.display = 'block';
+          }
+        }
+      }, IDLE_TIMEOUT);
+    }
+
+    // Track user activity to reset idle timer
+    const activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    
+    activityEvents.forEach(event => {
+      document.addEventListener(event, () => {
+        // Only track if user is logged in
+        if (sessionStorage.getItem(SESSION_KEY)) {
+          resetIdleTimer();
+        }
+      }, true);
+    });
+
+    // Start idle timer if user is already logged in on page load
+    if (sessionStorage.getItem(SESSION_KEY)) {
+      resetIdleTimer();
+    }
+
     // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileOverlay = document.getElementById('mobileOverlay');
@@ -1744,6 +1805,9 @@
       
       // Fetch and display employee data
       loadEmployeeData(email);
+      
+      // Start idle timeout timer on login
+      resetIdleTimer();
     }
 
     async function loadEmployeeData(email) {

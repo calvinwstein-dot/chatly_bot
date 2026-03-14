@@ -28,6 +28,7 @@
   "bookingUrl": "https://example.com/booking",
   "websiteUrl": "https://example.com",
   "email": "test@example.com",
+  "allowedDomains": ["example.com", "www.example.com", "test.example.com"],
   "setupFeeLink": {
     "test": "",
     "live": ""

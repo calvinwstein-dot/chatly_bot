@@ -67,8 +67,8 @@
       }
     },
     "BlondeSpecialistCPHDemo": {
-      "clicks": 17,
-      "messages": 0,
+      "clicks": 22,
+      "messages": 3,
       "dailyStats": {
         "2026-01-09": {
           "clicks": 13,
@@ -81,6 +81,10 @@
         "2026-01-26": {
           "clicks": 2,
           "messages": 0
+        },
+        "2026-03-02": {
+          "clicks": 5,
+          "messages": 3
         }
       }
     },

@@ -89,6 +89,50 @@ async function loadWidgetConfig() {
     widgetConfig = config;
     console.log('🎤 Widget config loaded:', { voiceEnabled: config.voiceEnabled, businessName });
     
+    // Check domain authorization (skip for localhost and test mode)
+    const currentDomain = window.location.hostname;
+    const isLocalhost = currentDomain === 'localhost' || currentDomain === '127.0.0.1' || currentDomain.startsWith('192.168.');
+    const isTestMode = !!testToken;
+    
+    if (!isLocalhost && !isTestMode && config.allowedDomains && config.allowedDomains.length > 0) {
+      const isAuthorized = config.allowedDomains.some(domain => {
+        // Exact match or subdomain match
+        return currentDomain === domain || currentDomain.endsWith('.' + domain);
+      });
+      
+      if (!isAuthorized) {
+        // Log unauthorized domain attempt
+        try {
+          const headers = { 'Content-Type': 'application/json' };
+          if (API_KEY) headers['X-API-Key'] = API_KEY;
+          
+          fetch(`${API_BASE}/api/log-domain-violation`, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({ 
+              business: businessName, 
+              domain: currentDomain,
+              allowedDomains: config.allowedDomains 
+            })
+          }).catch(() => {}); // Silent fail
+        } catch (e) {}
+        
+        // Block widget and show error
+        document.body.innerHTML = `
+          <div style="font-family: Inter, sans-serif; padding: 40px; text-align: center; background: #fff; height: 100vh; display: flex; align-items: center; justify-content: center;">
+            <div>
+              <div style="font-size: 48px; margin-bottom: 16px;">🚫</div>
+              <h2 style="color: #dc2626; margin: 0 0 12px 0;">Unauthorized Domain</h2>
+              <p style="color: #6b7280; margin: 0 0 8px 0;">This widget is not authorized for use on this domain.</p>
+              <p style="color: #9ca3af; font-size: 14px; margin: 0;">Domain: <code style="background: #f3f4f6; padding: 2px 8px; border-radius: 4px;">${currentDomain}</code></p>
+              <p style="color: #9ca3af; font-size: 14px; margin: 16px 0 0 0;">Please contact support to add this domain to your whitelist.</p>
+            </div>
+          </div>
+        `;
+        throw new Error('Unauthorized domain: ' + currentDomain);
+      }
+    }
+    
     // Set default language from config if not already set
     if (!localStorage.getItem('chatLanguage') && config.primaryLanguage) {
       currentLanguage = config.primaryLanguage;

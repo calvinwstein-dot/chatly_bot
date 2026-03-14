@@ -28,6 +28,7 @@
   "bookingUrl": "",
   "websiteUrl": "https://www.henri.dk",
   "email": "hr@henri.internal",
+  "allowedDomains": ["henri.dk", "www.henri.dk", "intranet.henri.dk"],
   "setupFeeLink": {
     "test": "",
     "live": ""

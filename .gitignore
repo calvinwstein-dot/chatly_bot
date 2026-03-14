@@ -6,4 +6,5 @@ server/data/employees.json
 server/data/hrSessions.json
 server/data/ptoRequests.json
 server/data/iframeAttempts.json
+server/data/domainViolations.json
 server/data/contracts/
