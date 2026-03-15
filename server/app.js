@@ -43,6 +43,7 @@ import { config } from "./config.js";
 import { adminAuth } from "./middleware/auth.js";
 import { optionalApiKeyAuth } from "./middleware/apiKeyAuth.js";
 import { requestLogger, detectSuspiciousActivity } from "./middleware/logging.js";
+import adminAuthRoute from "./routes/adminAuth.js";
 import chatRoute from "./routes/chat.js";
 import widgetConfigRoute from "./routes/widgetConfig.js";
 import debugRoute from "./routes/debug.js";
@@ -132,6 +133,12 @@ app.use((req, res, next) => {
 
 // Static widget
 app.use("/widget", express.static(path.join(__dirname, "../widget")));
+app.use("/public", express.static(path.join(__dirname, "../public")));
+
+// Admin auth API (must be before admin static to avoid auth middleware)
+app.use("/api/admin", adminAuthRoute);
+
+// Admin static files (protected by Supabase auth)
 app.use("/admin", adminAuth, express.static(path.join(__dirname, "../admin")));
 app.use("/public", express.static(path.join(__dirname, "../public")));
 

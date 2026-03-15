@@ -1,41 +1,62 @@
-import bcrypt from 'bcrypt';
+import { verifyToken, hasRole } from '../supabaseClient.js';
 
-// Simple authentication middleware for admin panel
-export function adminAuth(req, res, next) {
+/**
+ * Admin authentication middleware using Supabase JWT.
+ * Expects Authorization: Bearer <access_token> header.
+ * For static /admin routes, redirects to login page if no token (cookie-based).
+ */
+export async function adminAuth(req, res, next) {
+  // For static file requests (HTML pages), check the supabase-auth-token cookie
+  // The login page sets this cookie after successful Supabase auth
+  const isStaticRequest = req.method === 'GET' && !req.path.startsWith('/api/');
+  
+  // Allow login.html to always be accessible
+  if (req.path === '/login.html' || req.path === '/login') {
+    return next();
+  }
+
+  // Extract token from Authorization header or cookie
+  let token = null;
   const authHeader = req.headers.authorization;
   
-  // Check for Basic Auth
-  if (authHeader && authHeader.startsWith('Basic ')) {
-    const base64Credentials = authHeader.split(' ')[1];
-    const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
-    const [username, password] = credentials.split(':');
-    
-    // Check credentials (set these in your .env file)
-    const validUsername = process.env.ADMIN_USERNAME || 'admin';
-    const validPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-    
-    // If no hash is set, use legacy plaintext comparison with warning
-    if (!validPasswordHash) {
-      console.warn('⚠️  WARNING: Using plaintext password. Please set ADMIN_PASSWORD_HASH in .env');
-      const validPassword = process.env.ADMIN_PASSWORD || 'changeme123';
-      if (username === validUsername && password === validPassword) {
-        return next();
-      }
-    } else {
-      // Use bcrypt to compare password with hash
-      if (username === validUsername && bcrypt.compareSync(password, validPasswordHash)) {
-        return next();
-      }
-    }
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.split(' ')[1];
+  } else if (req.headers.cookie) {
+    // Parse supabase-auth-token from cookies
+    const cookies = req.headers.cookie.split(';').reduce((acc, c) => {
+      const [key, ...val] = c.trim().split('=');
+      acc[key] = val.join('=');
+      return acc;
+    }, {});
+    token = cookies['supabase-auth-token'];
   }
   
-  // Request authentication
-  res.setHeader('WWW-Authenticate', 'Basic realm="Admin Panel"');
-  res.status(401).send('Authentication required');
-}
+  if (!token) {
+    if (isStaticRequest) {
+      return res.redirect('/admin/login.html');
+    }
+    return res.status(401).json({ error: 'Authentication required' });
+  }
 
-// Utility function to generate password hash (for setup)
-export function generatePasswordHash(password) {
-  const saltRounds = 10;
-  return bcrypt.hashSync(password, saltRounds);
+  // Verify the Supabase JWT
+  const { user, error } = await verifyToken(token);
+  
+  if (error || !user) {
+    if (isStaticRequest) {
+      return res.redirect('/admin/login.html');
+    }
+    return res.status(401).json({ error: error || 'Invalid token' });
+  }
+
+  // Check admin role
+  if (!hasRole(user, 'admin')) {
+    if (isStaticRequest) {
+      return res.redirect('/admin/login.html');
+    }
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+
+  // Attach user to request for downstream use
+  req.user = user;
+  next();
 }

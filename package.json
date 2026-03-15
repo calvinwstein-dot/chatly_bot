@@ -9,6 +9,7 @@
     "start:prod": "node server/app.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.99.1",
     "axios": "^1.6.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",

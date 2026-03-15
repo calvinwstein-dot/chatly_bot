@@ -3,6 +3,7 @@ import { body, validationResult } from 'express-validator';
 import { handleChat } from "../orchestrator/index.js";
 import { loadProfile } from "../profileLoader.js";
 import { logAuditEvent, getClientIP } from "../auditLogger.js";
+import { verifyToken, hasRole } from "../supabaseClient.js";
 import fs from "fs";
 import path from "path";
 
@@ -14,8 +15,8 @@ const demoMessageCounts = new Map();
 const SUBSCRIPTIONS_FILE = path.resolve("server/subscriptions.json");
 const SESSIONS_FILE = path.resolve("server/data/hrSessions.json");
 
-// HR Session validation helper
-function validateHRSession(businessName, sessionToken) {
+// HR Session validation helper — supports both Supabase JWT and local sessions
+async function validateHRSession(businessName, sessionToken) {
   if (!businessName) return { valid: true }; // No business specified, skip validation
   
   try {
@@ -31,7 +32,13 @@ function validateHRSession(businessName, sessionToken) {
       return { valid: false, error: "Session token required" };
     }
     
-    // Validate session
+    // Try Supabase JWT verification first
+    const { user, error } = await verifyToken(sessionToken);
+    if (user && (hasRole(user, 'hr') || hasRole(user, 'admin'))) {
+      return { valid: true, email: user.email };
+    }
+    
+    // Fallback to local session file
     if (!fs.existsSync(SESSIONS_FILE)) {
       return { valid: false, error: "No sessions found" };
     }
@@ -142,7 +149,7 @@ router.post("/",
 
     // Check HR session for internal profiles
     const sessionToken = req.headers['x-hr-session'];
-    const sessionValidation = validateHRSession(business, sessionToken);
+    const sessionValidation = await validateHRSession(business, sessionToken);
     
     if (sessionValidation && !sessionValidation.valid) {
       return res.status(401).json({ 
