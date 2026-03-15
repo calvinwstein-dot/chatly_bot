@@ -19,10 +19,10 @@ Phone Hours: ${business.phoneHours || 'See hours below'}
 ${business.email ? 'Email: ' + business.email : ''}
 
 Locations:
-${business.locations.map(loc => `- ${loc.name} (${loc.address}) - Map: ${loc.mapUrl}`).join("\n")}
+${business.locations ? business.locations.map(loc => `- ${loc.name} (${loc.address}) - Map: ${loc.mapUrl}`).join("\n") : 'Contact us for location information'}
 
 Services:
-${business.services.map(s => `- ${s.name} (${s.price} ${business.currency || 'kr'})`).join("\n")}
+${business.services ? business.services.map(s => `- ${s.name} (${s.price} ${business.currency || 'kr'})`).join("\n") : 'Contact us for service information'}
 
 Products:
 ${business.products ? business.products.map(p => {
@@ -43,10 +43,10 @@ ${business.giftBoxes.map(gb => {
 }).join("\n")}
 
 ` : ''}Hours:
-${Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n")}
+${business.hours ? Object.entries(business.hours).map(([day, hours]) => `${day}: ${hours}`).join("\n") : 'Contact us for hours'}
 
 FAQs:
-${business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n")}
+${business.faq ? business.faq.map(f => `Q: ${f.question} | A: ${f.answer}`).join("\n") : ''}
 
 Always answer using ONLY this business's information.
 

@@ -1,6 +1,6 @@
 {
   "businessName": "Blonde Specialist CPH",
-  "logoUrl": "/public/logos/chappy-logo.png",
+  "logoUrl": "/public/logos/blonde-specialist-logo.png",
   "primaryColor": "#fbd0edff",
   "secondaryColor": "#e68affff",
   "textColor": "#cf0cbfff",
@@ -21,7 +21,7 @@
   "phoneHours": "",
   "bookingUrl": "https://blonde-specialist-cph.planway.com/",
   "websiteUrl": "",
-  "email": "blondespecialistcph@gmail.dk.ny",
+  "email": "blondespecialistcph@gmail.com",
   "allowedDomains": [
     "blondespecialistcph.dk",
     "www.blondespecialistcph.dk"

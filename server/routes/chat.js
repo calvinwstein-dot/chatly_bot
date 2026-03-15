@@ -120,8 +120,8 @@ function checkDemoStatus(businessProfile) {
 router.post("/",
   // Input validation middleware
   [
-    body('sessionId').trim().isLength({ min: 1, max: 100 }).escape(),
-    body('message').trim().isLength({ min: 1, max: 5000 }).escape(),
+    body('sessionId').trim().isLength({ min: 1, max: 100 }),
+    body('message').trim().isLength({ min: 1, max: 5000 }),
     body('language').optional().isIn(['en', 'da', 'es', 'fr', 'de', 'it', 'pt', 'nl', 'pl', 'ru', 'zh', 'ja', 'ko', 'ar', 'hi', 'sv']),
     body('business').optional().trim().isLength({ max: 50 }).matches(/^[a-zA-Z0-9_-]+$/),
     body('demoMessageCount').optional().isInt({ min: 0, max: 1000 })

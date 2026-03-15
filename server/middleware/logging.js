@@ -65,7 +65,7 @@ export function detectSuspiciousActivity(req, res, next) {
     /union.*select|drop.*table/i,        // SQL injection
   ];
   
-  const checkString = JSON.stringify(req.body) + req.path + req.query;
+  const checkString = JSON.stringify(req.body) + req.path + JSON.stringify(req.query);
   
   for (const pattern of suspiciousPatterns) {
     if (pattern.test(checkString)) {

@@ -78,8 +78,8 @@ app.use((req, res, next) => {
 app.use(cors({
   origin: true, // Allow all origins
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key', 'X-HR-Session']
 }));
 
 // Rate limiting
@@ -173,7 +173,7 @@ app.post("/api/log-iframe-attempt", (req, res) => {
       business,
       domain,
       timestamp: new Date().toISOString(),
-      ip: req.ip || req.connection.remoteAddress
+      ip: req.ip || req.socket.remoteAddress
     });
     
     // Keep only last 100 attempts
@@ -231,7 +231,7 @@ app.post("/api/log-domain-violation", (req, res) => {
       domain,
       allowedDomains,
       timestamp: new Date().toISOString(),
-      ip: req.ip || req.connection.remoteAddress
+      ip: req.ip || req.socket.remoteAddress
     });
     
     // Keep only last 100 violations
