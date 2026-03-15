@@ -89,12 +89,13 @@ async function loadWidgetConfig() {
     widgetConfig = config;
     console.log('🎤 Widget config loaded:', { voiceEnabled: config.voiceEnabled, businessName });
     
-    // Check domain authorization (skip for localhost and test mode)
+    // Check domain authorization (skip for localhost, test mode, and own hosting domain)
     const currentDomain = window.location.hostname;
     const isLocalhost = currentDomain === 'localhost' || currentDomain === '127.0.0.1' || currentDomain.startsWith('192.168.');
     const isTestMode = !!testToken;
+    const isOwnDomain = currentDomain === 'chatly-bot-1.onrender.com';
     
-    if (!isLocalhost && !isTestMode && config.allowedDomains && config.allowedDomains.length > 0) {
+    if (!isLocalhost && !isTestMode && !isOwnDomain && config.allowedDomains && config.allowedDomains.length > 0) {
       const isAuthorized = config.allowedDomains.some(domain => {
         // Exact match or subdomain match
         return currentDomain === domain || currentDomain.endsWith('.' + domain);
