@@ -1,72 +1,88 @@
 import express from "express";
-import { createClient } from '@supabase/supabase-js';
-import { verifyToken, hasRole } from '../supabaseClient.js';
+import crypto from "crypto";
+import bcrypt from "bcrypt";
 import fs from "fs";
 import path from "path";
 import { logAuditEvent, getClientIP } from "../auditLogger.js";
 
 const router = express.Router();
 const SESSIONS_FILE = path.resolve("server/data/hrSessions.json");
+const EMPLOYEES_FILE = path.resolve("server/data/employees.json");
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
-
-// Validate HR portal login via Supabase
+// Validate HR portal login and create session
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   
-  if (!email || !password) {
-    return res.status(401).json({ error: "Email and password required" });
+  if (!username || !password) {
+    return res.status(401).json({ error: "Username and password required" });
   }
   
   try {
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      console.log(`❌ HR login failed for ${email}: ${error.message}`);
-      return res.status(401).json({ error: "Invalid email or password" });
+    // Load employee data
+    const employeesData = JSON.parse(fs.readFileSync(EMPLOYEES_FILE, 'utf8'));
+    
+    // Find employee by username
+    let employee = null;
+    let employeeEmail = null;
+    
+    for (const [email, emp] of Object.entries(employeesData.employees)) {
+      if (emp.username && emp.username.toLowerCase() === username.toLowerCase()) {
+        employee = emp;
+        employeeEmail = email;
+        break;
+      }
     }
-
-    // Check that user has hr role
-    if (!hasRole(data.user, 'hr') && !hasRole(data.user, 'admin')) {
-      console.log(`⛔ User ${email} without HR role attempted HR login`);
-      return res.status(403).json({ error: "HR portal access required" });
+    
+    if (!employee) {
+      console.log(`❌ Login failed: Username "${username}" not found`);
+      return res.status(401).json({ error: "Invalid username or password" });
     }
-
-    console.log(`✅ HR login successful for ${email}`);
-
-    // Store session in hrSessions.json for backward compatibility with chat.js validation
-    const sessionToken = data.session.access_token;
+    
+    console.log(`👤 Login attempt for username: ${username} (email: ${employeeEmail})`);
+    
+    // Verify password
+    const passwordMatch = await bcrypt.compare(password, employee.password);
+    if (!passwordMatch) {
+      console.log(`❌ Login failed: Incorrect password for ${username}`);
+      return res.status(401).json({ error: "Invalid username or password" });
+    }
+    
+    console.log(`✅ Login successful for ${username}`);
+    
+    // Generate session token
+    const sessionToken = crypto.randomBytes(32).toString('hex');
+    
+    // Load sessions
     const sessions = loadSessions();
+    
+    // Store session (expires in 8 hours)
     sessions[sessionToken] = {
-      email: data.user.email,
-      role: data.user.app_metadata?.role || 'hr',
+      email: employeeEmail,
+      role: employee.role || 'employee',
       createdAt: Date.now(),
-      expiresAt: data.session.expires_at * 1000 // Supabase returns seconds
+      expiresAt: Date.now() + (8 * 60 * 60 * 1000)
     };
+    
     saveSessions(sessions);
-
+    
     // Audit log
-    logAuditEvent('HR_LOGIN', email, { method: 'supabase' }, getClientIP(req));
+    logAuditEvent('HR_LOGIN', employeeEmail, { username }, getClientIP(req));
     
     res.json({ 
       success: true, 
       sessionToken,
-      accessToken: data.session.access_token,
-      refreshToken: data.session.refresh_token,
-      email: data.user.email,
-      name: data.user.email.split('@')[0],
-      role: data.user.app_metadata?.role || 'hr'
+      email: employeeEmail,
+      name: employee.name,
+      role: employee.role || 'employee'
     });
   } catch (error) {
-    console.error("Error during HR login:", error);
-    res.status(500).json({ error: "Failed to authenticate" });
+    console.error("Error creating session:", error);
+    res.status(500).json({ error: "Failed to create session" });
   }
 });
 
 // Validate session token
-router.post("/validate", async (req, res) => {
+router.post("/validate", (req, res) => {
   const { sessionToken } = req.body;
   
   if (!sessionToken) {
@@ -74,35 +90,27 @@ router.post("/validate", async (req, res) => {
   }
   
   try {
-    // Verify with Supabase
-    const { user, error } = await verifyToken(sessionToken);
+    const sessions = loadSessions();
+    const session = sessions[sessionToken];
     
-    if (error || !user) {
-      // Also check local sessions as fallback
-      const sessions = loadSessions();
-      const session = sessions[sessionToken];
-      
-      if (!session || Date.now() > session.expiresAt) {
-        return res.status(401).json({ valid: false, error: "Session expired" });
-      }
-      
-      return res.json({ 
-        valid: true, 
-        email: session.email,
-        role: session.role || 'hr'
-      });
+    if (!session) {
+      return res.status(401).json({ valid: false });
     }
-
-    if (!hasRole(user, 'hr') && !hasRole(user, 'admin')) {
-      return res.status(403).json({ valid: false, error: "HR access required" });
+    
+    // Check expiration
+    if (Date.now() > session.expiresAt) {
+      delete sessions[sessionToken];
+      saveSessions(sessions);
+      return res.status(401).json({ valid: false, error: "Session expired" });
     }
-
-    logAuditEvent('HR_SESSION_VALIDATED', user.email, { sessionToken: sessionToken.substring(0, 10) + '...' }, getClientIP(req));
-
+    
+    // Log session validation (only for actual validation checks, not every request)
+    logAuditEvent('HR_SESSION_VALIDATED', session.email, { sessionToken: sessionToken.substring(0, 10) + '...' }, getClientIP(req));
+    
     res.json({ 
       valid: true, 
-      email: user.email,
-      role: user.app_metadata?.role || 'hr'
+      email: session.email,
+      role: session.role || 'employee'
     });
   } catch (error) {
     console.error("Error validating session:", error);
@@ -148,15 +156,6 @@ export async function validateHRSession(req, res, next) {
       return res.status(401).json({ error: "HR session required" });
     }
     
-    // Try Supabase verification first
-    const { user, error } = await verifyToken(sessionToken);
-    
-    if (user && (hasRole(user, 'hr') || hasRole(user, 'admin'))) {
-      req.hrUser = { email: user.email };
-      return next();
-    }
-    
-    // Fallback to local session check
     const sessions = loadSessions();
     const session = sessions[sessionToken];
     
